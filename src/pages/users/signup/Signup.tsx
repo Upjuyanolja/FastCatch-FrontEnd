@@ -210,7 +210,7 @@ const Signup = () => {
                     type="number"
                     placeholder="숫자만 입력하세요"
                     {...register("phone", {
-                      required: "휴대폰 번호를 입력하세요",
+                      required: "휴대폰 번호(-제외)를 입력하세요",
                       minLength: {
                         value: 10,
                         message: "10자리 이상 입력하세요",
