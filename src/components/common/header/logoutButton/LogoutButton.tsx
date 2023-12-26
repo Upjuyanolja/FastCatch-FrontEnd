@@ -8,8 +8,6 @@ import { userState } from "@/states/userState";
 import instance from "@/api/instanceApi";
 import { getRefreshToken, getToken } from "@/utils/getToken";
 
-import "../cartButton/cartbutton.scss";
-
 const LogoutButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const setUserInfo = useSetRecoilState(userState);
@@ -26,24 +24,20 @@ const LogoutButton = () => {
         size: "small",
         colorName: "coral500",
         onClick: () => {
-          
           const logOut = async () => {
             try {
-
               const body = {
                 accessToken,
-                refreshToken
-              }
-          
-              const res = await instance.post(`/api/members/signout`, 
-                body
-              );
-          
-              localStorage.removeItem('accessToken');
-              localStorage.removeItem('refreshToken');
+                refreshToken,
+              };
+
+              const res = await instance.post(`/api/members/signout`, body);
+
+              localStorage.removeItem("accessToken");
+              localStorage.removeItem("refreshToken");
               setUserInfo(null);
-              navigate('/');
-              
+              navigate("/");
+
               return res;
             } catch (error) {
               console.log(error);

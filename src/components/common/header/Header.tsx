@@ -7,7 +7,6 @@ import { IoIosSearch } from "react-icons/io";
 import { IoFilter } from "react-icons/io5";
 
 import MyInfo from "./myInfo/MyInfo";
-import CartButton from "./cartButton/CartButton";
 import SearchFilter from "./searchFilter/SearchFilter";
 import CategoryFilter from "./categoryFilter/CategoryFilter";
 
@@ -103,7 +102,6 @@ const Header = () => {
           <section className="header-container__right">
             {localStorage.getItem("accessToken") ? ( //
               <>
-                <CartButton />
                 <LogoutButton />
                 <MyInfo />
               </>

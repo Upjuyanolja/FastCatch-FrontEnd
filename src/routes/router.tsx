@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { PATH } from "./constants";
 import {
-  Basket,
   Home,
   Accommodation,
   Order,
@@ -21,10 +20,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-      },
-      {
-        path: PATH.BASKET,
-        element: <Basket />,
       },
       {
         path: PATH.ACCOMMODATION,
