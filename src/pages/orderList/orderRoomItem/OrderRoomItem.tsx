@@ -54,9 +54,12 @@ const OrderRoomItem = ({ roomInfo }: RoomPropsType) => {
         </div>
         <div className="item-content__right-box">
           <span className="price text-body2">500,000원</span>
-          <span className="applyCoupon-price text-subtitle5">
-            {formattedOrderPrice}원
-          </span>
+          <div className="applyCoupon-container">
+            <div className="coupon-box">쿠폰가</div>
+            <span className="applyCoupon-price text-subtitle5">
+              {formattedOrderPrice}원
+            </span>
+          </div>
         </div>
       </div>
     </div>
