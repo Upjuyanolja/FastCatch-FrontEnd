@@ -193,12 +193,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
 
         <div className="room__options-container">
           {englishToKoreanFormat(roomOption, template).map((option: any) => (
-            <Badge
-              key={option}
-              text={option}
-              badgeType="line"
-              badgeStatus="canceled"
-            />
+            <Badge key={option} text={option} option="option" />
           ))}
         </div>
 
@@ -207,12 +202,24 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
             <span className="text-body2">체크인 {checkInTime}</span>
             <span className="text-body2">체크아웃 {checkOutTime}</span>
           </div>
-          <div className="text-subtitle4">{numberFormat(totalPrice)} 원</div>
+
+          {/* 쿠폰이 있으면 원래가격 */}
+          <div className="room__detail-info__strikethrough">
+            <span>75000원</span>
+          </div>
+
+          <div className="room__detail-info__price text-subtitle4">
+            {/* 쿠폰이 있으면 쿠폰가 div */}
+            <div className="room__detail-info__price__discountBox">
+              <span>쿠폰가</span>
+            </div>
+            {numberFormat(totalPrice)} 원
+          </div>
         </div>
       </div>
 
       <div>
-        <div className="room__divider"></div>
+        {/* <div className="room__divider"></div>s */}
         <div className="room__buttons-container">
           {soldOut || !isPossible ? (
             <Button
@@ -223,12 +230,12 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
             />
           ) : (
             <>
-              <button
+              {/* <button
                 className="room__buttons-container__basket"
                 onClick={onClickBasket}
               >
                 <IoCartOutline size="30px" color="#93114E" />
-              </button>
+              </button> */}
               <Button
                 text="예약하기"
                 buttonSize="large"
