@@ -1,31 +1,30 @@
-import { useQuery } from "react-query";
 import AccomodationItem from "./accomodationItem/AccomodationItem";
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import "./home.scss";
 
-import { useRecoilState, useRecoilValue } from "recoil";
-import { filterState } from "@/states/filterState";
-import { format } from "date-fns";
-import { fetchAccommodationsData } from "@/hooks/fetchAccommodations";
-import { Accommodation } from "../../types/accommodations";
-import { responseState } from "@/states/responseState";
-import { useEffect, useRef } from "react";
-import { detailState } from "@/states/detailState";
+import { useEffect, useMemo, useRef } from "react";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
+import { useGetAllAccommodations } from "@/hooks/quries/useMain";
 
 const Home = () => {
-  const detailFiltered = useRecoilValue(detailState);
-  const [filterStates] = useRecoilState(filterState);
-  const [responseStates, setResponseStates] = useRecoilState(responseState);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isError,
+    isLoading,
+    refetch,
+    remove,
+  } = useGetAllAccommodations("ALL", false);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     // Intersection Observer 생성
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && hasNextPage) {
           // 타겟 요소가 화면에 나타남
-          setTimeout(() => refetch(), 500);
+          setTimeout(() => fetchNextPage(), 500);
         }
       });
     });
@@ -36,35 +35,13 @@ const Home = () => {
       observer.observe(targetElements!);
     }
     return () => observer.disconnect();
-  }, [filterStates, scrollRef.current]);
+  }, [scrollRef.current]);
 
-  // 시작일 종료일 만들기
-  const startDate = format(filterStates.startDate, "yyyy-MM-dd");
-  const endDate = filterStates.endDate
-    ? format(filterStates.endDate, "yyyy-MM-dd")
-    : startDate;
-
-  // 리액트 쿼리
-  const { refetch, isLoading, isError } = useQuery({
-    queryKey: ["accommodations", filterStates.current],
-    queryFn: () =>
-      fetchAccommodationsData(
-        filterStates.current.locale,
-        startDate,
-        endDate,
-        filterStates.current.category,
-        filterStates.current.amount,
-        responseStates.pageIndex
-      ),
-    staleTime: 500000,
-    onSuccess: data => {
-      setResponseStates(prev => ({
-        pageIndex: prev.pageIndex + 1,
-        responseArray: [...prev.responseArray, ...data.accommodations],
-      }));
-    },
-  });
-
+  const accommodationsItems = useMemo(
+    () => data?.pages.flatMap(page => page.data.data.accommodations),
+    [data]
+  );
+  console.log(accommodationsItems);
   if (isLoading) {
     return (
       <div className="home__animation-container">
@@ -80,17 +57,10 @@ const Home = () => {
       </div>
     );
   }
-
   return (
     <div className="home-wrapper">
       <div className="home-inner">
-        {detailFiltered.length === 0
-          ? responseStates.responseArray.map((acc: Accommodation) => (
-              <AccomodationItem key={acc.id} data={acc} />
-            ))
-          : detailFiltered.map(acc => (
-              <AccomodationItem key={acc.id} data={acc} />
-            ))}
+        {accommodationsItems?.map(item => <AccomodationItem data={item} />)}
         <div className="target-div" ref={scrollRef}>
           @2023 빨리 잡아
         </div>
