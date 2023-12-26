@@ -77,7 +77,7 @@ const Login = () => {
                   <label htmlFor="">이메일</label>
                   <input
                     type="email"
-                    placeholder="아이디를 입력해주세요"
+                    placeholder="이메일를 입력해주세요"
                     {...register("email", {
                       required: "이메일을 입력하세요",
                       pattern: {
