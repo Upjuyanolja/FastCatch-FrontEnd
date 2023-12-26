@@ -80,11 +80,6 @@ const Home = () => {
       </div>
     );
   }
-  console.log(responseStates);
-  console.log("response");
-
-  console.log(detailFiltered);
-  console.log("detail");
 
   return (
     <div className="home-wrapper">
