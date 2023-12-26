@@ -1,93 +1,144 @@
 {
-  "status": "SUCCESS",
+  "message": "성공적으로 숙소 목록을 조회 했습니다.",
   "data": {
+    "pageNum": 1,
+    "pageSize": 12,
+    "totalPages": 8,
+    "totalElements": 96,
+    "isLast": false,
     "accommodations": [
       {
         "id": 1,
-        "name": "춘천세종호텔",
-        "region": "GANGWON",
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
         "category": "HOTELRESORT",
-        "lowestPrice": 45000,
-        "image": "1.jpg",
-        "soldOut": true,
-        "accommodationOption": {
-          "hasSmokingRoom": true,
-          "hasPetRoom": false,
-          "hasParkingLot": true,
-          "hasWifi": true,
-          "hasSwimmingPool": false,
-          "hasGym": false,
-          "hasBreakfast": true,
-          "hasRestaurant": false,
-          "hasCookingRoom": false
-        }
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
       },
       {
         "id": 2,
-        "name": "파도소리펜션",
-        "region": "GYEONGSANG",
-        "category": "PENSION",
-        "lowestPrice": 100000,
-        "image": "2.jpg",
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
         "soldOut": false,
-        "accommodationOption": {
-          "hasSmokingRoom": true,
-          "hasPetRoom": true,
-          "hasParkingLot": true,
-          "hasWifi": true,
-          "hasSwimmingPool": false,
-          "hasGym": false,
-          "hasBreakfast": true,
-          "hasRestaurant": false,
-          "hasCookingRoom": true
-        }
+        "coupon": "10000원 할인"
       },
       {
         "id": 3,
-        "name": "럭셔리관광호텔(오산)",
-        "region": "GYEONGGI",
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
         "category": "HOTELRESORT",
-        "lowestPrice": 65000,
-        "image": "3.jpg",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
         "soldOut": false,
-        "accommodationOption": {
-          "hasSmokingRoom": true,
-          "hasPetRoom": true,
-          "hasParkingLot": true,
-          "hasWifi": true,
-          "hasSwimmingPool": true,
-          "hasGym": true,
-          "hasBreakfast": true,
-          "hasRestaurant": true,
-          "hasCookingRoom": true
-        }
+        "coupon": "10000원 할인"
       },
       {
         "id": 4,
-        "name": "포포인츠 바이 쉐라톤 서울 구로",
-        "region": "SEOUL",
-        "category": "MOTEL",
-        "lowestPrice": 40000,
-        "image": "4.jpg",
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
         "soldOut": false,
-        "accommodationOption": {
-          "hasSmokingRoom": true,
-          "hasPetRoom": false,
-          "hasParkingLot": true,
-          "hasWifi": true,
-          "hasSwimmingPool": false,
-          "hasGym": false,
-          "hasBreakfast": false,
-          "hasRestaurant": false,
-          "hasCookingRoom": false
-        }
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 5,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 6,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 7,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 8,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 9,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 10,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 11,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
+      },
+      {
+        "id": 12,
+        "name": "웨스틴 조선 서울",
+        "address": "서울특별시 중구 소공로 106",
+        "category": "HOTELRESORT",
+        "lowestPrice": 95000,
+        "discountPrice": 80000,
+        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "soldOut": false,
+        "coupon": "10000원 할인"
       }
-    ],
-    "pageNum": 1,
-    "pageSize": 12,
-    "totalPages": 0,
-    "totalElements": 4,
-    "isFirst": true,
-    "isLast": true
+    ]
   }
 }
