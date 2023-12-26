@@ -59,9 +59,7 @@
   height: rem(20);
   accent-color: coral(500);
 }
-.discount-filter:checked + .discount-filter-text {
-  color: coral(500);
-}
+
 .discount-filter:checked + .discount-filter-text {
   color: coral(500);
 }
@@ -102,12 +100,12 @@
     font-size: 20px;
   }
 
+  &.discount {
+    border: 1px solid coral(500);
+  }
+
   &:hover {
     color: gray(900);
     box-shadow: shadow(1);
   }
-}
-
-.filter__button-detail input:checked ~ label {
-  color: red;
 }
