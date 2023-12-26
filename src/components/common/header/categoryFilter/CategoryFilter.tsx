@@ -76,6 +76,8 @@ const CategoryFilter = () => {
     }));
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
   return (
     <div className="category-filter__container">
       <div className="category-filter__inner">
@@ -106,6 +108,16 @@ const CategoryFilter = () => {
             </button>
           )
         )}
+        <div className="filter__adjust-height">
+          <label className="filter__button-detail">
+            <input
+              type="checkbox"
+              className="discount-filter"
+              onChange={handleChange}
+            />
+            <label className="discount-filter-text">할인숙소</label>
+          </label>
+        </div>
       </div>
     </div>
   );

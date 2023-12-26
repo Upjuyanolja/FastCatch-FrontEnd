@@ -54,6 +54,23 @@
     color: gray(700);
   }
 }
+.discount-filter {
+  width: rem(20);
+  height: rem(20);
+  accent-color: coral(500);
+}
+.discount-filter:checked + .discount-filter-text {
+  color: coral(500);
+}
+.discount-filter:checked + .discount-filter-text {
+  color: coral(500);
+}
+
+.discount-filter-text {
+  font-size: rem(14);
+  font-weight: 400;
+  color: #000;
+}
 
 .categorySelect {
   & span {
@@ -71,10 +88,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: rem(4);
+  gap: rem(8);
 
-  width: rem(101);
-  height: rem(66);
+  width: rem(125);
+  height: rem(61);
   color: gray(700);
   border: rem(1) solid gray(400);
   border-radius: rem(8);
@@ -89,4 +106,8 @@
     color: gray(900);
     box-shadow: shadow(1);
   }
+}
+
+.filter__button-detail input:checked ~ label {
+  color: red;
 }
