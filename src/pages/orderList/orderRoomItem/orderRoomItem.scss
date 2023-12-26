@@ -49,8 +49,29 @@
         text-decoration: line-through;
       }
 
-      .applyCoupon-price {
-        color: black;
+      .applyCoupon-container {
+        display: flex;
+        gap: rem(5);
+        flex-direction: row;
+        align-items: center;
+
+        .applyCoupon-price {
+          color: black;
+          margin-left: rem(5);
+        }
+      }
+
+      .coupon-box {
+        border: 1px solid coral(500);
+        padding: rem(2);
+        border-radius: rem(4);
+        font-size: 14px;
+        box-sizing: border-box;
+        font-weight: 400;
+        color: coral(500);
+        text-align: center;
+        width: 53px;
+        height: 21px;
       }
     }
   }
