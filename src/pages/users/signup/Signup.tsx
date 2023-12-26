@@ -35,13 +35,13 @@ const Signup = () => {
 
   // 변수, state
   const [isAllCheck, setIsAllCheck] = useState(false);
-  const [nicknameError, setNicknameError] = useState<string | null>(null);
-  const [isNicknameValid, setIsNicknameValid] = useState<boolean | null>(null);
   const [idError, setIdError] = useState<string | null>(null);
+  const [isIdValid, setIsIdValid] = useState<boolean | null>(null);
   const {
     register,
     formState: { errors },
     watch,
+    setError,
   } = useForm<SignupData>({
     mode: "onBlur",
   });
@@ -50,43 +50,56 @@ const Signup = () => {
   const password = watch("password") ?? "";
   const checkPassword = watch("checkPassword" ?? "");
   const name = watch("name") ?? "";
-  const phoneNumber = watch("phoneNumber") ?? "";
+  const phone = watch("phone") ?? "";
   const { showToast, ToastContainer } = ToastLayout();
 
-  const duplicatedNickName = async () => {
-    try {
-      const res = await instance.get(
-        `/api/members/nickname?nickname=${nickname}`
-      );
+  // const duplicatedId = async () => {
+  //   try {
+  //     const res = await instance.get(`/api/members/email?email=${email}`);
+  //     // 이 부분은 서버 개발이 진행된 후 체크해봐야 겠어요.
+  //     // .env내 url은 미니 서버라서 요청 보내도 안되네요.
+  //     if (res.status === 201) {
+  //       setIsIdValid(true);
+  //       showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
+  //     }
+  //     return res;
+  //   } catch (error) {
+  //     console.log(error);
+  //     // 에러 경우가 하나이므로 바로 에러 핸들링
+  //     setIsIdValid(false);
+  //     showToast({ theme: "error", message: "사용 불가능한 아이디입니다" });
+  //   }
+  // };
 
-      if (res.status === 200) {
-        setIsNicknameValid(true);
-        showToast({ theme: "success", message: "사용가능한 닉네임입니다" });
-      }
+  // 비밀번호 확인 동적 체크
 
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const duplicatedId = async () => {
-    try {
-    } catch (error) {
-      console.log(error);
+  const handleCheckPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checkPasswordValue = e.target.value;
+    if (password !== checkPasswordValue) {
+      setError("checkPassword", {
+        type: "manual",
+        message: "동일한 비밀번호를 입력하세요",
+      });
+    } else {
+      setError("checkPassword", {
+        type: "manual",
+        message: "",
+      });
     }
   };
 
   // 회원가입 폼 제출
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isAllCheck && isNicknameValid) {
+    if (isAllCheck && isIdValid) {
       const requestBody = {
         email,
         password,
         nickname,
         name,
-        phoneNumber,
+        phone,
       };
       const signUp = async () => {
         try {
@@ -95,6 +108,7 @@ const Signup = () => {
           return res;
         } catch (error) {
           console.log(error);
+          // 에러 코드 및 에러 메세지를 토대로 에러 핸들링
         }
       };
       signUp();
@@ -102,15 +116,8 @@ const Signup = () => {
   };
 
   // 중복확인 조건문
-  const isNicknameValids =
-    /^[A-Za-z가-힣]+$/.test(nickname) &&
-    nickname.length >= 2 &&
-    nickname.length <= 14;
+  const isIdValids = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
 
-  const isIdValids =
-    /^[A-Za-z가-힣]+$/.test(email) &&
-    nickname.length >= 2 &&
-    nickname.length <= 14;
   return (
     <>
       <div className="common-bg"></div>
@@ -157,7 +164,7 @@ const Signup = () => {
                       {...register("email", {
                         required: "이메일을 입력하세요",
                         pattern: {
-                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/,
+                          value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
                           message: "유효한 이메일 주소를 입력하세요",
                         },
                       })}
@@ -165,7 +172,7 @@ const Signup = () => {
                     />
                     <button
                       className="btn-check"
-                      onClick={duplicatedId}
+                      // onClick={duplicatedId}
                       disabled={!isIdValids}
                     >
                       중복확인
@@ -178,40 +185,23 @@ const Signup = () => {
                 </div>
                 <div className="input-inner">
                   <label htmlFor="">닉네임</label>
-                  <div className="input-inner__item">
-                    <input
-                      type="text"
-                      placeholder="닉네임을 입력해주세요"
-                      {...register("nickname", {
-                        required: "닉네임을 입력하세요",
-                        minLength: {
-                          value: 2,
-                          message: "닉네임은 최소 2글자 이상 입력하세요",
-                        },
-                        maxLength: {
-                          value: 14,
-                          message: "닉네임은 최대 14글자를 초과할 수 없습니다",
-                        },
-                        pattern: {
-                          value: /^[A-Za-z가-힣]+$/,
-                          message: "영어와 한글만 입력 가능합니다",
-                        },
-                      })}
-                      onFocus={() => setNicknameError("")}
-                    />
-                    <button
-                      className="btn-check"
-                      onClick={duplicatedNickName}
-                      disabled={!isNicknameValids}
-                    >
-                      중복확인
-                    </button>
-                  </div>
+                  <input
+                    type="text"
+                    placeholder="닉네임을 입력해주세요"
+                    {...register("nickname", {
+                      required: "닉네임을 입력하세요",
+                      minLength: {
+                        value: 2,
+                        message: "닉네임은 최소 2글자 이상 입력하세요",
+                      },
+                      pattern: {
+                        value: /^[A-Za-z가-힣]+$/,
+                        message: "영어와 한글만 입력 가능합니다",
+                      },
+                    })}
+                  />
                   {errors.nickname && (
                     <p className="alert-message">{errors.nickname.message}</p>
-                  )}
-                  {nicknameError && (
-                    <p className="alert-message">{nicknameError}</p>
                   )}
                 </div>
                 <div className="input-inner">
@@ -219,7 +209,7 @@ const Signup = () => {
                   <input
                     type="number"
                     placeholder="숫자만 입력하세요"
-                    {...register("phoneNumber", {
+                    {...register("phone", {
                       required: "휴대폰 번호를 입력하세요",
                       minLength: {
                         value: 10,
@@ -235,10 +225,8 @@ const Signup = () => {
                       },
                     })}
                   />
-                  {errors.phoneNumber && (
-                    <p className="alert-message">
-                      {errors.phoneNumber.message}
-                    </p>
+                  {errors.phone && (
+                    <p className="alert-message">{errors.phone.message}</p>
                   )}
                 </div>
                 <div className="input-inner">
@@ -273,15 +261,14 @@ const Signup = () => {
                   <div className="input-inner__item">
                     <input
                       type={isCheckPwVisible ? "text" : "password"}
-                      placeholder="영문자, 숫자 포함 최소 8~20자로 입력하세요"
+                      placeholder="동일한 비밀번호를 입력하세요"
                       className="input-visible"
                       {...register("checkPassword", {
                         required: "비밀번호가 다릅니다",
-                        pattern: {
-                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
-                          message: "동일한 비밀번호를 입력하세요",
-                        },
+                        validate: value =>
+                          value === password || "비밀번호가 다릅니다",
                       })}
+                      onChange={e => handleCheckPasswordChange(e)}
                     />
                     <button
                       type="button"
@@ -305,7 +292,7 @@ const Signup = () => {
                   type="submit"
                   buttonSize="large"
                   text="회원가입"
-                  isPassed={isAllCheck && isNicknameValid}
+                  isPassed={isAllCheck && isIdValid}
                 />
               </div>
             </form>
@@ -324,6 +311,6 @@ interface SignupData {
   email: string;
   nickname: string;
   checkPassword: string;
-  phoneNumber: string;
+  phone: string;
   password: string;
 }
