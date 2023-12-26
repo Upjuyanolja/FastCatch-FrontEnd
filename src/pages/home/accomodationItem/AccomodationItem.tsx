@@ -16,10 +16,15 @@ const AccommodationItem = ({ data }: accommodationProps) => {
 
   return (
     <div className="accomdationItem-container" onClick={navigateHandler}>
-      <div className="accomdationItem-container__image-box">
-        <img
-          src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.image}`}
-        />
+      <div
+        className="accomdationItem-container__image-box"
+        style={{
+          backgroundImage: `url(https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.image})`,
+        }}
+      >
+        <div className="accomdationItem-container__coupon-box">
+          10,000원 즉시할인
+        </div>
       </div>
       <div className="accomdationItem-container__desc-box">
         <div className="item-info">
