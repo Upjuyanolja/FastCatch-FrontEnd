@@ -1,0 +1,18 @@
+@import "../../../styles/common.scss";
+
+.discount-item {
+  width: calc(50% - rem(4));
+  padding: rem(16) 0;
+  text-align: center;
+  border: 2px solid coral(100);
+  border-radius: rem(8);
+  cursor: pointer;
+  transition: all 0.1s;
+  &.full {
+    width: 100%;
+  }
+  &__selected {
+    border: 2px solid coral(500);
+    background-color: coral(100);
+  }
+}
