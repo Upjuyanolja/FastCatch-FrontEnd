@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ReactDOM from "react-dom";
 import "./categoryFilter.scss";
 import _debounce from "lodash/debounce";
 
@@ -8,6 +9,7 @@ import PENSION from "../../../../assets/categoryIcons/pension-fullvilla.jpg";
 import GUESTHOUSE from "../../../../assets/categoryIcons/guest-house.jpg";
 import HOTELRESORT from "../../../../assets/categoryIcons/hotel.jpg";
 import MOTEL from "../../../../assets/categoryIcons/motel.jpg";
+import { IoOptionsOutline } from "react-icons/io5";
 
 import { useSetRecoilState } from "recoil";
 
@@ -16,6 +18,7 @@ import { filterState, filterStateTypes } from "@/states/filterState";
 import { AccommodationType } from "@/types/accommodations";
 import { responseState } from "@/states/responseState";
 import { detailState } from "@/states/detailState";
+import DetailCategoryModal from "@/pages/home/detailFilter/DetailCategoryModal";
 
 interface categoryTypes {
   name: string;
@@ -48,7 +51,15 @@ const CategoryFilter = () => {
     { name: "게스트하우스", img: MOTEL, engName: "GUESTHOUSE", select: false },
   ];
 
+  // 디테일 필터 오픈 여부 state
+  const [openDetail, setOpenDetail] = useState(false);
+
+  // 카테고리 선택 상황 state
   const [categories, setCategories] = useState(categoriesData);
+
+  const toggleDetailHandler = () => {
+    setOpenDetail(prev => !prev);
+  };
 
   const changeCategoryHandler = (categoryName: string) => {
     // 카테고리 데이터가 바뀔때마다 서버호출을 다시합니다....
@@ -65,7 +76,6 @@ const CategoryFilter = () => {
       pageIndex: 0,
       responseArray: [],
     });
-    setDetailStates([]);
 
     setFilterStates((prev: filterStateTypes) => ({
       ...prev,
@@ -106,6 +116,24 @@ const CategoryFilter = () => {
             </button>
           )
         )}
+        <div className="filter__adjust-height">
+          <button
+            className="filter__button-detail"
+            onClick={toggleDetailHandler}
+          >
+            <IoOptionsOutline className="detail__icon" />
+            <span className="text-body3">필터</span>
+          </button>
+        </div>
+        {openDetail
+          ? ReactDOM.createPortal(
+              <DetailCategoryModal
+                onClick={toggleDetailHandler}
+                setOpenDetail={setOpenDetail}
+              />,
+              document.getElementById("root") as Element
+            )
+          : ""}
       </div>
     </div>
   );

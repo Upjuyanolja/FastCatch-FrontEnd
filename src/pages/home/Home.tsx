@@ -3,7 +3,7 @@ import AccomodationItem from "./accomodationItem/AccomodationItem";
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import "./home.scss";
 
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { filterState } from "@/states/filterState";
 import { format } from "date-fns";
 import { fetchAccommodationsData } from "@/hooks/fetchAccommodations";
@@ -14,7 +14,7 @@ import { detailState } from "@/states/detailState";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
 
 const Home = () => {
-  const detailFiltered = useRecoilValue(detailState);
+  const [detailFiltered, setDetailFiltered] = useRecoilState(detailState);
   const [filterStates] = useRecoilState(filterState);
   const [responseStates, setResponseStates] = useRecoilState(responseState);
 
@@ -80,11 +80,6 @@ const Home = () => {
       </div>
     );
   }
-  console.log(responseStates);
-  console.log("response");
-
-  console.log(detailFiltered);
-  console.log("detail");
 
   return (
     <div className="home-wrapper">
@@ -100,6 +95,23 @@ const Home = () => {
           @2023 빨리 잡아
         </div>
       </div>
+      {detailFiltered.length !== 0 && (
+        <button
+          className="home__filter-reset"
+          onClick={() => {
+            const searchInput = document.querySelector(
+              ".search-filter__input"
+            ) as HTMLInputElement;
+            if (searchInput) {
+              searchInput.value = "";
+              console.log(searchInput);
+            }
+            setDetailFiltered([]);
+          }}
+        >
+          세부필터 해제
+        </button>
+      )}
     </div>
   );
 };

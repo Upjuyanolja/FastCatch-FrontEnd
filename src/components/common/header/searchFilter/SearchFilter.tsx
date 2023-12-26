@@ -2,21 +2,20 @@ import { useEffect, useRef } from "react";
 import { IoIosSearch } from "react-icons/io";
 import "./searchFilter.scss";
 import { searchAccommodationByName } from "@/hooks/fetchAccommodations";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { detailState } from "@/states/detailState";
 import { Accommodation } from "@/states/detailState";
 import { useNavigate } from "react-router-dom";
 
 const SearchFilter = () => {
   const navigate = useNavigate();
-  const [detailStates, setDetailStates] = useRecoilState(detailState);
+  const setDetailStates = useSetRecoilState(detailState);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (detailStates.length === 0) {
-      if (inputRef.current) inputRef.current.value = "";
-    }
-  }, [detailStates]);
+    console.log(inputRef.current, "cur!");
+  }, []);
+
   const searchSubmitHandler: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
     const name = inputRef.current?.value;
