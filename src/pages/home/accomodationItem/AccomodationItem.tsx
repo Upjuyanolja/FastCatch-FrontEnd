@@ -1,5 +1,4 @@
 import "./accomodationItem.scss";
-import numberFormat from "@/utils/numberFormat";
 import { useNavigate } from "react-router-dom";
 import { accommodationCategoryData } from "@/constant/categories";
 import { Accommodation } from "../../../types/accommodations";
