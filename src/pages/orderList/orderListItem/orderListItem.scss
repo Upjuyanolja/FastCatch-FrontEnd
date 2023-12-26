@@ -6,17 +6,15 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-bottom: rem(8);
+    gap: rem(8);
   }
   &__left {
     display: flex;
     align-items: center;
-    gap: rem(16);
   }
   &__right {
     display: flex;
-    gap: rem(8);
     align-items: center;
   }
   &__button {
