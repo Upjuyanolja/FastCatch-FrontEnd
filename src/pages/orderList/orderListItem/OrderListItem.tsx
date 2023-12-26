@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Order } from "@/types/order";
-import numberFormat from "@/utils/numberFormat";
 import OrderRoomItem from "../orderRoomItem/OrderRoomItem";
-
 import "swiper/css";
 import "./orderListItem.scss";
 import { deleteOrderApi } from "@/api/deleteOrderApi";
@@ -13,10 +11,7 @@ import { getOrderApi } from "@/api/getOrderApi";
 
 const OrderListItem = memo(
   ({ roomInfo, reservedList, setReservedList }: OrderListItemProps) => {
-    const { orderDate, orderItems, totalPrice, orderStatus, orderId } =
-      roomInfo;
-
-    const formattedTotalPrice = numberFormat(totalPrice);
+    const { orderDate, orderItems, orderStatus, orderId } = roomInfo;
 
     const { refetch } = useQuery("orderListData", getOrderApi);
 
@@ -55,7 +50,6 @@ const OrderListItem = memo(
             {orderStatus === "used" ? (
               <Badge text={"사용 완료"} badgeStatus={orderStatus} />
             ) : null}
-            <h5 className="text-subtitle5">총 {formattedTotalPrice}원</h5>
           </div>
         </div>
         <div className="order-list-item__body">
