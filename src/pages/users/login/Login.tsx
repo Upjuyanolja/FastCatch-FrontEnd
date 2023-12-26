@@ -42,8 +42,9 @@ const Login = () => {
     const requestBody = { email, password };
     try {
       const res = await instance.post("/api/members/signin", requestBody);
-      const { accessToken, refreshToken, memberResponse }: memberResI = res.data.data;      
-      setToken( accessToken, refreshToken, memberResponse );
+      const { accessToken, refreshToken, memberResponse }: memberResI =
+        res.data.data;
+      setToken(accessToken, refreshToken, memberResponse);
       navigate("/");
     } catch (error) {
       showToast({
@@ -56,7 +57,7 @@ const Login = () => {
 
   return (
     <>
-    <div className="common-bg"></div>
+      <div className="common-bg"></div>
       <div className="user-wrap">
         <div className="bg-wrap">
           <div className="login-wrap">
@@ -76,7 +77,7 @@ const Login = () => {
                   <label htmlFor="">이메일</label>
                   <input
                     type="email"
-                    placeholder="이메일을 입력하세요"
+                    placeholder="이메일를 입력해주세요"
                     {...register("email", {
                       required: "이메일을 입력하세요",
                       pattern: {
@@ -94,7 +95,7 @@ const Login = () => {
                   <div className="input-inner__item">
                     <div className="button-inner">
                       <input
-                        placeholder="비밀번호를 입력하세요"
+                        placeholder="비밀번호를 입력해주세요"
                         type={isPwVisible ? "text" : "password"}
                         {...register("password", {
                           required: "비밀번호를 입력하세요",
