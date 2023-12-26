@@ -20,10 +20,10 @@ jobs:
         env:
           API_TOKEN_GITHUB: ${{ secrets.AUTH_TOKEN }}
         with:
-          source-directory: 'output'
-          destination-github-username: gahyuun
-          destination-repository-name: FastCatch-FrontEnd
-          user-email: ${{ secrets.OFFICIAL_ACCOUNT_EMAIL }} 
+          source-directory: "output"
+          destination-github-username: "gahyuun"
+          destination-repository-name: "FastCatch-FrontEnd"
+          user-email: ${{ secrets.OFFICIAL_ACCOUNT_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
       - name: Test get variable exported by push-to-another-repository
