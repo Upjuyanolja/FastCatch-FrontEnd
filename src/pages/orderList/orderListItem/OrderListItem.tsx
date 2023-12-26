@@ -60,7 +60,7 @@ const OrderListItem = memo(
           >
             {orderItems.map((roomInfo, index) => (
               <SwiperSlide key={index}>
-                <OrderRoomItem pageType={"orderList"} roomInfo={roomInfo} />
+                <OrderRoomItem roomInfo={roomInfo} />
               </SwiperSlide>
             ))}
           </Swiper>

@@ -5,7 +5,7 @@ import numberFormat from "@/utils/numberFormat";
 import "./orderRoomItem.scss";
 import { calculateNightStay } from "@/utils/calculateNightStay";
 
-const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
+const OrderRoomItem = ({ roomInfo }: RoomPropsType) => {
   const {
     roomName,
     startDate,
@@ -54,9 +54,6 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
         </div>
         <div className="item-content__right-box">
           <span className="price text-subtitle5">{formattedOrderPrice}원</span>
-          {pageType === "basket" && (
-            <span className="delete-button text-body2">삭제</span>
-          )}
         </div>
       </div>
     </div>
@@ -66,6 +63,5 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
 export default OrderRoomItem;
 
 interface RoomPropsType {
-  pageType?: "basket" | "orderList";
   roomInfo: RoomInfo;
 }
