@@ -15,6 +15,7 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
     checkInTime,
     checkOutTime,
     orderPrice,
+    accommodationName,
   } = roomInfo;
 
   const sliceCheckInTime = checkInTime.slice(0, -3);
@@ -25,7 +26,9 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
     <div className="order-room__item">
       <div className="item-content">
         <div className="item-content__left-box">
-          <p className="text-subtitle4">{roomName}</p>
+          <p className="text-subtitle4">
+            {accommodationName} ({roomName})
+          </p>
           <div>
             <p className="text-body1">
               {startDate} {getDayOfWeek(startDate)} - {endDate}{" "}
