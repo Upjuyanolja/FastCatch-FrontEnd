@@ -26,10 +26,18 @@ const Signup = () => {
     }
   };
 
+  const [isCheckPwVisible, setIsCheckPwVisible] = useState(false);
+  const toggleCheckPw = (field: string) => {
+    if (field === "checkPassword") {
+      setIsCheckPwVisible(prev => !prev);
+    }
+  };
+
   // 변수, state
   const [isAllCheck, setIsAllCheck] = useState(false);
   const [nicknameError, setNicknameError] = useState<string | null>(null);
   const [isNicknameValid, setIsNicknameValid] = useState<boolean | null>(null);
+  const [idError, setIdError] = useState<string | null>(null);
   const {
     register,
     formState: { errors },
@@ -40,8 +48,8 @@ const Signup = () => {
   const email = watch("email") ?? "";
   const nickname = watch("nickname") ?? "";
   const password = watch("password") ?? "";
+  const checkPassword = watch("checkPassword" ?? "");
   const name = watch("name") ?? "";
-  const birthday = watch("birthday") ?? "";
   const phoneNumber = watch("phoneNumber") ?? "";
   const { showToast, ToastContainer } = ToastLayout();
 
@@ -62,6 +70,13 @@ const Signup = () => {
     }
   };
 
+  const duplicatedId = async () => {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // 회원가입 폼 제출
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,7 +86,6 @@ const Signup = () => {
         password,
         nickname,
         name,
-        birthday,
         phoneNumber,
       };
       const signUp = async () => {
@@ -93,9 +107,13 @@ const Signup = () => {
     nickname.length >= 2 &&
     nickname.length <= 14;
 
+  const isIdValids =
+    /^[A-Za-z가-힣]+$/.test(email) &&
+    nickname.length >= 2 &&
+    nickname.length <= 14;
   return (
     <>
-    <div className="common-bg"></div>
+      <div className="common-bg"></div>
       <div className="user-wrap">
         <div className="bg-wrap">
           <div className="login-wrap">
@@ -117,7 +135,7 @@ const Signup = () => {
                   <label htmlFor="">이름</label>
                   <input
                     type="text"
-                    placeholder="이름을 입력하세요"
+                    placeholder="이름을 입력해주세요"
                     {...register("name", {
                       required: "이름을 입력하세요",
                       pattern: {
@@ -131,28 +149,39 @@ const Signup = () => {
                   )}
                 </div>
                 <div className="input-inner">
-                  <label htmlFor="">이메일</label>
-                  <input
-                    type="email"
-                    placeholder="이메일을 입력하세요"
-                    {...register("email", {
-                      required: "이메일을 입력하세요",
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "유효한 이메일 주소를 입력하세요",
-                      },
-                    })}
-                  />
+                  <label htmlFor="">아이디</label>
+                  <div className="input-inner__item">
+                    <input
+                      type="email"
+                      placeholder="아이디를 입력해주세요"
+                      {...register("email", {
+                        required: "이메일을 입력하세요",
+                        pattern: {
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/,
+                          message: "유효한 이메일 주소를 입력하세요",
+                        },
+                      })}
+                      onFocus={() => setIdError("")}
+                    />
+                    <button
+                      className="btn-check"
+                      onClick={duplicatedId}
+                      disabled={!isIdValids}
+                    >
+                      중복확인
+                    </button>
+                  </div>
                   {errors.email && (
                     <p className="alert-message">{errors.email.message}</p>
                   )}
+                  {idError && <p className="alert-message">{idError}</p>}
                 </div>
                 <div className="input-inner">
                   <label htmlFor="">닉네임</label>
                   <div className="input-inner__item">
                     <input
                       type="text"
-                      placeholder="닉네임을 입력하세요"
+                      placeholder="닉네임을 입력해주세요"
                       {...register("nickname", {
                         required: "닉네임을 입력하세요",
                         minLength: {
@@ -183,24 +212,6 @@ const Signup = () => {
                   )}
                   {nicknameError && (
                     <p className="alert-message">{nicknameError}</p>
-                  )}
-                </div>
-                <div className="input-inner">
-                  <label htmlFor="">생년월일</label>
-                  <input
-                    type="text"
-                    placeholder="생년월일을 입력하세요 (yyyy-mm-dd)"
-                    {...register("birthday", {
-                      required: "생년월일을 입력하세요",
-                      pattern: {
-                        value: /^(19\d\d|20\d\d)-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/,
-                        message:
-                          "올바른 형식의 생년월일을 입력하세요 (yyyy-mm-dd)",
-                      },
-                    })}
-                  />
-                  {errors.birthday && (
-                    <p className="alert-message">{errors.birthday.message}</p>
                   )}
                 </div>
                 <div className="input-inner">
@@ -257,6 +268,35 @@ const Signup = () => {
                     <p className="alert-message">{errors.password.message}</p>
                   )}
                 </div>
+                <div className="input-inner">
+                  <label htmlFor="">비밀번호 확인</label>
+                  <div className="input-inner__item">
+                    <input
+                      type={isCheckPwVisible ? "text" : "password"}
+                      placeholder="영문자, 숫자 포함 최소 8~20자로 입력하세요"
+                      className="input-visible"
+                      {...register("checkPassword", {
+                        required: "비밀번호가 다릅니다",
+                        pattern: {
+                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
+                          message: "동일한 비밀번호를 입력하세요",
+                        },
+                      })}
+                    />
+                    <button
+                      type="button"
+                      className="btn-visible"
+                      onClick={() => toggleCheckPw("checkPassword")}
+                    >
+                      {isCheckPwVisible ? <FaRegEye /> : <FaRegEyeSlash />}
+                    </button>
+                  </div>
+                  {errors.checkPassword && (
+                    <p className="alert-message">
+                      {errors.checkPassword.message}
+                    </p>
+                  )}
+                </div>
                 <TermsAgreement
                   isAllCheck={isAllCheck}
                   setIsAllCheck={setIsAllCheck}
@@ -283,7 +323,7 @@ interface SignupData {
   name: string;
   email: string;
   nickname: string;
-  birthday: string;
+  checkPassword: string;
   phoneNumber: string;
   password: string;
 }
