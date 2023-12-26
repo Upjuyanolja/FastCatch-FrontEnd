@@ -42,8 +42,9 @@ const Login = () => {
     const requestBody = { email, password };
     try {
       const res = await instance.post("/api/members/signin", requestBody);
-      const { accessToken, refreshToken, memberResponse }: memberResI = res.data.data;      
-      setToken( accessToken, refreshToken, memberResponse );
+      const { accessToken, refreshToken, memberResponse }: memberResI =
+        res.data.data;
+      setToken(accessToken, refreshToken, memberResponse);
       navigate("/");
     } catch (error) {
       showToast({
@@ -56,7 +57,7 @@ const Login = () => {
 
   return (
     <>
-    <div className="common-bg"></div>
+      <div className="common-bg"></div>
       <div className="user-wrap">
         <div className="bg-wrap">
           <div className="login-wrap">
