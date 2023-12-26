@@ -1,13 +1,13 @@
 import { memo } from "react";
-import "./paymentMethodItem.scss";
+import "./DiscountItem.scss";
 
-const PaymentMethodItem = memo(
+const DiscountItem = memo(
   ({
     className,
     methodName,
     selectedMethod,
     setSelectedMethod,
-  }: PaymentMethodItemProps) => {
+  }: DiscountItemProps) => {
     const handleSelected = () => {
       setSelectedMethod(methodName);
     };
@@ -27,9 +27,9 @@ const PaymentMethodItem = memo(
   }
 );
 
-export default PaymentMethodItem;
+export default DiscountItem;
 
-interface PaymentMethodItemProps {
+interface DiscountItemProps {
   className: string;
   methodName: string;
   selectedMethod: string;

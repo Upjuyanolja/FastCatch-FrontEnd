@@ -1,9 +1,11 @@
 import { SetStateAction, memo } from "react";
 
-import PaymentMethodItem from "@/pages/order/paymentMethodItem/PaymentMethodItem";
+import DiscountItem from "@/pages/order/paymentMethodItem/PaymentMethodItem";
 import { initialPaymentMethod } from "@/constant/initialPaymentMethod";
 
 import "./paymentMethod.scss";
+
+var myList = ["1번", "2번", "3번"]; //예시; 스타일링 확인 후 삭제 예정
 
 const Discount = memo(
   ({ selectedCoupon, setSelectedCoupon }: DiscountProps) => {
@@ -11,7 +13,7 @@ const Discount = memo(
       <div className="payment-method">
         <h4 className="text-subtitle4">할인</h4>
         {initialPaymentMethod.map((option, index) => (
-          <PaymentMethodItem
+          <DiscountItem
             className={""}
             methodName={option}
             key={index}
