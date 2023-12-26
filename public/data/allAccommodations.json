@@ -14,9 +14,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       },
       {
         "id": 2,
@@ -24,10 +24,10 @@
         "address": "서울특별시 중구 소공로 106",
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
-        "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "discountPrice": 0,
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": ""
       },
       {
         "id": 3,
@@ -36,9 +36,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       },
       {
         "id": 4,
@@ -46,10 +46,10 @@
         "address": "서울특별시 중구 소공로 106",
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
-        "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "discountPrice": 0,
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": ""
       },
       {
         "id": 5,
@@ -58,9 +58,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       },
       {
         "id": 6,
@@ -69,9 +69,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       },
       {
         "id": 7,
@@ -79,10 +79,10 @@
         "address": "서울특별시 중구 소공로 106",
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
-        "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "discountPrice": 0,
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": ""
       },
       {
         "id": 8,
@@ -91,9 +91,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       },
       {
         "id": 9,
@@ -101,10 +101,10 @@
         "address": "서울특별시 중구 소공로 106",
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
-        "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "discountPrice": 0,
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": ""
       },
       {
         "id": 10,
@@ -113,9 +113,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       },
       {
         "id": 11,
@@ -124,9 +124,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       },
       {
         "id": 12,
@@ -135,9 +135,9 @@
         "category": "HOTELRESORT",
         "lowestPrice": 95000,
         "discountPrice": 80000,
-        "imageUrl": "https://avatars.githubusercontent.com/u/81469686?v=4",
+        "imageUrl": "https://josunhotel.com/util/file/download.do?fileSn=1763080&sysCode=TWC",
         "soldOut": false,
-        "coupon": "10000원 할인"
+        "coupon": "10,000원 즉시 할인"
       }
     ]
   }

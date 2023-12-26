@@ -36,7 +36,9 @@
 
   &__desc-box {
     display: flex;
+    height: rem(100);
     flex-direction: column;
+    justify-content: space-between;
 
     .item-info {
       display: flex;
@@ -104,4 +106,9 @@
   &:hover {
     transform: translateY(rem(-4));
   }
+}
+.price-info {
+  color: gray(700);
+  font-size: rem(18);
+  font-weight: 400;
 }
