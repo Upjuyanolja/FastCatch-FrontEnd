@@ -45,10 +45,10 @@ const OrderListItem = memo(
           </div>
           <div className="order-list-item__right">
             {orderStatus === "canceled" ? (
-              <Badge text={"예약 취소"} badgeStatus={orderStatus} />
+              <Badge text={"예약 취소"} badgeStatus="light" />
             ) : null}
             {orderStatus === "used" ? (
-              <Badge text={"사용 완료"} badgeStatus={orderStatus} />
+              <Badge text={"사용 완료"} badgeStatus="dark" />
             ) : null}
           </div>
         </div>
