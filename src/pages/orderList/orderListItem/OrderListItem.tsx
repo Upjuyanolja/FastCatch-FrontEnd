@@ -47,7 +47,6 @@ const OrderListItem = memo(
         <div className="order-list-item__header">
           <div className="order-list-item__left">
             <h4 className="text-subtitle5">{orderDate}</h4>
-            <span className="text-body2">총 {orderItems.length}건</span>
           </div>
           <div className="order-list-item__right">
             {orderStatus === "canceled" ? (
