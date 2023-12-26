@@ -41,9 +41,15 @@
 
     &__right-box {
       display: flex;
-      gap: rem(24);
+      flex-direction: column;
+      align-items: flex-end;
 
       .price {
+        color: gray(700);
+        text-decoration: line-through;
+      }
+
+      .applyCoupon-price {
         color: black;
       }
     }
