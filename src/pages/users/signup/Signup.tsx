@@ -116,7 +116,7 @@ const Signup = () => {
   };
 
   // 중복확인 조건문
-  const isIdValids = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
+  const isIdValids = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
 
   return (
     <>
@@ -164,7 +164,7 @@ const Signup = () => {
                       {...register("email", {
                         required: "이메일을 입력하세요",
                         pattern: {
-                          value: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+                          value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                           message: "유효한 이메일 주소를 입력하세요",
                         },
                       })}
