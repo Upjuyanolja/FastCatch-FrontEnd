@@ -13,19 +13,30 @@
   &__image-box {
     width: 100%;
     height: rem(280);
+    background-size: cover;
+    border-radius: rem(16);
+    display: flex;
+    align-items: flex-end;
+  }
+  &__coupon-box {
+    width: 100%;
+    height: rem(38);
+    background-color: coral(500);
+    border-bottom-left-radius: rem(16);
+    border-bottom-right-radius: rem(16);
 
-    img {
-      border-radius: rem(16);
-      width: inherit;
-      height: inherit;
-      object-fit: cover;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    font-size: rem(20);
+    font-weight: 700;
   }
 
   &__desc-box {
     display: flex;
     flex-direction: column;
-    gap: rem(8);
 
     .item-info {
       display: flex;
@@ -52,9 +63,35 @@
 
     .item-price {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
+      justify-content: end;
+
       gap: rem(8);
 
+      .coupon-box {
+        border: 1px solid coral(500);
+        padding: rem(2) rem(8);
+        border-radius: rem(4);
+        font-size: rem(14);
+        box-sizing: border-box;
+        font-weight: 400;
+        color: coral(500);
+      }
+      .price-container {
+        display: flex;
+        flex-direction: column;
+        gap: rem(4);
+      }
+      .price {
+        font-size: rem(14);
+        display: flex;
+        justify-content: end;
+        text-decoration: line-through;
+      }
+      .lowest-price {
+        font-size: rem(20);
+        font-weight: 700;
+      }
       .text-body1 {
         color: gray(700);
       }
