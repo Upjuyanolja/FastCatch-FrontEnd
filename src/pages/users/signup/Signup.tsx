@@ -35,8 +35,8 @@ const Signup = () => {
 
   // 변수, state
   const [isAllCheck, setIsAllCheck] = useState(false);
-  const [idError, setIdError] = useState<string | null>(null);
-  const [isIdValid, setIsIdValid] = useState<boolean | null>(null);
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [isEmailValid, setIsEmailValid] = useState<boolean | null>(null);
   const {
     register,
     formState: { errors },
@@ -93,7 +93,7 @@ const Signup = () => {
   // 회원가입 폼 제출
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (isAllCheck && isIdValid) {
+    if (isAllCheck && isEmailValid) {
       const requestBody = {
         email,
         password,
@@ -116,7 +116,7 @@ const Signup = () => {
   };
 
   // 중복확인 조건문
-  const isIdValids = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
+  const isEmailValids = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(email);
 
   return (
     <>
@@ -155,11 +155,11 @@ const Signup = () => {
                 )}
               </div>
               <div className="input-inner">
-                <label htmlFor="">아이디</label>
+                <label htmlFor="">이메일</label>
                 <div className="input-inner__item">
                   <input
                     type="email"
-                    placeholder="아이디를 입력해주세요"
+                    placeholder="이메일을 입력해주세요"
                     {...register("email", {
                       required: "이메일을 입력하세요",
                       pattern: {
@@ -167,12 +167,12 @@ const Signup = () => {
                         message: "유효한 이메일 주소를 입력하세요",
                       },
                     })}
-                    onFocus={() => setIdError("")}
+                    onFocus={() => setEmailError("")}
                   />
                   <button
                     className="btn-check"
                     // onClick={duplicatedId}
-                    disabled={!isIdValids}
+                    disabled={!isEmailValids}
                   >
                     중복확인
                   </button>
@@ -180,7 +180,7 @@ const Signup = () => {
                 {errors.email && (
                   <p className="alert-message">{errors.email.message}</p>
                 )}
-                {idError && <p className="alert-message">{idError}</p>}
+                {emailError && <p className="alert-message">{emailError}</p>}
               </div>
               <div className="input-inner">
                 <label htmlFor="">닉네임</label>
@@ -291,7 +291,7 @@ const Signup = () => {
                 type="submit"
                 buttonSize="large"
                 text="회원가입"
-                isPassed={isAllCheck && isIdValid}
+                isPassed={isAllCheck && isEmailValid}
               />
             </div>
           </form>
