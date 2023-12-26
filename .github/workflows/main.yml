@@ -21,8 +21,8 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.AUTH_TOKEN }}
         with:
           source-directory: "output"
-          destination-github-username: "gahyuun"
-          destination-repository-name: "FastCatch-FrontEnd"
+          destination-github-username: gahyuun
+          destination-repository-name: FastCatch-FrontEnd
           user-email: ${{ secrets.OFFICIAL_ACCOUNT_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
