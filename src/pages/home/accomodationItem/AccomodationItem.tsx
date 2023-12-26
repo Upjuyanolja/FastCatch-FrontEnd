@@ -27,10 +27,7 @@ const AccommodationItem = ({ data }: accommodationProps) => {
           <div>
             <strong className="text-subtitle5">{data.name}</strong>
             <div className="text-body2 item-info__location">
-              <p>
-                {accommodationCategoryData[data.category]} |{" "}
-                {data.address?.split(" ").slice(0, 3).join(" ") || data.region}
-              </p>
+              <p>{accommodationCategoryData[data.category]} </p>
             </div>
           </div>
           <div className="item-info__status">
@@ -38,10 +35,13 @@ const AccommodationItem = ({ data }: accommodationProps) => {
           </div>
         </div>
         <div className="item-price">
-          <span className="text-body1">최저가</span>
-          <div className="text-subtitle5">
-            <span>{numberFormat(data.lowestPrice)}</span>
-            <span className="won">원</span>
+          {/* <span className="text-body1">최저가</span> */}
+          <div className="coupon-box">쿠폰가</div>
+          <div className="price-container">
+            <div className="price"> {data.lowestPrice.toLocaleString()}원</div>
+            <div className="lowest-price">
+              {data.lowestPrice.toLocaleString()}원
+            </div>
           </div>
         </div>
       </div>
