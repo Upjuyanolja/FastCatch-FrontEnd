@@ -11,7 +11,7 @@ export const fetchAccommodationsData = async (
 ): Promise<Accommodations> => {
   try {
     const res = await instance.get(
-      `/api/accommodations?category=${CATEGORY}&region=${REGION}&startDate=${STARTDATE}&endDate=${ENDDATE}&headCount=${AMOUNT}&page=${PAGE}`
+      `/api/accommodations?category=${CATEGORY}&region=${REGION}&startDate=${STARTDATE}&endDate=${ENDDATE}&defaultCount=${AMOUNT}&page=${PAGE}`
     );
     return res.data.data;
   } catch (error) {

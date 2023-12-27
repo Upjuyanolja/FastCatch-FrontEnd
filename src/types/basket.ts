@@ -3,8 +3,8 @@ export interface RoomDescriptionType {
   checkInTime: string;
   checkOutTime: string;
   endDate: string;
-  headCount: number;
-  maxHeadCount: number;
+  defaultCount: number;
+  maxDefaultCount: number;
   price: number;
   roomId: number;
   roomName: string;

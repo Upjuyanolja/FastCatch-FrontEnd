@@ -10,8 +10,8 @@ const OrderRoomItem = ({ roomInfo }: RoomPropsType) => {
     roomName,
     startDate,
     endDate,
-    headCount,
-    maxHeadCount,
+    defaultCount,
+    maxDefaultCount,
     checkInTime,
     checkOutTime,
     orderPrice,
@@ -37,7 +37,7 @@ const OrderRoomItem = ({ roomInfo }: RoomPropsType) => {
               {"박)"}
             </p>
             <p className="text-body1">
-              인원 {headCount}인 / 최대 {maxHeadCount}인
+              인원 {defaultCount}인 / 최대 {maxDefaultCount}인
             </p>
             <div className="check-in-out">
               <div className="check-in-out__content">

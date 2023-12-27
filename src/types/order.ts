@@ -17,8 +17,8 @@ export interface OrderItem {
   checkOutTime: string;
   startDate: string;
   endDate: string;
-  headCount: number;
-  maxHeadCount: number;
+  defaultCount: number;
+  maxDefaultCount: number;
   orderPrice: number;
 }
 

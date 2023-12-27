@@ -3,8 +3,8 @@ export interface RoomInfo {
   accommodationName: string;
   checkInTime: string;
   checkOutTime: string;
-  headCount: number;
-  maxHeadCount: number;
+  defaultCount: number;
+  maxDefaultCount: number;
   orderPrice: number;
   roomId: number;
   roomName: string;
