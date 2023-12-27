@@ -8,6 +8,7 @@ interface ButtonType {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   isPassed?: boolean | boolean[] | null | undefined;
   type?: "button" | "submit";
+  disabled?: boolean;
 }
 
 const Button = ({
