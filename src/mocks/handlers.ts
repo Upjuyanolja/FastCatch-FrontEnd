@@ -24,10 +24,7 @@ const getEmailIsDuplicatedResolver = () => {
   return HttpResponse.json(emailData);
 };
 
-const postSignUpResolver = async ({ request }: any) => {
-  const newPost = await request.json();
-  console.log("newPost", newPost);
-
+const postSignUpResolver = async () => {
   return HttpResponse.json(successSignUpData, { status: 201 });
 };
 
@@ -35,10 +32,7 @@ const getAccommodationResolver = () => {
   return HttpResponse.json(allAccommodations);
 };
 
-const getLoginResolver = async ({ request }: any) => {
-  const newPost = await request.json();
-  console.log("newPost", newPost);
-
+const getLoginResolver = async () => {
   return HttpResponse.json(successLoginData, { status: 200 });
 };
 
