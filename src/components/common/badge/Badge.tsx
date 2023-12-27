@@ -2,7 +2,7 @@ import "./badge.scss";
 
 interface CommonBadgeType {
   text: string;
-  badgeStatus?: "dark" | "light";
+  badgeStatus?: "dark" | "light" | "gray";
 }
 
 function Badge({ text, badgeStatus }: CommonBadgeType) {
