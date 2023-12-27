@@ -62,8 +62,3 @@ const Discount = memo(() => {
 });
 
 export default Discount;
-
-interface DiscountProps {
-  selectedDiscount: string; //차후에 수정하기
-  setSelectedDiscount: React.Dispatch<SetStateAction<string>>;
-}

@@ -9,3 +9,68 @@
   border-top: 1px solid gray(400);
   border-bottom: 1px solid gray(400);
 }
+
+.dropdown-container {
+  position: relative;
+  border: 1px solid #f00;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background-color: #fff;
+
+  .dropdown-header {
+    padding: 10px;
+    border-bottom: 1px solid #f00;
+    cursor: pointer;
+    position: relative;
+
+    &:after {
+      content: "";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: solid black;
+      border-width: 0 2px 2px 0;
+      display: inline-block;
+      padding: 3px;
+    }
+  }
+
+  .arrow {
+    transition: transform 0.3s ease;
+
+    &.open {
+      transform: rotate(-135deg);
+    }
+
+    &:not(.open) {
+      transform: rotate(45deg);
+    }
+  }
+
+  .dropdown-list {
+    position: absolute;
+    width: 100%;
+    border: 1px solid #f00;
+    border-top: none;
+    box-sizing: border-box;
+    max-height: 200px; // Adjust as needed
+    overflow-y: auto;
+    z-index: 10;
+    background-color: #fff;
+
+    .dropdown-item {
+      padding: 10px;
+      border-bottom: 1px solid #f00;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #fee;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
