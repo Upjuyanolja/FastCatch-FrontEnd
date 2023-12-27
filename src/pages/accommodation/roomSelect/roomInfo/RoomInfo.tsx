@@ -1,4 +1,3 @@
-import instance from "@/api/instanceApi";
 import { Badge, Button, ToastLayout } from "@/components/common";
 import { filterState } from "@/states/filterState";
 import { orderState } from "@/states/orderState";
@@ -10,8 +9,8 @@ import numberFormat from "@/utils/numberFormat";
 import { format } from "date-fns";
 import _debounce from "lodash/debounce";
 import { useEffect, useState } from "react";
-import { IoCartOutline, IoPeople } from "react-icons/io5";
-import { useMutation } from "react-query";
+import { IoPeople } from "react-icons/io5";
+
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -78,39 +77,6 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
     }
   }, [window.location.search, isClicked]);
 
-  const postBasket: any = () => {
-    try {
-      if (!userData) {
-        return;
-      }
-
-      const response = instance.post(`/api/carts?memberId=${userData.id}`, {
-        roomId: roomId,
-        startDate: startDate,
-        endDate: endDate,
-        headCount: curAmount,
-        orderPrice: totalPrice,
-      });
-      return response;
-    } catch (error) {
-      console.log("에러에러에러엘에러엘", error);
-    }
-  };
-
-  const mutation = useMutation({
-    mutationFn: postBasket,
-    onSuccess: data => {
-      console.log("데이터 전송 성공", data);
-      showToast({
-        theme: "success",
-        message: "장바구니에 객실이 담겼습니다",
-      });
-    },
-    onError: error => {
-      console.log("전송 실패했습니다!!", error);
-    },
-  });
-
   const { showToast, ToastContainer } = ToastLayout();
 
   const template: Template = {
@@ -122,20 +88,6 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
     has_pc: "PC",
     canCooking: "취사 가능",
   };
-
-  const onClickBasket = _debounce(() => {
-    if (!userData) {
-      showToast({
-        theme: "error",
-        message: "로그인을 해주세요",
-      });
-      setTimeout(() => {
-        navigate("/login");
-      }, 1700);
-      return;
-    }
-    mutation.mutate();
-  }, 700);
 
   const onClickOrder = async () => {
     if (!userData) {
@@ -191,7 +143,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         </div>
         <div className="room__options-container">
           {englishToKoreanFormat(roomOption, template).map((option: any) => (
-            <Badge key={option} text={option} badgeStatus="dark" />
+            <Badge key={option} text={option} badgeStatus="gray" />
           ))}
         </div>
 
@@ -200,12 +152,23 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
             <span className="text-body2">체크인 {checkInTime}</span>
             <span className="text-body2">체크아웃 {checkOutTime}</span>
           </div>
-          <div className="text-subtitle4">{numberFormat(totalPrice)} 원</div>
+
+          {/* 쿠폰이 있으면 원래가격 */}
+          <div className="room__detail-info__strikethrough">
+            <span>75000원</span>
+          </div>
+
+          <div className="room__detail-info__price text-subtitle4">
+            {/* 쿠폰이 있으면 쿠폰가 div */}
+            <div className="room__detail-info__price__discountBox">
+              <span>쿠폰가</span>
+            </div>
+            {numberFormat(totalPrice)} 원
+          </div>
         </div>
       </div>
 
       <div>
-        <div className="room__divider"></div>
         <div className="room__buttons-container">
           {soldOut || !isPossible ? (
             <Button
@@ -216,12 +179,6 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
             />
           ) : (
             <>
-              <button
-                className="room__buttons-container__basket"
-                onClick={onClickBasket}
-              >
-                <IoCartOutline size="30px" color="#93114E" />
-              </button>
               <Button
                 text="예약하기"
                 buttonSize="large"
