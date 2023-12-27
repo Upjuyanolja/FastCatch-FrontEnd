@@ -5,8 +5,12 @@ import "./home.scss";
 import { useEffect, useMemo, useRef } from "react";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
 import { useGetAllAccommodations } from "@/hooks/quries/useMain";
+import { useRecoilValue } from "recoil";
+import { categoryState, hasCouponState } from "@/states/categoryState";
 
 const Home = () => {
+  const category = useRecoilValue(categoryState);
+  const hasCoupon = useRecoilValue(hasCouponState);
   const {
     data,
     fetchNextPage,
@@ -15,7 +19,14 @@ const Home = () => {
     isLoading,
     refetch,
     remove,
-  } = useGetAllAccommodations("ALL", false);
+  } = useGetAllAccommodations(category, hasCoupon);
+
+  useEffect(() => {
+    refetch();
+    return () => {
+      remove();
+    };
+  }, [hasCoupon, category]);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -41,7 +52,6 @@ const Home = () => {
     () => data?.pages.flatMap(page => page.data.data.accommodations),
     [data]
   );
-  console.log(accommodationsItems);
   if (isLoading) {
     return (
       <div className="home__animation-container">

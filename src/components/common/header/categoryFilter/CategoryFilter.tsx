@@ -16,6 +16,7 @@ import { filterState, filterStateTypes } from "@/states/filterState";
 import { AccommodationType } from "@/types/accommodations";
 import { responseState } from "@/states/responseState";
 import { detailState } from "@/states/detailState";
+import { categoryState, hasCouponState } from "@/states/categoryState";
 
 interface categoryTypes {
   name: string;
@@ -29,6 +30,8 @@ const CategoryFilter = () => {
   const setResponseStates = useSetRecoilState(responseState);
   const setDetailStates = useSetRecoilState(detailState);
   const [isDiscounting, setIsDiscounting] = useState(false);
+  const setCategory = useSetRecoilState(categoryState);
+  const setHasCoupon = useSetRecoilState(hasCouponState);
 
   const categoriesData: //
   categoryTypes[] = [
@@ -57,6 +60,7 @@ const CategoryFilter = () => {
     const copy: categoryTypes[] = categories.slice().map(arg => {
       if (arg.name === categoryName) {
         engName = arg.engName;
+        setCategory(arg.engName);
         return { ...arg, select: true };
       }
       return { ...arg, select: false };
@@ -79,6 +83,7 @@ const CategoryFilter = () => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDiscounting(event?.currentTarget.checked);
+    setHasCoupon(prev => !prev);
   };
 
   return (
