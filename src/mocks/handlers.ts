@@ -38,6 +38,10 @@ const getReservationListResolver = () => {
   return HttpResponse.json(reservationList);
 };
 
+const getCancelReservationListResolver = () => {
+  return HttpResponse.json(reservationList);
+};
+
 export const handlers = [
   //
   // http.get("/accommodation", getHotelResolver),
@@ -52,5 +56,9 @@ export const handlers = [
   http.get(
     `${import.meta.env.VITE_API_BASE_URL}/api/reservations`,
     getReservationListResolver
+  ),
+  http.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/reservations/cancel`,
+    getCancelReservationListResolver
   ),
 ];
