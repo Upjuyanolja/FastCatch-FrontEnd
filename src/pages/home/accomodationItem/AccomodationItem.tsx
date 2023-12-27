@@ -41,7 +41,7 @@ const AccommodationItem = ({ data }: { data: Accommodation }) => {
           )}
 
           <div className="price-container">
-            {data.discountPrice !== 0 && (
+            {data.discountPrice !== data.lowestPrice && (
               <div className="price">
                 {data.discountPrice.toLocaleString()}원
               </div>
