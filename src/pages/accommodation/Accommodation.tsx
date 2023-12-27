@@ -12,8 +12,12 @@ import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
 
 import { AiOutlineRight } from "react-icons/ai";
+import CouponModal from "@/components/common/modal/Coupon/CouponModal";
+import { useState } from "react";
 
 const Accommodation = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
   const filterData = useRecoilValue(filterState);
   const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
   const endDate = filterData.endDate
@@ -50,9 +54,13 @@ const Accommodation = () => {
     );
   }
 
+  const handleClickCouponBox = () => {
+    setIsVisible(true);
+  };
   return (
     <>
       <div className="accommodation-container">
+        <CouponModal isVisible={isVisible} setIsVisible={setIsVisible} />
         <img
           style={{ height: "550px", width: "100%", objectFit: "cover" }}
           src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.image}`}
@@ -67,7 +75,10 @@ const Accommodation = () => {
           accommodationCategory={data.category}
         />
         <div className="accommodation__coupon-wrapper">
-          <button className="accommodation__coupon-wrapper__coupon-modal-btn">
+          <button
+            className="accommodation__coupon-wrapper__coupon-modal-btn"
+            onClick={handleClickCouponBox}
+          >
             <div>10,000원 or 10% 즉시할인</div>
             <div className="accommodation__coupon-wrapper__coupon-modal-btn__right-menu">
               <div>더보기</div>
