@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/router.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RecoilRoot } from "recoil";
-import { worker } from "./mocks/browsers.ts";
+import { worker } from "../src/mocks/browsers.ts";
 worker.start();
 const queryClient = new QueryClient();
 

@@ -25,6 +25,10 @@ const postSignUpResolver = async ({ request }: any) => {
   console.log("newPost", newPost);
 
   return HttpResponse.json(successSignUpData, { status: 201 });
+import allAccommodations from "../../public/data/allAccommodations.json";
+
+const getAccommodationResolver = () => {
+  return HttpResponse.json(allAccommodations);
 };
 
 export const handlers = [
@@ -34,4 +38,8 @@ export const handlers = [
   // http.get("/accomodations", getAccommodationResolver),
   http.get(`/api/members/email?email=${email}`, getEmailIsDuplicatedResolver),
   http.post(`/api/members/signup`, postSignUpResolver),
+  http.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/accommodations`,
+    getAccommodationResolver
+  ),
 ];
