@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Order } from "@/types/order";
-import numberFormat from "@/utils/numberFormat";
 import OrderRoomItem from "../orderRoomItem/OrderRoomItem";
-
 import "swiper/css";
 import "./orderListItem.scss";
 import { deleteOrderApi } from "@/api/deleteOrderApi";
@@ -13,10 +11,7 @@ import { getOrderApi } from "@/api/getOrderApi";
 
 const OrderListItem = memo(
   ({ roomInfo, reservedList, setReservedList }: OrderListItemProps) => {
-    const { orderDate, orderItems, totalPrice, orderStatus, orderId } =
-      roomInfo;
-
-    const formattedTotalPrice = numberFormat(totalPrice);
+    const { orderDate, orderItems, orderStatus, orderId } = roomInfo;
 
     const { refetch } = useQuery("orderListData", getOrderApi);
 
@@ -47,16 +42,14 @@ const OrderListItem = memo(
         <div className="order-list-item__header">
           <div className="order-list-item__left">
             <h4 className="text-subtitle5">{orderDate}</h4>
-            <span className="text-body2">총 {orderItems.length}건</span>
           </div>
           <div className="order-list-item__right">
             {orderStatus === "canceled" ? (
-              <Badge text={"예약 취소"} badgeStatus={orderStatus} />
+              <Badge text={"예약 취소"} badgeStatus="light" />
             ) : null}
             {orderStatus === "used" ? (
-              <Badge text={"사용 완료"} badgeStatus={orderStatus} />
+              <Badge text={"사용 완료"} badgeStatus="dark" />
             ) : null}
-            <h5 className="text-subtitle5">총 {formattedTotalPrice}원</h5>
           </div>
         </div>
         <div className="order-list-item__body">
@@ -67,7 +60,7 @@ const OrderListItem = memo(
           >
             {orderItems.map((roomInfo, index) => (
               <SwiperSlide key={index}>
-                <OrderRoomItem pageType={"orderList"} roomInfo={roomInfo} />
+                <OrderRoomItem roomInfo={roomInfo} />
               </SwiperSlide>
             ))}
           </Swiper>
