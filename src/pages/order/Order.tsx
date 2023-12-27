@@ -19,7 +19,7 @@ import {
   SubDescription,
   OrderItem,
 } from ".";
-import Discount from "@/pages/discount/Discount";
+import Discount from "@/pages/order/discount/Discount";
 
 import "./order.scss";
 
