@@ -2,6 +2,8 @@ import { http, HttpResponse } from "msw";
 import emailData from "../../public/data/emailData.json";
 import successSignUpData from "../../public/data/successSignUpData.json";
 import failSignUpData from "../../public/data/failSignUpData.json";
+import allAccommodations from "../../public/data/allAccommodations.json";
+
 // const getHotelResolver = () => {
 //   return HttpResponse.json(accommodationDetail);
 // };
@@ -25,7 +27,7 @@ const postSignUpResolver = async ({ request }: any) => {
   console.log("newPost", newPost);
 
   return HttpResponse.json(successSignUpData, { status: 201 });
-import allAccommodations from "../../public/data/allAccommodations.json";
+};
 
 const getAccommodationResolver = () => {
   return HttpResponse.json(allAccommodations);
