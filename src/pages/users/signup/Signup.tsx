@@ -53,6 +53,7 @@ const Signup = () => {
   const name = watch("name") ?? "";
   const phone = watch("phone") ?? "";
   const { showToast, ToastContainer } = ToastLayout();
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const duplicatedId = async () => {
     try {
@@ -101,12 +102,53 @@ const Signup = () => {
       };
       const signUp = async () => {
         try {
-          const res = await instance.post("/api/members/signup", requestBody);
-          await navigate("/login");
+          const res = await axios.post("/api/members/signup", requestBody); // 추후 서버 baseURL 생성 시 .env 파일 내 url 주소 변경 후 axios -> instance로 변경 예정 / msw 결과 확인을 위해 axios로 임시 변경
+          setIsDisabled(!isDisabled);
+          showToast({
+            theme: "success",
+            message: "회원 가입에 성공하셨습니다",
+          });
+          setTimeout(() => {
+            navigate("/login");
+          }, 1500);
           return res;
-        } catch (error) {
-          console.log(error);
+        } catch (error: any) {
           // 에러 코드 및 에러 메세지를 토대로 에러 핸들링
+          const errorCode = error.response.data.code;
+          const errorMessage = error.response.data.message;
+          console.log(errorMessage);
+          if (errorCode === 1000) {
+            showToast({
+              theme: "error",
+              message: "중복된 이메일 입니다",
+            });
+          } else {
+            if (errorMessage === "이메일 서식에 맞게 입력하세요.") {
+              showToast({
+                theme: "error",
+                message: "이메일 서식에 맞게 입력하세요",
+              });
+            } else if (errorMessage === "이름은 2자 이상으로 입력하세요.") {
+              showToast({
+                theme: "error",
+                message: "이름은 2자 이상으로 입력하세요",
+              });
+            } else if (
+              errorMessage ===
+              "비밀번호는 영문자, 숫자 포함 최소 8~20자로 입력하세요."
+            ) {
+              showToast({
+                theme: "error",
+                message:
+                  "비밀번호는 영문자, 숫자 포함 최소 8~20자로 입력하세요",
+              });
+            } else {
+              showToast({
+                theme: "error",
+                message: "전화번호 형식에 맞게 입력하세요 ex)010-1234-1234",
+              });
+            }
+          }
         }
       };
       signUp();
@@ -290,7 +332,8 @@ const Signup = () => {
                   type="submit"
                   buttonSize="large"
                   text="회원가입"
-                  isPassed={isAllCheck && isIdValid}
+                  isPassed={isAllCheck && isIdValid && !isDisabled}
+                  disabled={isDisabled}
                 />
               </div>
             </form>

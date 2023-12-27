@@ -1,8 +1,7 @@
 import { http, HttpResponse } from "msw";
-import accommodationDetail from "../../public/data/accommodationDetail.json";
-import allAccommodations from "../../public/data/allAccommodations.json";
 import emailData from "../../public/data/emailData.json";
-
+import successSignUpData from "../../public/data/successSignUpData.json";
+import failSignUpData from "../../public/data/failSignUpData.json";
 // const getHotelResolver = () => {
 //   return HttpResponse.json(accommodationDetail);
 // };
@@ -21,10 +20,18 @@ const getEmailIsDuplicatedResolver = () => {
   return HttpResponse.json(emailData);
 };
 
+const postSignUpResolver = async ({ request }: any) => {
+  const newPost = await request.json();
+  console.log("newPost", newPost);
+
+  return HttpResponse.json(successSignUpData, { status: 201 });
+};
+
 export const handlers = [
   //
   // http.get("/accommodation", getHotelResolver),
   // http.post("/accommodation", postHotelResolver),
   // http.get("/accomodations", getAccommodationResolver),
   http.get(`/api/members/email?email=${email}`, getEmailIsDuplicatedResolver),
+  http.post(`/api/members/signup`, postSignUpResolver),
 ];
