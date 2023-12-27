@@ -86,7 +86,7 @@ const Order = memo(() => {
         roomId: item.id,
         startDate: item.startDate,
         endDate: item.endDate,
-        defaultCount: item.defaultCapacity,
+        headCount: item.defaultCapacity,
         orderPrice: item.price,
       })),
     };

@@ -17,7 +17,7 @@ interface OrderItemType {
   roomId: number;
   startDate: string;
   endDate: string;
-  defaultCount: number;
+  headCount: number;
   orderPrice: number;
 }
 
