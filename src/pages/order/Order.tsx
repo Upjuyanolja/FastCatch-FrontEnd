@@ -19,6 +19,7 @@ import {
   SubDescription,
   OrderItem,
 } from ".";
+import Discount from "@/pages/discount/Discount";
 
 import "./order.scss";
 
@@ -123,6 +124,7 @@ const Order = memo(() => {
           setUserPhoneNumber={setUserPhoneNumber}
           setIsBookerValidationPass={setIsBookerValidationPass}
         />
+        <Discount />
         <PaymentMethod
           selectedMethod={selectedMethod}
           setSelectedMethod={setSelectedMethod}
