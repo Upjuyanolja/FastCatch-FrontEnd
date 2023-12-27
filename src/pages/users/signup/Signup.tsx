@@ -113,42 +113,8 @@ const Signup = () => {
           }, 1500);
           return res;
         } catch (error) {
-          // 에러 코드 및 에러 메세지를 토대로 에러 핸들링
           if (error instanceof AxiosError && error.response) {
-            const errorCode = error.response.data.code;
-            const errorMessage = error.response.data.message;
-            if (errorCode === 1000) {
-              showToast({
-                theme: "error",
-                message: "중복된 이메일 입니다",
-              });
-            } else {
-              if (errorMessage === "이메일 서식에 맞게 입력하세요.") {
-                showToast({
-                  theme: "error",
-                  message: "이메일 서식에 맞게 입력하세요",
-                });
-              } else if (errorMessage === "이름은 2자 이상으로 입력하세요.") {
-                showToast({
-                  theme: "error",
-                  message: "이름은 2자 이상으로 입력하세요",
-                });
-              } else if (
-                errorMessage ===
-                "비밀번호는 영문자, 숫자 포함 최소 8~20자로 입력하세요."
-              ) {
-                showToast({
-                  theme: "error",
-                  message:
-                    "비밀번호는 영문자, 숫자 포함 최소 8~20자로 입력하세요",
-                });
-              } else {
-                showToast({
-                  theme: "error",
-                  message: "전화번호 형식에 맞게 입력하세요 ex)010-1234-1234",
-                });
-              }
-            }
+            showToast({ theme: "error", message: "입력값이 잘못되었습니다" });
           }
         }
       };
