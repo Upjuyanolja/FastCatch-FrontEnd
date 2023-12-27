@@ -2,19 +2,15 @@ import "./badge.scss";
 
 interface CommonBadgeType {
   text: string;
-  badgeType?: "fill" | "line";
-  badgeStatus?: "used" | "canceled";
+  badgeStatus?: "dark" | "light";
 }
 
-function Badge({ text, badgeType, badgeStatus }: CommonBadgeType) {
-  return (
-    <span className={`common-badge ${badgeType} ${badgeStatus}`}>{text}</span>
-  );
+function Badge({ text, badgeStatus }: CommonBadgeType) {
+  return <span className={`common-badge ${badgeStatus}`}>{text}</span>;
 }
 
 Badge.defaultProps = {
-  badgeType: "line",
-  badgeStatus: "used",
+  badgeStatus: "dark",
 };
 
 export default Badge;
