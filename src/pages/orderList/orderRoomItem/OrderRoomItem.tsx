@@ -5,7 +5,7 @@ import numberFormat from "@/utils/numberFormat";
 import "./orderRoomItem.scss";
 import { calculateNightStay } from "@/utils/calculateNightStay";
 
-const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
+const OrderRoomItem = ({ roomInfo }: RoomPropsType) => {
   const {
     roomName,
     startDate,
@@ -15,6 +15,7 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
     checkInTime,
     checkOutTime,
     orderPrice,
+    accommodationName,
   } = roomInfo;
 
   const sliceCheckInTime = checkInTime.slice(0, -3);
@@ -25,7 +26,9 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
     <div className="order-room__item">
       <div className="item-content">
         <div className="item-content__left-box">
-          <p className="text-subtitle4">{roomName}</p>
+          <p className="text-subtitle4">
+            {accommodationName} ({roomName})
+          </p>
           <div>
             <p className="text-body1">
               {startDate} {getDayOfWeek(startDate)} - {endDate}{" "}
@@ -50,10 +53,13 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
           </div>
         </div>
         <div className="item-content__right-box">
-          <span className="price text-subtitle5">{formattedOrderPrice}원</span>
-          {pageType === "basket" && (
-            <span className="delete-button text-body2">삭제</span>
-          )}
+          <span className="price text-body2">500,000원</span>
+          <div className="applyCoupon-container">
+            <div className="coupon-box">쿠폰가</div>
+            <span className="applyCoupon-price text-subtitle5">
+              {formattedOrderPrice}원
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -63,6 +69,5 @@ const OrderRoomItem = ({ pageType, roomInfo }: RoomPropsType) => {
 export default OrderRoomItem;
 
 interface RoomPropsType {
-  pageType?: "basket" | "orderList";
   roomInfo: RoomInfo;
 }

@@ -28,6 +28,7 @@ const CategoryFilter = () => {
   const setFilterStates = useSetRecoilState(filterState);
   const setResponseStates = useSetRecoilState(responseState);
   const setDetailStates = useSetRecoilState(detailState);
+  const [isDiscounting, setIsDiscounting] = useState(false);
 
   const categoriesData: //
   categoryTypes[] = [
@@ -76,6 +77,10 @@ const CategoryFilter = () => {
     }));
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsDiscounting(event?.currentTarget.checked);
+  };
+
   return (
     <div className="category-filter__container">
       <div className="category-filter__inner">
@@ -106,6 +111,18 @@ const CategoryFilter = () => {
             </button>
           )
         )}
+        <div className="filter__adjust-height">
+          <div
+            className={`filter__button-detail ${isDiscounting && "discount"}`}
+          >
+            <input
+              type="checkbox"
+              className="discount-filter"
+              onChange={handleChange}
+            />
+            <label className="discount-filter-text">할인숙소</label>
+          </div>
+        </div>
       </div>
     </div>
   );

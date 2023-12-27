@@ -183,17 +183,15 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         <div className="accommodation__menu-title">
           <span className="text-subtitle4">{name}</span>
         </div>
-
         <div className="accommodation__main-info__detail">
           <IoPeople size="17px" />
           <span className="text-body1">
             기준 {baseHeadCount}인 / 최대 {maxHeadCount}인
           </span>
         </div>
-
         <div className="room__options-container">
           {englishToKoreanFormat(roomOption, template).map((option: any) => (
-            <Badge key={option} text={option} option="option" />
+            <Badge key={option} text={option} badgeStatus="dark" />
           ))}
         </div>
 
