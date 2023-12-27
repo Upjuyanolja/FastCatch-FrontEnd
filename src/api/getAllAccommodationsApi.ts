@@ -4,6 +4,7 @@ export type AccommodationParams = {
   category: string;
   page: number;
   hasCoupon: boolean;
+  keyword: string;
 };
 export type Accommodation = {
   id: number;
@@ -32,6 +33,7 @@ export type ResponseAccommodation = {
 export const getAllAccommodations = ({
   category = "string",
   hasCoupon = false,
+  keyword = "",
   page = 1,
 }: AccommodationParams) => {
   return instance.get<ResponseAccommodation>("/api/accommodations", {
@@ -39,6 +41,7 @@ export const getAllAccommodations = ({
       category,
       hasCoupon,
       page,
+      keyword,
     },
   });
 };

@@ -7,7 +7,8 @@ import { useInfiniteQuery } from "react-query";
 
 export const useGetAllAccommodations = (
   category: string,
-  hasCoupon: boolean
+  hasCoupon: boolean,
+  keyword: string
 ) => {
   return useInfiniteQuery<
     AxiosResponse<ResponseAccommodation>,
@@ -16,7 +17,7 @@ export const useGetAllAccommodations = (
   >(
     ["accommodations-list"],
     ({ pageParam = 1 }) =>
-      getAllAccommodations({ page: pageParam, category, hasCoupon }),
+      getAllAccommodations({ page: pageParam, category, hasCoupon, keyword }),
     {
       getNextPageParam: ({
         data: {

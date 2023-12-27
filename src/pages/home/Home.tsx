@@ -7,10 +7,12 @@ import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
 import { useGetAllAccommodations } from "@/hooks/quries/useMain";
 import { useRecoilValue } from "recoil";
 import { categoryState, hasCouponState } from "@/states/categoryState";
+import { searchState } from "@/states/searchState";
 
 const Home = () => {
   const category = useRecoilValue(categoryState);
   const hasCoupon = useRecoilValue(hasCouponState);
+  const keyword = useRecoilValue(searchState);
   const {
     data,
     fetchNextPage,
@@ -19,14 +21,14 @@ const Home = () => {
     isLoading,
     refetch,
     remove,
-  } = useGetAllAccommodations(category, hasCoupon);
+  } = useGetAllAccommodations(category, hasCoupon, keyword);
 
   useEffect(() => {
     refetch();
     return () => {
       remove();
     };
-  }, [hasCoupon, category]);
+  }, [hasCoupon, category, keyword]);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
