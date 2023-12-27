@@ -110,21 +110,33 @@ const Accommodation = () => {
         </div>
 
         <div className="accommodation__divider"></div>
+
         <AccommodationMap
-          accommodationName={data?.name}
-          latitude={data?.mapX}
-          longitude={data?.mapY}
+          accommodationName={data.name}
+          latitude={data.latitude}
+          longitude={data.longitude}
         />
         <div className="accommodation__divider"></div>
-        <AccommodationOptions options={data?.options} />
-        <div className="accommodation__divider"></div>
-        <RoomSelect
-          roomsInfo={data?.rooms}
-          accommodationId={data?.id}
-          accommodationName={data?.name}
-          refetch={refetch}
-        />
+        <div>
+          <span className="text-body1">{data?.description}</span>
+        </div>
       </div>
+
+      <div className="accommodation__divider"></div>
+      <AccommodationMap
+        accommodationName={data?.name}
+        latitude={data?.mapX}
+        longitude={data?.mapY}
+      />
+      <div className="accommodation__divider"></div>
+      <AccommodationOptions options={data?.options} />
+      <div className="accommodation__divider"></div>
+      <RoomSelect
+        roomsInfo={data?.rooms}
+        accommodationId={data?.id}
+        accommodationName={data?.name}
+        refetch={refetch}
+      />
     </>
   );
 };
