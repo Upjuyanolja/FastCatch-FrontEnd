@@ -16,4 +16,10 @@
     border: 1px solid coral(300);
     color: coral(300);
   }
+
+  &.gray {
+    border: 1px solid gray(700);
+    border-radius: 4px;
+    color: gray(700);
+  }
 }
