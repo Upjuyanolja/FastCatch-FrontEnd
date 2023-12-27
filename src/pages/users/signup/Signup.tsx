@@ -10,6 +10,7 @@ import instance from "@/api/instanceApi";
 import { Button, ToastLayout } from "@/components/common";
 
 import "../users.scss";
+import axios from "axios";
 
 const Signup = () => {
   // 회원가입/로그인 링크이동
@@ -53,26 +54,23 @@ const Signup = () => {
   const phone = watch("phone") ?? "";
   const { showToast, ToastContainer } = ToastLayout();
 
-  // const duplicatedId = async () => {
-  //   try {
-  //     const res = await instance.get(`/api/members/email?email=${email}`);
-  //     // 이 부분은 서버 개발이 진행된 후 체크해봐야 겠어요.
-  //     // .env내 url은 미니 서버라서 요청 보내도 안되네요.
-  //     if (res.status === 201) {
-  //       setIsIdValid(true);
-  //       showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
-  //     }
-  //     return res;
-  //   } catch (error) {
-  //     console.log(error);
-  //     // 에러 경우가 하나이므로 바로 에러 핸들링
-  //     setIsIdValid(false);
-  //     showToast({ theme: "error", message: "사용 불가능한 아이디입니다" });
-  //   }
-  // };
+  const duplicatedId = async () => {
+    try {
+      const res = await axios.get(`/api/members/email?email=${email}`); // 추후 서버 baseURL 생성 시 .env 파일 내 url 주소 변경 후 axios -> instance로 변경 예정 / msw 결과 확인을 위해 axios로 임시 변경
+      if (res.data.data.isExists === false) {
+        setIsIdValid(true);
+        showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
+      } else {
+        setIsIdValid(false);
+        showToast({ theme: "error", message: "사용 불가능한 아이디입니다" });
+      }
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // 비밀번호 확인 동적 체크
-
   const handleCheckPasswordChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -172,7 +170,7 @@ const Signup = () => {
                     />
                     <button
                       className="btn-check"
-                      // onClick={duplicatedId}
+                      onClick={duplicatedId}
                       disabled={!isIdValids}
                     >
                       중복확인

@@ -1,0 +1,6 @@
+{
+  "message": "성공적으로 이메일 중복 여부를 검사했습니다.",
+  "data": {
+    "isExists": false
+  }
+}
