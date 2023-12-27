@@ -3,6 +3,8 @@ import emailData from "../../public/data/emailData.json";
 import successSignUpData from "../../public/data/successSignUpData.json";
 import failSignUpData from "../../public/data/failSignUpData.json";
 import allAccommodations from "../../public/data/allAccommodations.json";
+import successLoginData from "../../public/data/successLoginData.json";
+import failLoginData from "../../public/data/failLoginData.json";
 
 // const getHotelResolver = () => {
 //   return HttpResponse.json(accommodationDetail);
@@ -33,6 +35,13 @@ const getAccommodationResolver = () => {
   return HttpResponse.json(allAccommodations);
 };
 
+const getLoginResolver = async ({ request }: any) => {
+  const newPost = await request.json();
+  console.log("newPost", newPost);
+
+  return HttpResponse.json(successLoginData, { status: 200 });
+};
+
 export const handlers = [
   //
   // http.get("/accommodation", getHotelResolver),
@@ -44,4 +53,5 @@ export const handlers = [
     `${import.meta.env.VITE_API_BASE_URL}/api/accommodations`,
     getAccommodationResolver
   ),
+  http.post(`/api/members/signin`, getLoginResolver),
 ];
