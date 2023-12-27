@@ -60,14 +60,13 @@
   accent-color: coral(500);
 }
 
-.discount-filter:checked + .discount-filter-text {
-  color: coral(500);
-}
-
 .discount-filter-text {
   font-size: rem(14);
   font-weight: 400;
   color: #000;
+  &.discount {
+    color: coral(500);
+  }
 }
 
 .categorySelect {

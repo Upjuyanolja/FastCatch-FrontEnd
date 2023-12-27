@@ -1,12 +1,9 @@
 import "./accomodationItem.scss";
 import { useNavigate } from "react-router-dom";
 import { accommodationCategoryData } from "@/constant/categories";
-import { Accommodation } from "../../../types/accommodations";
-interface accommodationProps {
-  data: Accommodation;
-}
+import { Accommodation } from "@/api/getAllAccommodationsApi";
 
-const AccommodationItem = ({ data }: accommodationProps) => {
+const AccommodationItem = ({ data }: { data: Accommodation }) => {
   const navigate = useNavigate();
 
   const navigateHandler = () => {
@@ -18,12 +15,14 @@ const AccommodationItem = ({ data }: accommodationProps) => {
       <div
         className="accomdationItem-container__image-box"
         style={{
-          backgroundImage: `url(https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.image})`,
+          backgroundImage: `url(${data.imageUrl})`,
         }}
       >
-        <div className="accomdationItem-container__coupon-box">
-          10,000원 즉시할인
-        </div>
+        {data.coupon && (
+          <div className="accomdationItem-container__coupon-box">
+            {data.coupon}
+          </div>
+        )}
       </div>
       <div className="accomdationItem-container__desc-box">
         <div className="item-info">
@@ -35,10 +34,18 @@ const AccommodationItem = ({ data }: accommodationProps) => {
           </div>
         </div>
         <div className="item-price">
-          {/* <span className="text-body1">최저가</span> */}
-          <div className="coupon-box">쿠폰가</div>
+          {data.coupon === "" ? (
+            <span className="price-info">최저가</span>
+          ) : (
+            <div className="coupon-box">쿠폰가</div>
+          )}
+
           <div className="price-container">
-            <div className="price"> {data.lowestPrice.toLocaleString()}원</div>
+            {data.discountPrice !== data.lowestPrice && (
+              <div className="price">
+                {data.discountPrice.toLocaleString()}원
+              </div>
+            )}
             <div className="lowest-price">
               {data.lowestPrice.toLocaleString()}원
             </div>
