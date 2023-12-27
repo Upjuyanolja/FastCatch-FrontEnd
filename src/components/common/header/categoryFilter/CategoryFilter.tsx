@@ -9,13 +9,15 @@ import GUESTHOUSE from "../../../../assets/categoryIcons/guest-house.jpg";
 import HOTELRESORT from "../../../../assets/categoryIcons/hotel.jpg";
 import MOTEL from "../../../../assets/categoryIcons/motel.jpg";
 
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 // 다른 컴포넌트
 import { filterState, filterStateTypes } from "@/states/filterState";
 import { AccommodationType } from "@/types/accommodations";
 import { responseState } from "@/states/responseState";
 import { detailState } from "@/states/detailState";
+import { categoryState, hasCouponState } from "@/states/categoryState";
+import { searchState } from "@/states/searchState";
 
 interface categoryTypes {
   name: string;
@@ -28,7 +30,9 @@ const CategoryFilter = () => {
   const setFilterStates = useSetRecoilState(filterState);
   const setResponseStates = useSetRecoilState(responseState);
   const setDetailStates = useSetRecoilState(detailState);
-  const [isDiscounting, setIsDiscounting] = useState(false);
+  const [category, setCategory] = useRecoilState(categoryState);
+  const [hasCoupon, setHasCoupon] = useRecoilState(hasCouponState);
+  const [keyword, setKeyword] = useRecoilState(searchState);
 
   const categoriesData: //
   categoryTypes[] = [
@@ -57,6 +61,8 @@ const CategoryFilter = () => {
     const copy: categoryTypes[] = categories.slice().map(arg => {
       if (arg.name === categoryName) {
         engName = arg.engName;
+        setCategory(arg.engName);
+        if (keyword !== "") setKeyword("");
         return { ...arg, select: true };
       }
       return { ...arg, select: false };
@@ -77,25 +83,26 @@ const CategoryFilter = () => {
     }));
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsDiscounting(event?.currentTarget.checked);
+  const handleChange = () => {
+    setHasCoupon(prev => !prev);
+    if (keyword !== "") setKeyword("");
   };
 
   return (
     <div className="category-filter__container">
       <div className="category-filter__inner">
-        {categories.map((category, idx) =>
-          category.select === true ? ( //
+        {categoriesData.map((item, idx) =>
+          item.engName === category ? ( //
             <button //
               key={`category-filter-${idx}`}
               className="filter__button categorySelect"
               onClick={_debounce(() => {
                 setDetailStates([]);
-                changeCategoryHandler(category.name);
+                changeCategoryHandler(item.name);
               }, 100)}
             >
-              <img src={category.img}></img>
-              <span>{category.name}</span>
+              <img src={item.img}></img>
+              <span>{item.name}</span>
             </button>
           ) : (
             <button //
@@ -103,24 +110,27 @@ const CategoryFilter = () => {
               className="filter__button"
               onClick={_debounce(() => {
                 setDetailStates([]);
-                changeCategoryHandler(category.name);
+                changeCategoryHandler(item.name);
               }, 100)}
             >
-              <img src={category.img}></img>
-              <span>{category.name}</span>
+              <img src={item.img}></img>
+              <span>{item.name}</span>
             </button>
           )
         )}
         <div className="filter__adjust-height">
-          <div
-            className={`filter__button-detail ${isDiscounting && "discount"}`}
-          >
+          <div className={`filter__button-detail ${hasCoupon && "discount"}`}>
             <input
               type="checkbox"
               className="discount-filter"
               onChange={handleChange}
+              checked={hasCoupon}
             />
-            <label className="discount-filter-text">할인숙소</label>
+            <label
+              className={`discount-filter-text ${hasCoupon && "discount"}`}
+            >
+              할인숙소
+            </label>
           </div>
         </div>
       </div>
