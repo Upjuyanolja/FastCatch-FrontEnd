@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
-import instance from "@/api/instanceApi";
+// import instance from "@/api/instanceApi";
 import { Button, ToastLayout } from "@/components/common";
 
 import "../users.scss";
@@ -40,9 +40,10 @@ const Signup = () => {
   const [isIdValid, setIsIdValid] = useState<boolean | null>(null);
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     setError,
+    handleSubmit,
   } = useForm<SignupData>({
     mode: "onBlur",
   });
@@ -90,15 +91,15 @@ const Signup = () => {
   };
 
   // 회원가입 폼 제출
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<SignupData> = async (data, event) => {
+    event?.preventDefault();
     if (isAllCheck && isIdValid) {
       const requestBody = {
-        email,
-        password,
-        nickname,
-        name,
-        phone,
+        email: data.email,
+        password: data.password,
+        nickname: data.nickname,
+        name: data.name,
+        phone: data.phone,
       };
       const signUp = async () => {
         try {
@@ -116,6 +117,7 @@ const Signup = () => {
           if (error instanceof AxiosError && error.response) {
             showToast({ theme: "error", message: "입력값이 잘못되었습니다" });
           }
+          throw error;
         }
       };
       signUp();
@@ -143,7 +145,7 @@ const Signup = () => {
                 </a>
               </li>
             </ul>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="login-wrap__body">
                 <div className="input-inner">
                   <label htmlFor="">이름</label>
@@ -299,8 +301,9 @@ const Signup = () => {
                   type="submit"
                   buttonSize="large"
                   text="회원가입"
-                  isPassed={isAllCheck && isIdValid && !isDisabled}
-                  disabled={isDisabled}
+                  isPassed={isAllCheck && isIdValid && !isDisabled && isValid}
+                  disabled={isDisabled || !isValid}
+                  onClick={handleSubmit(onSubmit)}
                 />
               </div>
             </form>
