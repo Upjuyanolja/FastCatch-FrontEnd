@@ -11,6 +11,8 @@ import { getAccommodationDetailApi } from "@/api/getAccommodationDetailApi";
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
 
+import { AiOutlineRight } from "react-icons/ai";
+
 const Accommodation = () => {
   const filterData = useRecoilValue(filterState);
   const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
@@ -49,47 +51,69 @@ const Accommodation = () => {
   }
 
   return (
-    <div className="accommodation-container">
-      <img
-        style={{ height: "550px", width: "100%", objectFit: "cover" }}
-        src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.image}`}
-        alt={data.name}
-        loading="lazy"
-      />
+    <>
+      <div className="accommodation-container">
+        <img
+          style={{ height: "550px", width: "100%", objectFit: "cover" }}
+          src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.image}`}
+          alt={data.name}
+          loading="lazy"
+        />
 
-      <AccommodationMainInfo
-        accommodationName={data.name}
-        accommodationLocation={data.address}
-        accommodationPhone={data.phoneNumber}
-        accommodationCategory={data.category}
-      />
-      <div className="accommodation__divider"></div>
-
-      <div className="accommodation__introduce">
-        <div className="accommodation__menu-title">
-          <span className="text-subtitle4">숙소 소개</span>
+        <AccommodationMainInfo
+          accommodationName={data.name}
+          accommodationLocation={data.address}
+          accommodationPhone={data.phoneNumber}
+          accommodationCategory={data.category}
+        />
+        <div className="accommodation__coupon-wrapper">
+          <button className="accommodation__coupon-wrapper__coupon-modal-btn">
+            <div>10,000원 or 10% 즉시할인</div>
+            <div className="accommodation__coupon-wrapper__coupon-modal-btn__right-menu">
+              <div>더보기</div>
+              <div>
+                <AiOutlineRight size={24} />
+              </div>
+            </div>
+          </button>
         </div>
+
+        <div className="accommodation__divider"></div>
+
+        <div className="accommodation__introduce">
+          <div className="accommodation__menu-title">
+            <span className="text-subtitle4">숙소 소개</span>
+          </div>
+          <div>
+            <span className="text-body1">{data.description}</span>
+          </div>
+        </div>
+
+        <div className="accommodation__divider"></div>
+
+        <AccommodationMap
+          accommodationName={data.name}
+          latitude={data.latitude}
+          longitude={data.longitude}
+        />
+        <div className="accommodation__divider"></div>
         <div>
-          <span className="text-body1">{data.description}</span>
+          <AccommodationOptions
+            accommodationOptions={data.accommodationOption}
+          />
+        </div>
+
+        <div className="accommodation__divider"></div>
+        <div>
+          <RoomSelect
+            roomsInfo={data.rooms}
+            accommodationId={data.id}
+            accommodationName={data.name}
+            refetch={refetch}
+          />
         </div>
       </div>
-
-      <div className="accommodation__divider"></div>
-      <AccommodationMap
-        accommodationName={data.name}
-        latitude={data.latitude}
-        longitude={data.longitude}
-      />
-      <div className="accommodation__divider"></div>
-      <AccommodationOptions accommodationOptions={data.accommodationOption} />
-      <div className="accommodation__divider"></div>
-      <RoomSelect
-        roomsInfo={data.rooms}
-        accommodationId={data.id}
-        accommodationName={data.name}
-        refetch={refetch}
-      />
-    </div>
+    </>
   );
 };
 
