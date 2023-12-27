@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
-import instance from "@/api/instanceApi";
+// import instance from "@/api/instanceApi";
 import { Button, ToastLayout } from "@/components/common";
 
 import "../users.scss";
+import axios, { AxiosError } from "axios";
 
 const Signup = () => {
   // 회원가입/로그인 링크이동
@@ -39,9 +40,10 @@ const Signup = () => {
   const [isIdValid, setIsIdValid] = useState<boolean | null>(null);
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     setError,
+    handleSubmit,
   } = useForm<SignupData>({
     mode: "onBlur",
   });
@@ -52,27 +54,25 @@ const Signup = () => {
   const name = watch("name") ?? "";
   const phone = watch("phone") ?? "";
   const { showToast, ToastContainer } = ToastLayout();
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  // const duplicatedId = async () => {
-  //   try {
-  //     const res = await instance.get(`/api/members/email?email=${email}`);
-  //     // 이 부분은 서버 개발이 진행된 후 체크해봐야 겠어요.
-  //     // .env내 url은 미니 서버라서 요청 보내도 안되네요.
-  //     if (res.status === 201) {
-  //       setIsIdValid(true);
-  //       showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
-  //     }
-  //     return res;
-  //   } catch (error) {
-  //     console.log(error);
-  //     // 에러 경우가 하나이므로 바로 에러 핸들링
-  //     setIsIdValid(false);
-  //     showToast({ theme: "error", message: "사용 불가능한 아이디입니다" });
-  //   }
-  // };
+  const duplicatedId = async () => {
+    try {
+      const res = await axios.get(`/api/members/email?email=${email}`); // 추후 서버 baseURL 생성 시 .env 파일 내 url 주소 변경 후 axios -> instance로 변경 예정 / msw 결과 확인을 위해 axios로 임시 변경
+      if (res.data.data.isExists === false) {
+        setIsIdValid(true);
+        showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
+      } else {
+        setIsIdValid(false);
+        showToast({ theme: "error", message: "사용 불가능한 아이디입니다" });
+      }
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // 비밀번호 확인 동적 체크
-
   const handleCheckPasswordChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -91,24 +91,33 @@ const Signup = () => {
   };
 
   // 회원가입 폼 제출
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<SignupData> = async (data, event) => {
+    event?.preventDefault();
     if (isAllCheck && isIdValid) {
       const requestBody = {
-        email,
-        password,
-        nickname,
-        name,
-        phone,
+        email: data.email,
+        password: data.password,
+        nickname: data.nickname,
+        name: data.name,
+        phone: data.phone,
       };
       const signUp = async () => {
         try {
-          const res = await instance.post("/api/members/signup", requestBody);
-          await navigate("/login");
+          const res = await axios.post("/api/members/signup", requestBody); // 추후 서버 baseURL 생성 시 .env 파일 내 url 주소 변경 후 axios -> instance로 변경 예정 / msw 결과 확인을 위해 axios로 임시 변경
+          setIsDisabled(!isDisabled);
+          showToast({
+            theme: "success",
+            message: "회원 가입에 성공하셨습니다",
+          });
+          setTimeout(() => {
+            navigate("/login");
+          }, 1500);
           return res;
         } catch (error) {
-          console.log(error);
-          // 에러 코드 및 에러 메세지를 토대로 에러 핸들링
+          if (error instanceof AxiosError && error.response) {
+            showToast({ theme: "error", message: "입력값이 잘못되었습니다" });
+          }
+          throw error;
         }
       };
       signUp();
@@ -136,7 +145,7 @@ const Signup = () => {
                 </a>
               </li>
             </ul>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="login-wrap__body">
                 <div className="input-inner">
                   <label htmlFor="">이름</label>
@@ -172,7 +181,7 @@ const Signup = () => {
                     />
                     <button
                       className="btn-check"
-                      // onClick={duplicatedId}
+                      onClick={duplicatedId}
                       disabled={!isIdValids}
                     >
                       중복확인
@@ -292,7 +301,9 @@ const Signup = () => {
                   type="submit"
                   buttonSize="large"
                   text="회원가입"
-                  isPassed={isAllCheck && isIdValid}
+                  isPassed={isAllCheck && isIdValid && !isDisabled && isValid}
+                  disabled={isDisabled || !isValid}
+                  onClick={handleSubmit(onSubmit)}
                 />
               </div>
             </form>
