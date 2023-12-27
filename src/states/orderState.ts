@@ -17,10 +17,10 @@ export interface OrderItemTypes {
   accommodationName: string;
   checkInTime: string;
   checkOutTime: string;
-  headCount: number;
-  maxHeadCount: number;
+  defaultCapacity: number;
+  maxCapacity: number;
   price: number;
-  roomId: number;
+  id: number;
   roomName: string;
   startDate: string;
   endDate: string;

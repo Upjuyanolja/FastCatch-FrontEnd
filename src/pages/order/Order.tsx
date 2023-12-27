@@ -83,10 +83,10 @@ const Order = memo(() => {
       reservationPhoneNumber: userPhoneNumber,
       totalPrice: totalOrderPrice,
       orderItems: orderData.map(item => ({
-        roomId: item.roomId,
+        roomId: item.id,
         startDate: item.startDate,
         endDate: item.endDate,
-        headCount: item.headCount,
+        headCount: item.defaultCapacity,
         orderPrice: item.price,
       })),
     };

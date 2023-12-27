@@ -29,10 +29,10 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
   const {
     name,
     price,
-    roomOption,
-    roomId,
-    baseHeadCount,
-    maxHeadCount,
+    options,
+    id,
+    defaultCapacity,
+    maxCapacity,
     checkInTime,
     checkOutTime,
     soldOut,
@@ -54,25 +54,25 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
   const [isPossible, setIsPossible] = useState(false);
 
   let totalPrice = 0;
-  if (curAmount < baseHeadCount) {
+  if (curAmount < defaultCapacity) {
     totalPrice = price * countDay;
-  } else if (curAmount > maxHeadCount) {
-    totalPrice = price * countDay + 15000 * (maxHeadCount - baseHeadCount);
+  } else if (curAmount > maxCapacity) {
+    totalPrice = price * countDay + 15000 * (maxCapacity - defaultCapacity);
   } else {
-    totalPrice = price * countDay + 15000 * (curAmount - baseHeadCount);
+    totalPrice = price * countDay + 15000 * (curAmount - defaultCapacity);
   }
 
   useEffect(() => {
-    if (curAmount < baseHeadCount) {
+    if (curAmount < defaultCapacity) {
       totalPrice = price;
       setIsPossible(false);
       return;
-    } else if (curAmount > maxHeadCount) {
-      totalPrice = price + 15000 * (maxHeadCount - baseHeadCount);
+    } else if (curAmount > maxCapacity) {
+      totalPrice = price + 15000 * (maxCapacity - defaultCapacity);
       setIsPossible(false);
       return;
     } else {
-      totalPrice = price + 15000 * (curAmount - baseHeadCount);
+      totalPrice = price + 15000 * (curAmount - defaultCapacity);
       setIsPossible(true);
       return;
     }
@@ -85,7 +85,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
       }
 
       const response = instance.post(`/api/carts?memberId=${userData.id}`, {
-        roomId: roomId,
+        id: id,
         startDate: startDate,
         endDate: endDate,
         headCount: curAmount,
@@ -121,6 +121,9 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
     hasNetflix: "넷플릭스",
     has_pc: "PC",
     canCooking: "취사 가능",
+    internet: "인터넷",
+    tv: "TV",
+    airCondition: "에어컨",
   };
 
   const onClickBasket = _debounce(() => {
@@ -154,10 +157,10 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         accommodationName: accommodationName,
         checkInTime: checkInTime,
         checkOutTime: checkOutTime,
-        headCount: filterData.amount,
-        maxHeadCount: maxHeadCount,
+        defaultCapacity: filterData.amount,
+        maxCapacity: maxCapacity,
         price: totalPrice,
-        roomId: roomId,
+        id: id,
         roomName: name,
         startDate: startDate,
         endDate: endDate,
@@ -186,11 +189,11 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         <div className="accommodation__main-info__detail">
           <IoPeople size="17px" />
           <span className="text-body1">
-            기준 {baseHeadCount}인 / 최대 {maxHeadCount}인
+            기준 {defaultCapacity}인 / 최대 {maxCapacity}인
           </span>
         </div>
         <div className="room__options-container">
-          {englishToKoreanFormat(roomOption, template).map((option: any) => (
+          {englishToKoreanFormat(options, template).map((option: any) => (
             <Badge key={option} text={option} badgeStatus="dark" />
           ))}
         </div>
