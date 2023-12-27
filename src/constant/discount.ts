@@ -1,7 +1,4 @@
 export const discount = [
-  "카드 결제",
-  "카카오페이",
-  "네이버페이",
-  "휴대폰 결제",
-  "토스페이",
+  { label: "10% 할인쿠폰 (5,000원 할인)", value: "10_percent" },
+  { label: "20,000원 할인쿠폰", value: "20k_coupon" },
 ];

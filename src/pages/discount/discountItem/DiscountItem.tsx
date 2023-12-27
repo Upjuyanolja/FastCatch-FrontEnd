@@ -1,28 +1,39 @@
-import { memo } from "react";
+/*import { memo } from "react";
 import "./DiscountItem.scss";
 
 const DiscountItem = memo(
   ({
     className,
     methodName,
-    selectedMethod,
-    setSelectedMethod,
+    selectedDiscount,
+    setSelectedDiscount,
   }: DiscountItemProps) => {
     const handleSelected = () => {
-      setSelectedMethod(methodName);
+        setSelectedDiscount(methodName);
+    };
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
+
+    const toggleDropdown = () => setIsOpen(!isOpen);
+
+    const selectOption = (option: OptionType) => {
+        setSelectedOption(option);
+        setIsOpen(false);
     };
 
     return (
-      <input
-        className={`${
-          className ? `discount-item ${className}` : "discount-item"
-        } text-body1 ${
-          selectedMethod === methodName ? "discount__selected" : ""
-        }`}
-        onClick={handleSelected}
-        type="button"
-        value={methodName}
-      />
+        
+    //   <input
+    //     className={`${
+    //       className ? `discount-item ${className}` : "discount-item"
+    //     } text-body1 ${
+    //     selectedDiscount === methodName ? "discount__selected" : ""
+    //     }`}
+    //     onClick={handleSelected}
+    //     type="button"
+    //     value={methodName}
+    //   />
     );
   }
 );
@@ -34,4 +45,4 @@ interface DiscountItemProps {
   methodName: string;
   selectedMethod: string;
   setSelectedMethod: (methodName: string) => void;
-}
+}*/
