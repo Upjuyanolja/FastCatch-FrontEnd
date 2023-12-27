@@ -1,15 +1,5 @@
-// import { Button } from "..";
 import "./CouponModal.scss";
 import { IoClose } from "react-icons/io5";
-
-// type Size = "small" | "large";
-
-// interface buttonInfo {
-//   text: string;
-//   size?: string;
-//   colorName?: string;
-//   onClick: () => void;
-// }
 
 interface modalPropI {
   isVisible: boolean;

@@ -169,7 +169,6 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
       </div>
 
       <div>
-        {/* <div className="room__divider"></div>s */}
         <div className="room__buttons-container">
           {soldOut || !isPossible ? (
             <Button
