@@ -1,81 +1,58 @@
-import { useEffect, useState } from "react";
-import { getOrderApi } from "@/api/getOrderApi";
-import { Order } from "@/types/order";
-import { getOrderListApi } from "@/api/getOrderListApi";
-
+import { useMemo } from "react";
 import MembersHeader from "@/pages/members/membersHeader/MembersHeader";
 import OrderListItem from "@/pages/orderList/orderListItem/OrderListItem";
 import { Button, ToastLayout } from "@/components/common";
-
 import "./orderList.scss";
-import { useQuery } from "react-query";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
+import { useGetReservationList } from "@/hooks/quries/useReservationList";
+import { useGetCancelReservationList } from "@/hooks/quries/useCancelReservationList";
 
 const OrderList = () => {
-  const [reservedList, setReservedList] = useState<Order[]>([]);
-  const [usedList, setUsedList] = useState<Order[]>([]);
-  const [canceledList, setCanceledList] = useState<Order[]>([]);
-
-  const [isReservedList, setIsReservedList] = useState<boolean>(true);
-  const [isUsedList, setIsUsedList] = useState<boolean>(true);
-  const [isCanceledList, setIsCanceledList] = useState<boolean>(true);
-
-  const { data, isLoading, isError } = useQuery("orderListData", getOrderApi);
-
-  useEffect(() => {
-    if (data) {
-      const { reservedOrders, usedOrders, canceledOrders } = data;
-      setReservedList(reservedOrders || []);
-      setUsedList(usedOrders || []);
-      setCanceledList(canceledOrders || []);
-
-      setIsReservedList(reservedOrders.length < 3 ? false : true);
-      setIsUsedList(usedOrders.length < 3 ? false : true);
-      setIsCanceledList(canceledOrders.length < 3 ? false : true);
-    }
-  }, [data]);
-
-  const getReservedList = async () => {
-    const getReservedListData = await getOrderListApi("reserved");
-    if (getReservedListData?.length > 0) {
-      setReservedList(prev => [...prev, ...getReservedListData]);
-    } else {
-      showToast({
-        theme: "info",
-        message: '"더이상 불러올 데이터가 없습니다"',
-      });
-      setIsReservedList(false);
-    }
-  };
-
-  const getUsedList = async () => {
-    const getUsedListData = await getOrderListApi("used");
-    if (getUsedListData?.length > 0) {
-      setUsedList(prev => [...prev, ...getUsedListData]);
-    } else {
-      showToast({
-        theme: "info",
-        message: '"더이상 불러올 데이터가 없습니다"',
-      });
-      setIsUsedList(false);
-    }
-  };
-
-  const getCancelList = async () => {
-    const getCancelListData = await getOrderListApi("canceled");
-    if (getCancelListData?.length > 0) {
-      setCanceledList(prev => [...prev, ...getCancelListData]);
-    } else {
-      showToast({
-        theme: "info",
-        message: '"더이상 불러올 데이터가 없습니다"',
-      });
-      setIsCanceledList(false);
-    }
-  };
-
   const { showToast, ToastContainer } = ToastLayout();
+  const today = new Date();
+
+  /*예약 목록 데이터 */
+  const { data, fetchNextPage, hasNextPage, isError, isLoading, refetch } =
+    useGetReservationList();
+
+  const reservationItems = useMemo(
+    () => data?.pages.flatMap(page => page.data.data.reservations),
+    [data]
+  );
+
+  const handleLoadMore = () => {
+    if (hasNextPage) fetchNextPage();
+    else {
+      showToast({
+        theme: "info",
+        message: '"더이상 불러올 데이터가 없습니다"',
+      });
+    }
+  };
+
+  /**예약 취소 목록 데이터 */
+  const {
+    data: cancelData,
+    fetchNextPage: cancelFetchNextPage,
+    hasNextPage: cancelHasNextPage,
+    refetch: cancelRefecth,
+  } = useGetCancelReservationList();
+
+  const cancelReservationItems = useMemo(
+    () => cancelData?.pages.flatMap(page => page.data.data.reservations),
+    [cancelData]
+  );
+
+  const cancelHandleLoadMore = () => {
+    if (cancelHasNextPage) cancelFetchNextPage();
+    else {
+      showToast({
+        theme: "info",
+        message: '"더이상 불러올 데이터가 없습니다"',
+      });
+    }
+  };
 
   if (isLoading) {
     return <LoadingAnimation width="200px" height="200px" />;
@@ -94,13 +71,41 @@ const OrderList = () => {
         <div className="order-list__booking-history">
           <h5 className="text-subtitle4">예약 내역</h5>
           <div className="order-list__item">
-            {reservedList.length !== 0 ? (
-              reservedList.map(item => (
+            {reservationItems?.length !== 0 ? (
+              reservationItems?.map(item => {
+                const itemDate = new Date(item.startDate);
+                const cancellAble = itemDate > today;
+                return (
+                  <OrderListItem
+                    key={item.id}
+                    roomInfo={item}
+                    cancellAble={cancellAble}
+                    refetch={refetch}
+                    cancelRefetch={cancelRefecth}
+                  />
+                );
+              })
+            ) : (
+              <p className="order-list__error-msg">내역이 존재하지 않습니다</p>
+            )}
+            <Button
+              text={"더보기"}
+              buttonSize="exLarge"
+              onClick={handleLoadMore}
+              isPassed={hasNextPage}
+            />
+          </div>
+        </div>
+        <div className="order-list__refund-history">
+          <h5 className="text-subtitle4">취소 내역</h5>
+          <div className="order-list__item">
+            {cancelReservationItems?.length !== 0 ? (
+              cancelReservationItems?.map(item => (
                 <OrderListItem
-                  key={item.orderId}
+                  key={item.id}
                   roomInfo={item}
-                  reservedList={reservedList}
-                  setReservedList={setReservedList}
+                  cancellAble={false}
+                  isCanceled={true}
                 />
               ))
             ) : (
@@ -109,44 +114,8 @@ const OrderList = () => {
             <Button
               text={"더보기"}
               buttonSize="exLarge"
-              isPassed={isReservedList}
-              onClick={getReservedList}
-            />
-          </div>
-        </div>
-        <div className="order-list__usage-history">
-          <h5 className="text-subtitle4">사용 내역</h5>
-          <div className="order-list__item">
-            {usedList.length !== 0 ? (
-              usedList.map(item => (
-                <OrderListItem key={item.orderId} roomInfo={item} />
-              ))
-            ) : (
-              <p className="order-list__error-msg">내역이 존재하지 않습니다</p>
-            )}
-            <Button
-              text={"더보기"}
-              buttonSize="exLarge"
-              isPassed={isUsedList}
-              onClick={getUsedList}
-            />
-          </div>
-        </div>
-        <div className="order-list__refund-history">
-          <h5 className="text-subtitle4">취소 내역</h5>
-          <div className="order-list__item">
-            {canceledList.length !== 0 ? (
-              canceledList.map(item => (
-                <OrderListItem key={item.orderId} roomInfo={item} />
-              ))
-            ) : (
-              <p className="order-list__error-msg">내역이 존재하지 않습니다</p>
-            )}
-            <Button
-              text={"더보기"}
-              buttonSize="exLarge"
-              isPassed={isCanceledList}
-              onClick={getCancelList}
+              onClick={cancelHandleLoadMore}
+              isPassed={cancelHasNextPage}
             />
           </div>
         </div>
