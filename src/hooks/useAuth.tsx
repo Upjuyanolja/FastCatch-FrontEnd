@@ -34,7 +34,7 @@ export async function refreshAccessToken() {
   const userEmail = userData.email;
 
   const response = await axios.post(
-    `${import.meta.env.VITE_API_BASE_URL}/api/members/re-token`,
+    `/api/members/re-token`,
     { email: userEmail },
     {
       headers: {

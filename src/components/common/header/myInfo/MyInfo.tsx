@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import "./myInfo.scss";
 import { useEffect, useState } from "react";
-import instance from "@/api/instanceApi";
-import { AxiosError } from "axios";
+// import instance from "@/api/instanceApi";
+import axios, { AxiosError } from "axios";
 import { FaUser } from "react-icons/fa";
 
 const MyInfo = () => {
   const getMyInfo = async () => {
     try {
-      const { data } = await instance.get("/api/members");
+      const { data } = await axios.get(`/api/members`);
       return data.data;
     } catch (error) {
       const axiosError = error as AxiosError;

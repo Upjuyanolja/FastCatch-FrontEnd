@@ -2,10 +2,9 @@ import axios, { AxiosInstance } from "axios";
 
 import { refreshAccessToken } from "@/hooks/useAuth";
 import { isAccessTokenExpired } from "@/utils/checkToken";
-import { removeCookie } from "@/utils/cookies";
 
 const instance: AxiosInstance = axios.create({
-  // baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 5000,
 });
 
@@ -40,7 +39,6 @@ instance.interceptors.response.use(
   error => {
     if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
-      removeCookie();
       alert("인증이 만료되어 재 로그인이 필요합니다.");
       window.location.href = "/login";
     }
