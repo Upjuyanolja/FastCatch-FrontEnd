@@ -1,38 +1,42 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Order } from "@/types/order";
 import OrderRoomItem from "../orderRoomItem/OrderRoomItem";
 import "swiper/css";
 import "./orderListItem.scss";
-import { deleteOrderApi } from "@/api/deleteOrderApi";
-import { SetStateAction, memo } from "react";
+import { memo } from "react";
 import { Badge, Button } from "@/components/common";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getOrderApi } from "@/api/getOrderApi";
+import {
+  InfiniteData,
+  QueryObserverResult,
+  RefetchOptions,
+  RefetchQueryFilters,
+} from "react-query";
+import { Reservation, ResponseReservation } from "@/api/getReservationListApi";
+import { useDeleteCancelReservation } from "@/hooks/quries/useDeleteCancelReservation";
+import { AxiosError, AxiosResponse } from "axios";
 
 const OrderListItem = memo(
-  ({ roomInfo, reservedList, setReservedList }: OrderListItemProps) => {
-    const { orderDate, orderItems, orderStatus, orderId } = roomInfo;
+  ({
+    roomInfo,
+    cancellAble,
+    isCanceled,
+    refetch,
+    cancelRefetch,
+  }: ReservationListItemProps) => {
+    const { date, id } = roomInfo;
 
-    const { refetch } = useQuery("orderListData", getOrderApi);
-
-    const queryClient = useQueryClient();
-
-    const deleteOrderMutation = useMutation(deleteOrderApi, {
-      onSuccess: () => {
-        queryClient.invalidateQueries("orderListData");
-      },
+    const deleteCancelReservationMutation = useDeleteCancelReservation({
+      reservationId: id,
     });
 
     const handleCancel = async () => {
       const bookingCancelConfirm = confirm("정말 취소하시겠습니까?");
       if (bookingCancelConfirm) {
-        if (reservedList && setReservedList) {
-          const updatedReservedList = reservedList.filter(
-            order => order.orderId !== orderId
-          );
-          setReservedList(updatedReservedList);
-          await deleteOrderMutation.mutate(orderId);
+        await deleteCancelReservationMutation.mutateAsync();
+        if (
+          typeof refetch === "function" &&
+          typeof cancelRefetch === "function"
+        ) {
           await refetch();
+          await cancelRefetch();
         }
       }
     };
@@ -41,30 +45,18 @@ const OrderListItem = memo(
       <div className="order-list-item">
         <div className="order-list-item__header">
           <div className="order-list-item__left">
-            <h4 className="text-subtitle5">{orderDate}</h4>
+            <h4 className="text-subtitle5">{date}</h4>
           </div>
           <div className="order-list-item__right">
-            {orderStatus === "canceled" ? (
-              <Badge text={"예약 취소"} badgeStatus="light" />
-            ) : null}
-            {orderStatus === "used" ? (
-              <Badge text={"사용 완료"} badgeStatus="dark" />
-            ) : null}
+            {!cancellAble && !isCanceled && (
+              <Badge text="사용 완료" badgeStatus="dark" />
+            )}
+            {isCanceled && <Badge text="예약 취소" badgeStatus="light" />}
           </div>
         </div>
         <div className="order-list-item__body">
-          <Swiper
-            spaceBetween={8}
-            slidesPerView={orderItems.length === 1 ? 1 : 1.5}
-            className="order-list-item__swiper"
-          >
-            {orderItems.map((roomInfo, index) => (
-              <SwiperSlide key={index}>
-                <OrderRoomItem roomInfo={roomInfo} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          {orderStatus === "reserved" && (
+          <OrderRoomItem roomInfo={roomInfo} />
+          {cancellAble && (
             <Button
               text={"취소하기"}
               buttonSize="exLarge"
@@ -80,8 +72,24 @@ const OrderListItem = memo(
 
 export default OrderListItem;
 
-interface OrderListItemProps {
-  roomInfo: Order;
-  reservedList?: Order[];
-  setReservedList?: React.Dispatch<SetStateAction<Order[]>>;
+interface ReservationListItemProps {
+  roomInfo: Reservation;
+  cancellAble?: boolean;
+  isCanceled?: boolean;
+  refetch?: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>
+  ) => Promise<
+    QueryObserverResult<
+      InfiniteData<AxiosResponse<ResponseReservation>>,
+      AxiosError
+    >
+  >;
+  cancelRefetch?: <TPageData>(
+    options?: RefetchOptions & RefetchQueryFilters<TPageData>
+  ) => Promise<
+    QueryObserverResult<
+      InfiniteData<AxiosResponse<ResponseReservation>>,
+      AxiosError
+    >
+  >;
 }
