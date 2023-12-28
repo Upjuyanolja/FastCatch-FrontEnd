@@ -4,10 +4,7 @@ export interface userInfoI {
   id: number;
   email: string;
   name: string;
-  nickname: string;
-  birthday: string;
-  phoneNumber: string;
-  cartId: number;
+  phone: string;
 }
 
 const userStateEffect: AtomEffect<userInfoI | null> = ({ onSet, setSelf }) => {
