@@ -16,7 +16,7 @@
     &.open {
       background-color: $white;
       .selected-option {
-        border-bottom: 2px solid coral(200);
+        border-bottom: 2px solid rgba(255, 236, 232, 1);
       }
     }
     .selected-option {
@@ -42,7 +42,7 @@
       width: 100%;
       .dropdown-item {
         padding: 16px;
-        border-bottom: 2px solid coral(200);
+        border-bottom: 2px solid rgba(255, 236, 232, 1);
         &:hover {
           background-color: coral(100);
         }
