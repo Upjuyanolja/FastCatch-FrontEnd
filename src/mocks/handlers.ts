@@ -5,6 +5,8 @@ import failSignUpData from "../../public/data/failSignUpData.json";
 import allAccommodations from "../../public/data/allAccommodations.json";
 import successLoginData from "../../public/data/successLoginData.json";
 import failLoginData from "../../public/data/failLoginData.json";
+import reservationList from "../../public/data/reservationList.json";
+import cancelReservationList from "../../public/data/cancelReservationList.json";
 
 // const getHotelResolver = () => {
 //   return HttpResponse.json(accommodationDetail);
@@ -36,6 +38,14 @@ const getLoginResolver = async () => {
   return HttpResponse.json(successLoginData, { status: 200 });
 };
 
+const getReservationListResolver = () => {
+  return HttpResponse.json(reservationList);
+};
+
+const getCancelReservationListResolver = () => {
+  return HttpResponse.json(cancelReservationList);
+};
+
 export const handlers = [
   //
   // http.get("/accommodation", getHotelResolver),
@@ -48,4 +58,12 @@ export const handlers = [
     getAccommodationResolver
   ),
   http.post(`/api/members/signin`, getLoginResolver),
+  http.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/reservations`,
+    getReservationListResolver
+  ),
+  http.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/reservations/cancel`,
+    getCancelReservationListResolver
+  ),
 ];
