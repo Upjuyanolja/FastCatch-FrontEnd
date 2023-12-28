@@ -30,7 +30,7 @@ const Discount = memo(() => {
   return (
     <div className="discount">
       <h4 className="text-subtitle4">할인</h4>
-      <div className="dropdown-container">
+      <div className={`dropdown-container ${isOpen && "open"}`}>
         <div className="selected-option" onClick={toggleDropdown}>
           <span className="label">
             {selectedOption ? selectedOption.label : "선택안함"}
