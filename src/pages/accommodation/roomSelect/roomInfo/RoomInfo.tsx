@@ -3,7 +3,7 @@ import { filterState } from "@/states/filterState";
 import { orderState } from "@/states/orderState";
 import { userState } from "@/states/userState";
 import { IRoom } from "@/types/accommodationDetail";
-import countDays from "@/utils/countDays";
+// import countDays from "@/utils/countDays";
 import englishToKoreanFormat from "@/utils/englishToKoreanFormat";
 import numberFormat from "@/utils/numberFormat";
 import { format } from "date-fns";
@@ -35,6 +35,8 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
     checkInTime,
     checkOutTime,
     soldOut,
+    discountPrice,
+    coupons,
   } = room;
 
   const setOrderData = useSetRecoilState(orderState);
@@ -47,31 +49,19 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
   const endDate = filterData.endDate
     ? format(filterData.endDate, "yyyy-MM-dd")
     : format(filterData.startDate, "yyyy-MM-dd");
-  const countDay = countDays(startDate, endDate);
+
   const curAmount = filterData.amount;
 
   const [isPossible, setIsPossible] = useState(false);
 
-  let totalPrice = 0;
-  if (curAmount < defaultCapacity) {
-    totalPrice = price * countDay;
-  } else if (curAmount > maxCapacity) {
-    totalPrice = price * countDay + 15000 * (maxCapacity - defaultCapacity);
-  } else {
-    totalPrice = price * countDay + 15000 * (curAmount - defaultCapacity);
-  }
-
   useEffect(() => {
     if (curAmount < defaultCapacity) {
-      totalPrice = price;
       setIsPossible(false);
       return;
     } else if (curAmount > maxCapacity) {
-      totalPrice = price + 15000 * (maxCapacity - defaultCapacity);
       setIsPossible(false);
       return;
     } else {
-      totalPrice = price + 15000 * (curAmount - defaultCapacity);
       setIsPossible(true);
       return;
     }
@@ -109,13 +99,15 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         accommodationName: accommodationName,
         checkInTime: checkInTime,
         checkOutTime: checkOutTime,
-        defaultCapacity: filterData.amount,
+        defaultCapacity: defaultCapacity,
         maxCapacity: maxCapacity,
-        price: totalPrice,
+        price: price,
+        discountPrice: discountPrice,
         id: id,
         roomName: name,
         startDate: startDate,
         endDate: endDate,
+        coupons: coupons,
       },
     ]);
 
@@ -157,16 +149,20 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
           </div>
 
           {/* 쿠폰이 있으면 원래가격 */}
-          <div className="room__detail-info__strikethrough">
-            <span>75000원</span>
-          </div>
+          {coupons ? (
+            <div className="room__detail-info__strikethrough">
+              <span>{numberFormat(price)} 원</span>
+            </div>
+          ) : null}
 
           <div className="room__detail-info__price text-subtitle4">
             {/* 쿠폰이 있으면 쿠폰가 div */}
-            <div className="room__detail-info__price__discountBox">
-              <span>쿠폰가</span>
-            </div>
-            {numberFormat(totalPrice)} 원
+            {coupons ? (
+              <div className="room__detail-info__price__discountBox">
+                <span>쿠폰가</span>
+              </div>
+            ) : null}
+            {numberFormat(discountPrice ? discountPrice : price)} 원
           </div>
         </div>
       </div>

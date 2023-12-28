@@ -57,7 +57,7 @@ const RoomSelect = ({
         {roomsInfo.map((room: any) => (
           <div className="room-container__list" key={room.roomId}>
             <div className="room__imgs">
-              <RoomImgSwiper roomImg={room.images} />
+              <RoomImgSwiper roomImg={room.images} coupons={room.coupons} />
             </div>
             <RoomInfo
               room={room}
