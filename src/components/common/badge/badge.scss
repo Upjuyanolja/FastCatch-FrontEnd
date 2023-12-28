@@ -1,9 +1,9 @@
 @import "../../../styles/common.scss";
 
 .common-badge {
-  padding: 2px 8px;
+  padding: rem(2) rem(8);
 
-  border-radius: 8px;
+  border-radius: rem(8);
 
   @extend .text-body3;
 
