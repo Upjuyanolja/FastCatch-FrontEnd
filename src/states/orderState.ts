@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-
+import { Coupon } from "@/types/accommodationDetail";
 export const orderState = atom<OrderItemTypes[]>({
   key: "orderState",
   default: JSON.parse(localStorage.getItem("orderState") || "[]"),
@@ -12,7 +12,6 @@ export const orderStateFromLocalStorage = selector({
     return storedValue ? JSON.parse(storedValue) : get(orderState);
   },
 });
-
 export interface OrderItemTypes {
   accommodationName: string;
   checkInTime: string;
@@ -20,10 +19,12 @@ export interface OrderItemTypes {
   defaultCapacity: number;
   maxCapacity: number;
   price: number;
+  discountPrice: number | null;
   id: number;
   roomName: string;
   startDate: string;
   endDate: string;
   cartItemIds?: number[];
   cartItemId?: number;
+  coupons: Coupon[];
 }
