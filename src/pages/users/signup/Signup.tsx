@@ -302,7 +302,6 @@ const Signup = () => {
                   buttonSize="large"
                   text="회원가입"
                   isPassed={isAllCheck && isIdValid && !isDisabled && isValid}
-                  disabled={isDisabled || !isValid}
                   onClick={handleSubmit(onSubmit)}
                 />
               </div>

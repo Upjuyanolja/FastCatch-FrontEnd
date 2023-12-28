@@ -6,10 +6,11 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import "../users.scss";
-import instance from "@/api/instanceApi";
+// import instance from "@/api/instanceApi";
 import { useAuth } from "@/hooks/useAuth";
 import { Button, ToastLayout } from "@/components/common";
 import { memberResI } from "@/types/member";
+import axios from "axios";
 
 const Login = () => {
   // 회원가입/로그인 링크이동
@@ -36,16 +37,20 @@ const Login = () => {
   const email = watch("email");
   const password = watch("password");
   const { setToken } = useAuth();
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const requestBody = { email, password };
     try {
-      const res = await instance.post("/api/members/signin", requestBody);
+      const res = await axios.post("/api/members/signin", requestBody);
       const { accessToken, refreshToken, memberResponse }: memberResI =
         res.data.data;
       setToken(accessToken, refreshToken, memberResponse);
-      navigate("/");
+      setIsDisabled(!isDisabled);
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     } catch (error) {
       showToast({
         theme: "error",
@@ -120,7 +125,12 @@ const Login = () => {
                     )}
                   </div>
                 </div>
-                <Button type="submit" text={"로그인"} buttonSize={"large"} />
+                <Button
+                  type="submit"
+                  text={"로그인"}
+                  buttonSize={"large"}
+                  isPassed={!isDisabled}
+                />
                 {ToastContainer}
               </div>
             </form>

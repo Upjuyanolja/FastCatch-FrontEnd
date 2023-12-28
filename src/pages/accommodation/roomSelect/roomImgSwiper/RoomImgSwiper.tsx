@@ -16,21 +16,49 @@ const RoomImgSwiper = ({ roomImg }: RoomImgSwiperProps) => {
         delay: 5000,
       }}
       resistance={false}
-      style={{ height: "280px", margin: "0 4px" }}
+      style={{ height: "264px", margin: "0 4px" }}
     >
       {roomImg.map((obj: any) => (
-        <SwiperSlide key={obj.fileName}>
-          <img
-            style={{
-              height: "280px",
-              width: "100%",
-              objectFit: "cover",
-            }}
-            src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${obj.fileName}`}
-            alt={"이미지"}
-            loading="lazy"
-          />
-        </SwiperSlide>
+        <>
+          <SwiperSlide key={obj.fileName}>
+            {/* 추가 부분 */}
+            {/* if / HasCoupon / true  */}
+            <div
+              style={{
+                width: "120px",
+                height: "80px",
+
+                backgroundColor: "#FE395B",
+                color: "#FFF",
+
+                position: "fixed",
+                left: "17px",
+
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+
+                fontWeight: "700",
+                lineHeight: "24px",
+              }}
+            >
+              <span>10000 원 할인</span>
+              <span>적용 가능 객실</span>
+            </div>
+
+            <img
+              style={{
+                height: "264px",
+                width: "100%",
+                objectFit: "cover",
+              }}
+              src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${obj.fileName}`}
+              alt={"이미지"}
+              loading="lazy"
+            />
+          </SwiperSlide>
+        </>
       ))}
     </Swiper>
   );

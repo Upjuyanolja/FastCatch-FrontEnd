@@ -3,9 +3,7 @@ interface memberInfoI {
   email: string;
   name: string;
   nickname: string;
-  birthday: string;
-  phoneNumber: string;
-  cartId: number;
+  phone: string;
 }
 
 export interface memberResI {
