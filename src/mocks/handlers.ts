@@ -4,6 +4,7 @@ import successSignUpData from "../../public/data/successSignUpData.json";
 import failSignUpData from "../../public/data/failSignUpData.json";
 import allAccommodations from "../../public/data/allAccommodations.json";
 import accommodationDetailData from "../../public/data/accommodationDetailData.json";
+import couponData from "../../public/data/couponData.json";
 // const getHotelResolver = () => {
 //   return HttpResponse.json(accommodationDetail);
 // };
@@ -35,6 +36,9 @@ const getAccommodationResolver = () => {
 const getAccommodationDetailData = () => {
   return HttpResponse.json(accommodationDetailData);
 };
+const getCouponsData = () => {
+  return HttpResponse.json(couponData);
+};
 export const handlers = [
   //
   // http.get("/accommodation", getHotelResolver),
@@ -50,4 +54,5 @@ export const handlers = [
     `${import.meta.env.VITE_API_BASE_URL}/api/accommodations/detail`,
     getAccommodationDetailData
   ),
+  http.get(`${import.meta.env.VITE_API_BASE_URL}/api/coupons`, getCouponsData),
 ];
