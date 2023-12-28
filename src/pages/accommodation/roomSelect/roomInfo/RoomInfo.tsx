@@ -102,7 +102,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         defaultCapacity: defaultCapacity,
         maxCapacity: maxCapacity,
         price: price,
-        discountPrice: discountPrice,
+        discountPrice: discountPrice ? discountPrice : null,
         id: id,
         roomName: name,
         startDate: startDate,
