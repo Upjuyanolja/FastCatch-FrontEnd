@@ -1,0 +1,27 @@
+@import "../../../styles/common.scss";
+.discount-badge-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: rem(8);
+  .discount-badge {
+    display: inline-block;
+    font-size: rem(16);
+    font-weight: bold;
+    border: 2px solid transparent;
+    background-image: linear-gradient($white, $white),
+      linear-gradient(to right, rgba(254, 57, 91, 1), rgba(255, 236, 232, 1));
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    border-radius: rem(100);
+    box-shadow: 0px 4px 4px 0px #0000001a;
+    overflow: hidden;
+    p {
+      background: linear-gradient(
+        to right,
+        rgba(255, 236, 232, 0),
+        rgba(255, 236, 232, 1)
+      );
+      padding: rem(12) rem(35);
+    }
+  }
+}
