@@ -1,3 +1,8 @@
+export interface Coupon {
+  id:number;
+  name:string;
+  price:number
+}
 export interface IRoom {
   price: number;
   id: number;
@@ -10,6 +15,8 @@ export interface IRoom {
   soldOut: boolean;
   description: string;
   images?: Array<Object>;
+  discountPrice: number | null;
+  coupons: Coupon[]
 }
 
 export interface IRoomOption {
