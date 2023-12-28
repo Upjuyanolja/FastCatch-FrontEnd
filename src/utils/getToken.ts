@@ -22,4 +22,4 @@ export const getRefreshToken = () => {
   } catch (error) {
     return null;
   }
-}
+};
