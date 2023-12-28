@@ -9,7 +9,6 @@ const MyInfo = () => {
   const getMyInfo = async () => {
     try {
       const { data } = await instance.get("/api/members");
-      console.log(data, "MYINFO");
       return data.data;
     } catch (error) {
       const axiosError = error as AxiosError;

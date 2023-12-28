@@ -44,8 +44,8 @@ const Login = () => {
     const requestBody = { email, password };
     try {
       const res = await axios.post("/api/members/signin", requestBody);
-      const { accessToken, refreshToken, memberResponse }: memberResI =
-        res.data.data;
+      const { accessToken, refreshToken, memberResponse } = res.data.data;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
       setToken(accessToken, refreshToken, memberResponse);
       setIsDisabled(!isDisabled);
       setTimeout(() => {

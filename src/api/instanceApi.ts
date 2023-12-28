@@ -2,18 +2,17 @@ import axios, { AxiosInstance } from "axios";
 
 import { refreshAccessToken } from "@/hooks/useAuth";
 import { isAccessTokenExpired } from "@/utils/checkToken";
-import { getToken } from "@/utils/getToken";
-import { useCookies } from "react-cookie";
+import { removeCookie } from "@/utils/cookies";
 
 const instance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  // baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 5000,
 });
 
 instance.interceptors.request.use(
   async config => {
     config.headers["Content-Type"] = "application/json";
-    const accessToken = getToken();
+    const accessToken = localStorage.getItem("accessToken");
 
     if (accessToken) {
       const isTokenExpired = isAccessTokenExpired(accessToken);
@@ -41,7 +40,7 @@ instance.interceptors.response.use(
   error => {
     if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      removeCookie();
       alert("인증이 만료되어 재 로그인이 필요합니다.");
       window.location.href = "/login";
     }
