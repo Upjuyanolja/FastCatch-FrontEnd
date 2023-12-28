@@ -7,6 +7,7 @@ import successLoginData from "../../public/data/successLoginData.json";
 import failLoginData from "../../public/data/failLoginData.json";
 import reservationList from "../../public/data/reservationList.json";
 import cancelReservationList from "../../public/data/cancelReservationList.json";
+import successCancelReservation from "../../public/data/successCancelReservation.json";
 
 // const getHotelResolver = () => {
 //   return HttpResponse.json(accommodationDetail);
@@ -46,6 +47,10 @@ const getCancelReservationListResolver = () => {
   return HttpResponse.json(cancelReservationList);
 };
 
+const deleteCancelReservation = () => {
+  return HttpResponse.json(successCancelReservation);
+};
+
 export const handlers = [
   //
   // http.get("/accommodation", getHotelResolver),
@@ -65,5 +70,9 @@ export const handlers = [
   http.get(
     `${import.meta.env.VITE_API_BASE_URL}/api/reservations/cancel`,
     getCancelReservationListResolver
+  ),
+  http.delete(
+    `${import.meta.env.VITE_API_BASE_URL}/api/reservations/:reservationId`,
+    deleteCancelReservation
   ),
 ];
