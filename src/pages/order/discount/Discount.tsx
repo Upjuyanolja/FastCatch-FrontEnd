@@ -4,28 +4,25 @@ import { SetStateAction, memo, useState } from "react";
 import { discount } from "@/constant/discount";
 import { FaSortDown } from "react-icons/fa6";
 import "./discount.scss";
-
-type OptionType = {
-  label: string;
-  value: string;
-};
-
-type CustomDropdownProps = {
-  options: OptionType[];
-};
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { orderState, OrderItemTypes } from "@/states/orderState";
 
 const Discount = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
+  const [selectedCoupon, setSelectedCoupon] = useState<OrderItemTypes | null>(
+    null
+  );
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const selectOption = (option: OptionType) => {
+  const selectCoupon = (option: OrderItemTypes) => {
     setSelectedOption(option);
     setIsOpen(false);
   };
 
-  const defaultOption: OptionType = { label: "선택없음", value: "" };
+  const defaultOption: OrderItemTypes = { couponName: "선택없음", price: 0 };
+
+  const order = useRecoilValue(orderState);
 
   return (
     <div className="discount">
@@ -33,7 +30,7 @@ const Discount = memo(() => {
       <div className="dropdown-container">
         <div className="selected-option" onClick={toggleDropdown}>
           <span className="label">
-            {selectedOption ? selectedOption.label : "선택안함"}
+            {selectedCoupon ? selectedCoupon.couponName : "선택안함"}
           </span>
           <span
             className={`arrow ${isOpen ? "open" : ""}`}
@@ -48,32 +45,22 @@ const Discount = memo(() => {
             <li
               key="default-option"
               className="dropdown-item"
-              onClick={() => selectOption(defaultOption)}
+              onClick={() => selectCoupon(defaultOption)}
             >
-              {defaultOption.label}
+              {defaultOption.couponName}
             </li>
-            {discount.map(option => (
+            {order.coupons.map(coupon => (
               <li
-                key={option.value}
+                key={coupon.couponName}
                 className="dropdown-item"
-                onClick={() => selectOption(option)}
+                onClick={() => selectCoupon(coupon)}
               >
-                {option.label}
+                {coupon.couponName}
               </li>
             ))}
           </ul>
         )}
       </div>
-
-      {/* {discount.map((option, index) => (
-          <DiscountItem
-            className={""}
-            methodName={option}
-            key={index}
-            selectedDiscount={selectedDiscount}
-            setSelectedDiscount={setSelectedDiscount}
-          />
-        ))} */}
     </div>
   );
 });
