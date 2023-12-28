@@ -14,6 +14,19 @@
             "roomName": "디럭스 룸"
           }
         ]
+      },
+      {
+        "couponName": "10,000원 즉시 할인",
+        "maxDiscount": 10000,
+        "endDate": "2024-01-02",
+        "rooms": [
+          {
+            "roomName": "스탠다드 룸"
+          },
+          {
+            "roomName": "디럭스 룸"
+          }
+        ]
       }
     ]
   }
