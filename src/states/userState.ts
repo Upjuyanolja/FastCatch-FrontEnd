@@ -4,6 +4,7 @@ export interface userInfoI {
   id: number;
   email: string;
   name: string;
+  nickname: string;
   phone: string;
 }
 

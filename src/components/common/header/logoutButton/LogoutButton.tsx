@@ -6,14 +6,13 @@ import { MdLogout } from "react-icons/md";
 
 import { userState } from "@/states/userState";
 import instance from "@/api/instanceApi";
-import { getRefreshToken, getToken } from "@/utils/getToken";
+import axios from "axios";
+import { removeCookie } from "@/utils/cookies";
 
 const LogoutButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const setUserInfo = useSetRecoilState(userState);
   const navigate = useNavigate();
-  const accessToken = getToken();
-  const refreshToken = getRefreshToken();
 
   const modalProps = {
     title: "로그아웃",
@@ -26,15 +25,9 @@ const LogoutButton = () => {
         onClick: () => {
           const logOut = async () => {
             try {
-              const body = {
-                accessToken,
-                refreshToken,
-              };
-
-              const res = await instance.post(`/api/members/signout`, body);
-
+              const res = await axios.post(`/api/members/signout`);
               localStorage.removeItem("accessToken");
-              localStorage.removeItem("refreshToken");
+              removeCookie();
               setUserInfo(null);
               navigate("/");
 
