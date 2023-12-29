@@ -12,6 +12,11 @@ export const orderStateFromLocalStorage = selector({
     return storedValue ? JSON.parse(storedValue) : get(orderState);
   },
 });
+interface Options {
+  airCondition?: boolean;
+  tv?: boolean;
+  internet?: boolean;
+}
 export interface OrderItemTypes {
   accommodationName: string;
   checkInTime: string;
@@ -27,4 +32,5 @@ export interface OrderItemTypes {
   cartItemIds?: number[];
   cartItemId?: number;
   coupons: Coupon[];
+  options: Options;
 }
