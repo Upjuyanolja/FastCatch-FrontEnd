@@ -4,11 +4,15 @@ import RoomName from "@/components/roomName/RoomName";
 import CheckIn from "@/components/checkIn/CheckIn";
 import CheckOut from "@/components/checkOut/CheckOut";
 import OrderPrice from "@/pages/order/orderPrice/OrderPrice";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { discountState } from "@/states/discountState";
-import "./orderItem.scss";
 import { calculateNightStay } from "@/utils/calculateNightStay";
 import { memo } from "react";
+import { Badge } from "@/components/common";
+import englishToKoreanFormat from "@/utils/englishToKoreanFormat";
+import { ROOM_OPTIONS } from "@/constant/roomOptions";
+import "./orderItem.scss";
+import { Options } from "@/states/orderState";
 
 const OrderItem = memo(({ orderData }: OrderItemProps) => {
   const {
@@ -21,9 +25,10 @@ const OrderItem = memo(({ orderData }: OrderItemProps) => {
     endDate,
     checkOutTime,
     price,
+    options,
   } = orderData;
 
-  const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
+  const discountAmt = useRecoilValue(discountState);
 
   return (
     <div className="order-item">
@@ -33,6 +38,11 @@ const OrderItem = memo(({ orderData }: OrderItemProps) => {
       </div>
       <div className="order-item__guest">
         <AccommodationGuest minimum={defaultCapacity} maximum={maxCapacity} />
+      </div>
+      <div className="order-item__room-option">
+        {englishToKoreanFormat(options, ROOM_OPTIONS).map((option: any) => (
+          <Badge key={option} text={option} badgeStatus="gray" />
+        ))}
       </div>
       <div className="order-item__info">
         <div className="order-item__check">
@@ -61,5 +71,6 @@ interface OrderItemProps {
     endDate: string;
     checkOutTime: string;
     price: number;
+    options: Options;
   };
 }

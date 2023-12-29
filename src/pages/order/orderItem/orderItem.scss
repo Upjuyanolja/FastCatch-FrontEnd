@@ -27,4 +27,9 @@
     display: flex;
     gap: rem(100);
   }
+  &__room-option {
+    margin-top: rem(12);
+    display: flex;
+    gap: rem(8);
+  }
 }
