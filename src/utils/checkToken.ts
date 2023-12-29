@@ -6,14 +6,14 @@ export function isAccessTokenExpired(accessToken: string) {
   const decodedToken = decodeAccessToken(accessToken);
   const currentTime = Math.floor(Date.now() / 1000);
 
-  return decodedToken.exp < currentTime;
+  return decodedToken.exp > currentTime;
+  // return decodedToken.exp < currentTime;
 }
 
 function decodeAccessToken(accessToken: string) {
-
-  const tokenParts = accessToken.split('.');
+  const tokenParts = accessToken.split(".");
   const encodedPayload = tokenParts[1];
   const decodedPayload = atob(encodedPayload);
-  
+
   return JSON.parse(decodedPayload);
 }

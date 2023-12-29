@@ -1,0 +1,6 @@
+{
+  "message": "성공적으로 토큰을 재발급했습니다.",
+  "data": {
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTcwMDczNDIwNH0.MBBWR5KFeCUFeeLmKkElf87vw_9jOuAbC9dNTlbfr4HARDUkfngHfNXWqr5cniognK_qz779NckKq6pHcty81w"
+  }
+}

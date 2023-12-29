@@ -56,20 +56,6 @@ const MembersInfo = () => {
           </div>
         </div>
         <div className="members-info__item">
-          <label htmlFor="birthDay" className="members-info__title">
-            생년월일
-          </label>
-          <div className="members-info__input">
-            <input
-              id="birthDay"
-              type="text"
-              className="members-info__value text-body1"
-              disabled={true}
-              value={userInfo?.birthday}
-            />
-          </div>
-        </div>
-        <div className="members-info__item">
           <label htmlFor="userPhoneNumber" className="members-info__title">
             휴대폰 번호
           </label>
@@ -79,7 +65,7 @@ const MembersInfo = () => {
               type="text"
               className="members-info__value text-body1"
               disabled={true}
-              value={userInfo?.phoneNumber}
+              value={userInfo?.phone}
             />
           </div>
         </div>
