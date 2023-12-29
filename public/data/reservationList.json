@@ -1,0 +1,63 @@
+{
+  "message": "예약 조회에 성공하였습니다.",
+  "data": {
+    "pageNum": 1,
+    "pageSize": 3,
+    "totalPages": 3,
+    "totalElements": 9,
+    "isLast": false,
+    "reservations": [
+      {
+        "id": 1,
+        "date": "2023-11-27",
+        "totalPrice": 380000,
+        "accommodationId": 1,
+        "accommodationName": "파도소리펜션1",
+        "roomId": 3,
+        "roomName": "럭셔리 룸",
+        "checkInTime": "15:00:00",
+        "checkOutTime": "12:00:00",
+        "startDate": "2023-12-26",
+        "endDate": "2024-01-02",
+        "defaultCapacity": 3,
+        "maxCapacity": 4,
+        "coupon": true,
+        "basePrice": 450000
+      },
+      {
+        "id": 2,
+        "date": "2023-11-27",
+        "totalPrice": 0,
+        "accommodationId": 1,
+        "accommodationName": "파도소리펜션2",
+        "roomId": 3,
+        "roomName": "럭셔리 룸",
+        "checkInTime": "15:00:00",
+        "checkOutTime": "12:00:00",
+        "startDate": "2023-12-31",
+        "endDate": "2024-01-02",
+        "defaultCapacity": 2,
+        "maxCapacity": 4,
+        "coupon": false,
+        "basePrice": 450000
+      },
+      {
+        "id": 3,
+        "date": "2023-11-27",
+        "totalPrice": 0,
+        "accommodationId": 1,
+        "accommodationName": "파도소리펜션3",
+        "roomId": 3,
+        "roomName": "럭셔리 룸",
+        "checkInTime": "15:00:00",
+        "checkOutTime": "12:00:00",
+        "startDate": "2023-12-31",
+        "endDate": "2024-01-02",
+        "defaultCapacity": 2,
+        "maxCapacity": 4,
+        "coupon": false,
+        "basePrice": 450000
+      }
+    ]
+  }
+}

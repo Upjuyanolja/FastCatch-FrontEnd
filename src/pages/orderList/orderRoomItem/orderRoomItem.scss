@@ -63,15 +63,15 @@
 
       .coupon-box {
         border: 1px solid coral(500);
-        padding: rem(2);
         border-radius: rem(4);
-        font-size: 14px;
+        padding: rem(3);
         box-sizing: border-box;
         font-weight: 400;
         color: coral(500);
+        font-size: rem(14);
         text-align: center;
-        width: 53px;
-        height: 21px;
+        width: rem(53);
+        height: rem(21);
       }
     }
   }

@@ -13,8 +13,8 @@ const OrderItem = memo(({ orderData }: OrderItemProps) => {
   const {
     accommodationName,
     roomName,
-    headCount,
-    maxHeadCount,
+    defaultCapacity,
+    maxCapacity,
     startDate,
     checkInTime,
     endDate,
@@ -29,7 +29,7 @@ const OrderItem = memo(({ orderData }: OrderItemProps) => {
         <RoomName roomName={roomName} />
       </div>
       <div className="order-item__guest">
-        <AccommodationGuest minimum={headCount} maximum={maxHeadCount} />
+        <AccommodationGuest minimum={defaultCapacity} maximum={maxCapacity} />
       </div>
       <div className="order-item__info">
         <div className="order-item__check">
@@ -51,8 +51,8 @@ interface OrderItemProps {
   orderData: {
     accommodationName: string;
     roomName: string;
-    headCount: number;
-    maxHeadCount: number;
+    defaultCapacity: number;
+    maxCapacity: number;
     startDate: string;
     checkInTime: string;
     endDate: string;

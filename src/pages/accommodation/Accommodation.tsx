@@ -1,34 +1,40 @@
-import { useRecoilValue } from "recoil";
-import { format } from "date-fns";
+// import { useRecoilValue } from "recoil";
+// import { format } from "date-fns";
 import "./accommodation.scss";
 import { useQuery } from "react-query";
 import RoomSelect from "./roomSelect/RoomSelect";
 import AccommodationMainInfo from "./accommodationMainInfo/AccommodationMainInfo";
 import AccommodationOptions from "./accommodationOptions/AccommodationOptions";
 import AccommodationMap from "./accommodationMap/AccommodationMap";
-import { filterState } from "@/states/filterState";
-import { getAccommodationDetailApi } from "@/api/getAccommodationDetailApi";
+// import { filterState } from "@/states/filterState";
+
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
+import axios from "axios";
 
 import { AiOutlineRight } from "react-icons/ai";
 import CouponModal from "@/components/common/modal/Coupon/CouponModal";
 import { useState } from "react";
 
 const Accommodation = () => {
+  // 해당 부분은 추후에 서버 API할 때 넣을 , Requset 부분입니다. 임시 주석입니다.
+  // const filterData = useRecoilValue(filterState);
+  // const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
+  // const endDate = filterData.endDate
+  //   ? format(filterData.endDate, "yyyy-MM-dd")
+  //   : format(filterData.startDate, "yyyy-MM-dd");
+
   const [isVisible, setIsVisible] = useState(false);
 
-  const filterData = useRecoilValue(filterState);
-  const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
-  const endDate = filterData.endDate
-    ? format(filterData.endDate, "yyyy-MM-dd")
-    : format(filterData.startDate, "yyyy-MM-dd");
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
   const getAccommodationDetailData = async () => {
-    const result = await getAccommodationDetailApi(id, startDate, endDate);
-    return result;
+    const result = await axios.get(
+      `${import.meta.env.VITE_API_BASE_URL}/api/accommodations/detail`
+    );
+
+    return result.data.data;
   };
 
   const { data, isLoading, refetch, isError } = useQuery({
@@ -79,7 +85,7 @@ const Accommodation = () => {
             className="accommodation__coupon-wrapper__coupon-modal-btn"
             onClick={handleClickCouponBox}
           >
-            <div>10,000원 or 10% 즉시할인</div>
+            <div>{data.mainCoupon}</div>
             <div className="accommodation__coupon-wrapper__coupon-modal-btn__right-menu">
               <div>더보기</div>
               <div>
@@ -102,27 +108,21 @@ const Accommodation = () => {
 
         <div className="accommodation__divider"></div>
 
+        <div className="accommodation__divider"></div>
         <AccommodationMap
-          accommodationName={data.name}
-          latitude={data.latitude}
-          longitude={data.longitude}
+          accommodationName={data?.name}
+          latitude={data?.mapX}
+          longitude={data?.mapY}
         />
         <div className="accommodation__divider"></div>
-        <div>
-          <AccommodationOptions
-            accommodationOptions={data.accommodationOption}
-          />
-        </div>
-
+        <AccommodationOptions options={data?.options} />
         <div className="accommodation__divider"></div>
-        <div>
-          <RoomSelect
-            roomsInfo={data.rooms}
-            accommodationId={data.id}
-            accommodationName={data.name}
-            refetch={refetch}
-          />
-        </div>
+        <RoomSelect
+          roomsInfo={data?.rooms}
+          accommodationId={data?.id}
+          accommodationName={data?.name}
+          refetch={refetch}
+        />
       </div>
     </>
   );

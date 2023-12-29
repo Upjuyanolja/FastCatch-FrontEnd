@@ -72,7 +72,7 @@ const Home = () => {
   return (
     <div className="home-wrapper">
       <div className="home-inner">
-        {accommodationsItems?.map(item => <AccomodationItem data={item} />)}
+        {accommodationsItems?.map(item => <AccomodationItem  data={item} />)}
         <div className="target-div" ref={scrollRef}>
           @2023 빨리 잡아
         </div>

@@ -1,11 +1,13 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
+import { Coupon } from "@/types/accommodationDetail";
 
 interface RoomImgSwiperProps {
   roomImg: object[];
+  coupons: Coupon[];
 }
-const RoomImgSwiper = ({ roomImg }: RoomImgSwiperProps) => {
+const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
   return (
     <Swiper
       modules={[Navigation, Autoplay]}
@@ -21,8 +23,6 @@ const RoomImgSwiper = ({ roomImg }: RoomImgSwiperProps) => {
       {roomImg.map((obj: any) => (
         <>
           <SwiperSlide key={obj.fileName}>
-            {/* 추가 부분 */}
-            {/* if / HasCoupon / true  */}
             <div
               style={{
                 width: "120px",
@@ -43,7 +43,8 @@ const RoomImgSwiper = ({ roomImg }: RoomImgSwiperProps) => {
                 lineHeight: "24px",
               }}
             >
-              <span>10000 원 할인</span>
+              {coupons ? <span>{coupons[0].name}</span> : null}
+
               <span>적용 가능 객실</span>
             </div>
 
