@@ -7,11 +7,12 @@ import OrderPrice from "@/pages/order/orderPrice/OrderPrice";
 import { useRecoilValue } from "recoil";
 import { discountState } from "@/states/discountState";
 import { calculateNightStay } from "@/utils/calculateNightStay";
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { Badge } from "@/components/common";
 import englishToKoreanFormat from "@/utils/englishToKoreanFormat";
 import { ROOM_OPTIONS } from "@/constant/roomOptions";
 import "./orderItem.scss";
+import { Options } from "@/states/orderState";
 
 const OrderItem = memo(({ orderData }: OrderItemProps) => {
   const {
@@ -70,6 +71,6 @@ interface OrderItemProps {
     endDate: string;
     checkOutTime: string;
     price: number;
-    options: [];
+    options: Options;
   };
 }
