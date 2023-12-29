@@ -27,10 +27,6 @@ const OrderItem = memo(({ orderData }: OrderItemProps) => {
     options,
   } = orderData;
 
-  useEffect(() => {
-    console.log(orderData);
-  }, []);
-
   const discountAmt = useRecoilValue(discountState);
 
   return (
