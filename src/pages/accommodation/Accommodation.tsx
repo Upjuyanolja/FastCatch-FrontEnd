@@ -69,7 +69,7 @@ const Accommodation = () => {
         <CouponModal isVisible={isVisible} setIsVisible={setIsVisible} />
         <img
           style={{ height: "550px", width: "100%", objectFit: "cover" }}
-          src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.image}`}
+          src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.imageUrl}`}
           alt={data.name}
           loading="lazy"
         />
