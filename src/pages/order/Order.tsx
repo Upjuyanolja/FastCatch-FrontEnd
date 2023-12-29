@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
-import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { OrderItemTypes, orderState } from "@/states/orderState";
-import { PostOrderApiErrorResponse, postOrderApi } from "@/api/postOrderApi";
+import { PostOrderApiErrorResponse } from "@/api/postOrderApi";
 import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
 
@@ -37,7 +37,7 @@ const Order = memo(() => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const cartParam = urlParams.get("cart");
-  const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
+  const discountAmt = useRecoilValue(discountState);
   const totalOrderPrice =
     discountAmt !== 0
       ? discountAmt
