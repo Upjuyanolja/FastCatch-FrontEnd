@@ -3,6 +3,8 @@ import emailData from "../../public/data/emailData.json";
 import successSignUpData from "../../public/data/successSignUpData.json";
 import failSignUpData from "../../public/data/failSignUpData.json";
 import allAccommodations from "../../public/data/allAccommodations.json";
+import accommodationDetailData from "../../public/data/accommodationDetailData.json";
+import couponData from "../../public/data/couponData.json";
 import successLoginData from "../../public/data/successLoginData.json";
 import failLoginData from "../../public/data/failLoginData.json";
 import reservationList from "../../public/data/reservationList.json";
@@ -35,6 +37,12 @@ const postSignUpResolver = async () => {
 
 const getAccommodationResolver = () => {
   return HttpResponse.json(allAccommodations);
+};
+const getAccommodationDetailData = () => {
+  return HttpResponse.json(accommodationDetailData);
+};
+const getCouponsData = () => {
+  return HttpResponse.json(couponData);
 };
 
 const getLoginResolver = async () => {
@@ -75,6 +83,11 @@ export const handlers = [
     `${import.meta.env.VITE_API_BASE_URL}/api/accommodations`,
     getAccommodationResolver
   ),
+  http.get(
+    `${import.meta.env.VITE_API_BASE_URL}/api/accommodations/detail`,
+    getAccommodationDetailData
+  ),
+  http.get(`${import.meta.env.VITE_API_BASE_URL}/api/coupons`, getCouponsData),
   http.post(`/api/members/signin`, getLoginResolver),
   http.get(
     `${import.meta.env.VITE_API_BASE_URL}/api/reservations`,

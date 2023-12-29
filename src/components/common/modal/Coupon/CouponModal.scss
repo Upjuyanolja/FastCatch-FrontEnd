@@ -65,6 +65,12 @@
 
     border: 2px solid coral(500);
     border-radius: 16px;
+    &__color-coral {
+      color: coral(500);
+    }
+    &__color-gray {
+      color: gray(700);
+    }
 
     &__options {
       height: 80px;
@@ -81,12 +87,12 @@
       gap: 4px;
 
       &-item {
-        border: 2px solid coral(500);
+        border: 2px solid gray(700);
         border-radius: 4px;
 
         padding: 0px 8px;
 
-        background-color: coral(500);
+        background-color: gray(700);
 
         color: white;
         font-size: 14px;
