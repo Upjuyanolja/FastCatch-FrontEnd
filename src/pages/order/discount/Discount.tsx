@@ -4,6 +4,18 @@ import "./discount.scss";
 import { useRecoilValue, useRecoilState } from "recoil";
 import { orderState } from "@/states/orderState";
 import { discountState } from "@/states/discountState";
+import { atom } from "recoil";
+
+type CouponType = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+export const couponState = atom<CouponType | null>({
+  key: "couponState",
+  default: null,
+});
 
 const Discount = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +26,7 @@ const Discount = memo(() => {
     price: number;
   };
 
-  const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
+  const [selectedCoupon, setSelectedCoupon] = useRecoilState(couponState);
   const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -34,7 +46,6 @@ const Discount = memo(() => {
       <div className={`dropdown-container ${isOpen && "open"}`}>
         <div className="selected-option" onClick={toggleDropdown}>
           <span className="label">
-            {/* {selectedCoupon ? selectedCoupon.name : "선택안함"} */}
             {selectedCoupon ? selectedCoupon.name : "선택안함"}
           </span>
           <span

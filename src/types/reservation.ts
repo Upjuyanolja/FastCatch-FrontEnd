@@ -1,4 +1,4 @@
-export interface Order {
+export interface Reservation {
   orderId: number;
   orderStatus: string;
   orderDate: string;
@@ -22,9 +22,9 @@ export interface OrderItem {
   orderPrice: number;
 }
 
-export interface OrderDataTypes {
+export interface ReservationsTypes {
   status: string;
   pageSize: number;
   pageNum: number;
-  orderResponses: Order[];
+  orderResponses: Reservation[];
 }

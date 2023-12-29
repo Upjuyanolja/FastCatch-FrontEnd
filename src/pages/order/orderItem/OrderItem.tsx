@@ -4,7 +4,7 @@ import RoomName from "@/components/roomName/RoomName";
 import CheckIn from "@/components/checkIn/CheckIn";
 import CheckOut from "@/components/checkOut/CheckOut";
 import OrderPrice from "@/pages/order/orderPrice/OrderPrice";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { discountState } from "@/states/discountState";
 import "./orderItem.scss";
 import { calculateNightStay } from "@/utils/calculateNightStay";

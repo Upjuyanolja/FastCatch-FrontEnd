@@ -13,31 +13,12 @@ export const postOrderApi = async (
   }
 };
 
-interface PostOrderApiRequestBodyType {
+export interface PostOrderApiRequestBodyType {
   visitorName: string;
   visitorPhone: string;
   roomId: number;
   startDate: string;
-  //orderItems?: OrderItemType[];
   endDate: string;
-  couponId: number;
+  couponId: number | undefined;
   totalPrice: number;
-}
-
-export interface PostOrderApiErrorResponse {
-  message: string;
-  name: string;
-  stack: string;
-  response: {
-    data: {
-      errorMessage: string;
-    };
-  };
-  config: {
-    method: string;
-    url: string;
-    data: string;
-  };
-  code: string;
-  status: number;
 }

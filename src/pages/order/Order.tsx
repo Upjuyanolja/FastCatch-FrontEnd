@@ -1,15 +1,13 @@
 import { memo, useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { OrderItemTypes, orderState } from "@/states/orderState";
-import { PostOrderApiErrorResponse, postOrderApi } from "@/api/postOrderApi";
+import { postOrderApi } from "@/api/postOrderApi";
 import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
-
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
-
 import numberFormat from "@/utils/numberFormat";
 import { discountState } from "@/states/discountState";
-
+import { couponState } from "@/states/couponState";
 import { orderErrorMsgState } from "@/states/orderErrorMsgState";
 import { Button } from "@/components/common";
 import {
@@ -34,72 +32,43 @@ const Order = memo(() => {
   const [isAllValidationPass, setIsAllValidationPass] = useState(false);
   const orderData: OrderItemTypes[] = useRecoilValue(orderState);
   const setOrderErrorMsg = useSetRecoilState(orderErrorMsgState);
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const cartParam = urlParams.get("cart");
   const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
+
   const totalOrderPrice =
     discountAmt !== 0
       ? discountAmt
       : orderData.reduce((total, item) => total + item.price, 0);
+
+  const orderDetail = useRecoilValue(orderState);
+  const orderStartDate = orderDetail.length > 0 ? orderDetail[0].startDate : "";
+  const orderEndDate = orderDetail.length > 0 ? orderDetail[0].endDate : "";
+  const orderRoomId = orderDetail.length > 0 ? orderDetail[0].id : 0;
+  const [selectedCoupon, setSelectedCoupon] = useRecoilState(couponState);
 
   useEffect(() => {
     localStorage.setItem("orderState", JSON.stringify(orderData));
   }, [orderData]);
 
   const handleClick = () => {
-    if (cartParam === "true") {
-      postOrderApiFromCart();
-    }
-    if (cartParam === "false") {
-      postOrderApiFromAccommodation();
-    }
+    postReservationsApiFromAccommodation();
   };
 
-  const postOrderApiFromCart = async () => {
-    const cartItemIds: number[] = orderData
-      .map(item => {
-        return item.cartItemId;
-      })
-      .filter((cartId): cartId is number => typeof cartId === "number");
+  const postReservationsApiFromAccommodation = async () => {
     const requestBody = {
-      ageConsent: isAllCheck,
-      reservationPersonName: userName,
-      reservationPhoneNumber: userPhoneNumber,
-      totalPrice: totalOrderPrice,
-      cartItemIds: cartItemIds,
+      visitorName: userName,
+      visitorPhone: userPhoneNumber,
+      roomId: orderRoomId,
+      startDate: orderStartDate,
+      endDate: orderEndDate,
+      couponId: selectedCoupon?.id,
+      totalPrice: totalPrice,
     };
     try {
-      const res = await postOrderApi("/api/orders/carts", requestBody);
-      navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
+      const res = await postOrderApi("/api/reservations", requestBody);
+      navigate(`/`);
+      //navigate(`/order/result?result=true&orderid=${res.data.orderId}`); 결제 완료 메세지는 다른 백엔드, 프론트엔드 팀원들과 상의 후 결정
     } catch (error) {
-      navigate("/order/result?=false");
-      const postOrderApiError = error as PostOrderApiErrorResponse;
-      setOrderErrorMsg(postOrderApiError.response.data.errorMessage);
-    }
-  };
-
-  const postOrderApiFromAccommodation = async () => {
-    const requestBody = {
-      ageConsent: isAllCheck,
-      reservationPersonName: userName,
-      reservationPhoneNumber: userPhoneNumber,
-      totalPrice: totalOrderPrice,
-      orderItems: orderData.map(item => ({
-        roomId: item.id,
-        startDate: item.startDate,
-        endDate: item.endDate,
-        headCount: item.defaultCapacity,
-        orderPrice: item.price,
-      })),
-    };
-    try {
-      const res = await postOrderApi("/api/orders", requestBody);
-      navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
-    } catch (error) {
-      navigate("/order/result?=false");
-      const postOrderApiError = error as PostOrderApiErrorResponse;
-      setOrderErrorMsg(postOrderApiError.response.data.errorMessage);
+      navigate(`/`);
     }
   };
 

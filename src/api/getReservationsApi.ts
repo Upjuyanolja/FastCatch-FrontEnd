@@ -1,21 +1,21 @@
-import { OrderDataTypes } from "../types/order";
+import { ReservationsTypes } from "../types/reservation";
 import instance from "./instanceApi";
 
-export const getOrderApi = async () => {
+export const getReservationsApi = async () => {
   try {
-    const res = await instance.get("/api/orders");
+    const res = await instance.get("/api/reservations");
     const orderData = res.data.data.orders;
 
     const reservedOrders =
-      orderData.find((order: OrderDataTypes) => order.status === "reserved")
+      orderData.find((order: ReservationsTypes) => order.status === "reserved")
         ?.orderResponses || [];
 
     const usedOrders =
-      orderData.find((order: OrderDataTypes) => order.status === "used")
+      orderData.find((order: ReservationsTypes) => order.status === "used")
         ?.orderResponses || [];
 
     const canceledOrders =
-      orderData.find((order: OrderDataTypes) => order.status === "canceled")
+      orderData.find((order: ReservationsTypes) => order.status === "canceled")
         ?.orderResponses || [];
     return { orderData, reservedOrders, usedOrders, canceledOrders };
   } catch (error) {
