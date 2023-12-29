@@ -37,7 +37,6 @@ export async function refreshAccessToken() {
     },
   });
 
-  // console.log("토큰 재발급 성공", response.data);
   const newAccessToken = response.data.data.accessToken;
   localStorage.setItem("accessToken", newAccessToken);
 
