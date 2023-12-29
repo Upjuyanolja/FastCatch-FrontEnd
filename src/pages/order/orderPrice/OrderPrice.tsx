@@ -5,12 +5,7 @@ import { discountState } from "@/states/discountState";
 
 const OrderPrice = ({ nightCount, roomPrice }: OrderPriceProps) => {
   const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
-  console.log(roomPrice, discountAmt);
   const finalPrice = discountAmt > 0 ? discountAmt : roomPrice;
-
-  // Format the prices for display
-  const formattedOriginalPrice = numberFormat(roomPrice + discountAmt);
-  const formattedFinalPrice = numberFormat(finalPrice);
 
   return (
     <div className="order-price">
@@ -25,10 +20,12 @@ const OrderPrice = ({ nightCount, roomPrice }: OrderPriceProps) => {
 
       <div className="original-price-container">
         {discountAmt !== 0 && (
-          <span className="original-price">{formattedOriginalPrice}</span>
+          <span className="original-price">
+            {numberFormat(roomPrice + discountAmt)}
+          </span>
         )}
         <span className="order-price__price text-subtitle3">
-          {formattedFinalPrice}원
+          {numberFormat(finalPrice)}원
         </span>
       </div>
     </div>

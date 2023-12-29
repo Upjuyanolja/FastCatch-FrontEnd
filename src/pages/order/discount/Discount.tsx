@@ -31,7 +31,7 @@ const Discount = memo(() => {
   return (
     <div className="discount">
       <h4 className="text-subtitle4">할인</h4>
-      <div className="dropdown-container">
+      <div className={`dropdown-container ${isOpen && "open"}`}>
         <div className="selected-option" onClick={toggleDropdown}>
           <span className="label">
             {/* {selectedCoupon ? selectedCoupon.name : "선택안함"} */}
@@ -47,13 +47,16 @@ const Discount = memo(() => {
 
         {isOpen && (
           <ul className="dropdown-list">
-            <li
-              key="default-option"
-              className="dropdown-item"
-              onClick={() => selectCoupon(defaultOption)}
-            >
-              {defaultOption.name}
-            </li>
+            {selectedCoupon && selectedCoupon.name === "선택안함" && (
+              <li
+                key="default-option"
+                className="dropdown-item"
+                onClick={() => selectCoupon(defaultOption)}
+              >
+                {defaultOption.name}
+              </li>
+            )}
+
             {order[0]?.coupons.map(coupon => (
               <li
                 key={coupon.id}

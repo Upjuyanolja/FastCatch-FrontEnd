@@ -21,7 +21,7 @@ import {
   OrderItem,
 } from ".";
 import Discount from "@/pages/order/discount/Discount";
-
+import DiscountBadge from "./discountBadge/DiscountBadge";
 import "./order.scss";
 
 const Order = memo(() => {
@@ -111,6 +111,8 @@ const Order = memo(() => {
     setIsAllValidationPass(true);
   }, [isAllCheck, isBookerValidationPass]);
 
+  const totalPrice = orderData.reduce((sum, item) => sum + item.price, 0);
+
   return (
     <div className="order">
       <form>
@@ -132,6 +134,9 @@ const Order = memo(() => {
           setSelectedMethod={setSelectedMethod}
         />
         <TermsAgreement isAllCheck={isAllCheck} setIsAllCheck={setIsAllCheck} />
+        {discountAmt > 0 && (
+          <DiscountBadge savedAmt={totalPrice - discountAmt} />
+        )}
         <Button
           text={`${numberFormat(totalOrderPrice)}원 예약하기`}
           buttonSize={"exLarge"}
