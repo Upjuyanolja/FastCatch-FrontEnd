@@ -70,8 +70,8 @@ const Order = memo(() => {
       cartItemIds: cartItemIds,
     };
     try {
-      // const res = await postOrderApi("/api/orders/carts", requestBody);
-      // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
+      const res = await postOrderApi("/api/orders/carts", requestBody);
+      navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
     } catch (error) {
       navigate("/order/result?=false");
       const postOrderApiError = error as PostOrderApiErrorResponse;
@@ -94,8 +94,8 @@ const Order = memo(() => {
       })),
     };
     try {
-      // const res = await postOrderApi("/api/orders", requestBody);
-      // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
+      const res = await postOrderApi("/api/orders", requestBody);
+      navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
     } catch (error) {
       navigate("/order/result?=false");
       const postOrderApiError = error as PostOrderApiErrorResponse;
