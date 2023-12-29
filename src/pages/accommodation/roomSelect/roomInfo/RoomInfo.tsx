@@ -3,7 +3,7 @@ import { filterState } from "@/states/filterState";
 import { orderState } from "@/states/orderState";
 import { userState } from "@/states/userState";
 import { IRoom } from "@/types/accommodationDetail";
-import countDays from "@/utils/countDays";
+
 import englishToKoreanFormat from "@/utils/englishToKoreanFormat";
 import numberFormat from "@/utils/numberFormat";
 import { format } from "date-fns";
@@ -28,13 +28,15 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
   const {
     name,
     price,
-    roomOption,
-    roomId,
-    baseHeadCount,
-    maxHeadCount,
+    options,
+    id,
+    defaultCapacity,
+    maxCapacity,
     checkInTime,
     checkOutTime,
     soldOut,
+    discountPrice,
+    coupons,
   } = room;
 
   const setOrderData = useSetRecoilState(orderState);
@@ -47,31 +49,19 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
   const endDate = filterData.endDate
     ? format(filterData.endDate, "yyyy-MM-dd")
     : format(filterData.startDate, "yyyy-MM-dd");
-  const countDay = countDays(startDate, endDate);
+
   const curAmount = filterData.amount;
 
   const [isPossible, setIsPossible] = useState(false);
 
-  let totalPrice = 0;
-  if (curAmount < baseHeadCount) {
-    totalPrice = price * countDay;
-  } else if (curAmount > maxHeadCount) {
-    totalPrice = price * countDay + 15000 * (maxHeadCount - baseHeadCount);
-  } else {
-    totalPrice = price * countDay + 15000 * (curAmount - baseHeadCount);
-  }
-
   useEffect(() => {
-    if (curAmount < baseHeadCount) {
-      totalPrice = price;
+    if (curAmount < defaultCapacity) {
       setIsPossible(false);
       return;
-    } else if (curAmount > maxHeadCount) {
-      totalPrice = price + 15000 * (maxHeadCount - baseHeadCount);
+    } else if (curAmount > maxCapacity) {
       setIsPossible(false);
       return;
     } else {
-      totalPrice = price + 15000 * (curAmount - baseHeadCount);
       setIsPossible(true);
       return;
     }
@@ -87,6 +77,9 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
     hasNetflix: "넷플릭스",
     has_pc: "PC",
     canCooking: "취사 가능",
+    internet: "인터넷",
+    tv: "TV",
+    airCondition: "에어컨",
   };
 
   const onClickOrder = async () => {
@@ -103,16 +96,19 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
 
     await setOrderData([
       {
-        accommodationName: accommodationName,
-        checkInTime: checkInTime,
-        checkOutTime: checkOutTime,
-        headCount: filterData.amount,
-        maxHeadCount: maxHeadCount,
-        price: totalPrice,
-        roomId: roomId,
+        accommodationName,
+        checkInTime,
+        checkOutTime,
+        defaultCapacity,
+        maxCapacity,
+        price,
+        discountPrice,
+        id,
         roomName: name,
-        startDate: startDate,
-        endDate: endDate,
+        startDate,
+        endDate,
+        coupons,
+        options,
       },
     ]);
 
@@ -138,11 +134,11 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         <div className="accommodation__main-info__detail">
           <IoPeople size="17px" />
           <span className="text-body1">
-            기준 {baseHeadCount}인 / 최대 {maxHeadCount}인
+            기준 {defaultCapacity}인 / 최대 {maxCapacity}인
           </span>
         </div>
         <div className="room__options-container">
-          {englishToKoreanFormat(roomOption, template).map((option: any) => (
+          {englishToKoreanFormat(options, template).map((option: any) => (
             <Badge key={option} text={option} badgeStatus="gray" />
           ))}
         </div>
@@ -154,16 +150,20 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
           </div>
 
           {/* 쿠폰이 있으면 원래가격 */}
-          <div className="room__detail-info__strikethrough">
-            <span>75000원</span>
-          </div>
+          {coupons ? (
+            <div className="room__detail-info__strikethrough">
+              <span>{numberFormat(price)} 원</span>
+            </div>
+          ) : null}
 
           <div className="room__detail-info__price text-subtitle4">
             {/* 쿠폰이 있으면 쿠폰가 div */}
-            <div className="room__detail-info__price__discountBox">
-              <span>쿠폰가</span>
-            </div>
-            {numberFormat(totalPrice)} 원
+            {coupons && (
+              <div className="room__detail-info__price__discountBox">
+                <span>쿠폰가</span>
+              </div>
+            )}
+            {numberFormat(discountPrice ? discountPrice : price)} 원
           </div>
         </div>
       </div>
