@@ -46,8 +46,8 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
               }}
             >
               {coupons ? <span>{coupons[0].name}</span> : null}
-              {/* <span>10000 원 할인</span>
-              <span>적용 가능 객실</span> */}
+
+              <span>적용 가능 객실</span>
             </div>
 
             <img
