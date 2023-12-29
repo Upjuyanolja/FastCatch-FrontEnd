@@ -61,8 +61,9 @@ const deleteCancelReservation = () => {
   return HttpResponse.json(successCancelReservation);
 };
 
-const postTokenResolver = () => {
-  return HttpResponse.json(successTokenData);
+const postTokenResolver = async ({ request }: any) => {
+  const newPost = await request.json();
+  return HttpResponse.json(newPost, { status: 200 });
 };
 
 const getInfoResolver = () => {

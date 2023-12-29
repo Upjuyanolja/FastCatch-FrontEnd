@@ -7,6 +7,7 @@ import { MdLogout } from "react-icons/md";
 import { userState } from "@/states/userState";
 import instance from "@/api/instanceApi";
 import axios from "axios";
+import { removeCookie } from "@/utils/cookies";
 
 const LogoutButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,6 +27,7 @@ const LogoutButton = () => {
             try {
               const res = await axios.post(`/api/members/signout`);
               localStorage.removeItem("accessToken");
+              removeCookie();
               setUserInfo(null);
               navigate("/");
 

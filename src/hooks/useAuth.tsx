@@ -2,7 +2,7 @@ import axios from "axios";
 import { useSetRecoilState } from "recoil";
 
 import { userInfoI, userState } from "@/states/userState";
-import { setCookie } from "@/utils/cookies";
+import { getCookie, setCookie } from "@/utils/cookies";
 
 export const useAuth = () => {
   const setUserInfo = useSetRecoilState(userState);
@@ -24,25 +24,18 @@ export const useAuth = () => {
 export async function refreshAccessToken() {
   const accessToken = localStorage.getItem("accessToken");
   const userDataString = localStorage.getItem("userState");
-
+  const refreshToken = getCookie("refreshToken");
   if (!userDataString) {
     console.error("User data not found in localStorage");
     return;
   }
 
-  const userData = JSON.parse(userDataString);
-  const userEmail = userData.email;
-
-  const response = await axios.post(
-    `/api/members/re-token`,
-    { email: userEmail },
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await axios.post(`/api/members/re-token`, refreshToken, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+  });
 
   console.log("토큰 재발급 성공", response.data);
   const newAccessToken = response.data.data.accessToken;
