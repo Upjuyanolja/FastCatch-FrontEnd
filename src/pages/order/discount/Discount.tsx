@@ -47,15 +47,13 @@ const Discount = memo(() => {
 
         {isOpen && (
           <ul className="dropdown-list">
-            {selectedCoupon && selectedCoupon.name === "선택안함" && (
-              <li
-                key="default-option"
-                className="dropdown-item"
-                onClick={() => selectCoupon(defaultOption)}
-              >
-                {defaultOption.name}
-              </li>
-            )}
+            <li
+              key="default-option"
+              className="dropdown-item"
+              onClick={() => selectCoupon(defaultOption)}
+            >
+              {defaultOption.name}
+            </li>
 
             {order[0]?.coupons.map(coupon => (
               <li
