@@ -4,7 +4,8 @@ import RoomName from "@/components/roomName/RoomName";
 import CheckIn from "@/components/checkIn/CheckIn";
 import CheckOut from "@/components/checkOut/CheckOut";
 import OrderPrice from "@/pages/order/orderPrice/OrderPrice";
-
+import { useRecoilState } from "recoil";
+import { discountState } from "@/states/discountState";
 import "./orderItem.scss";
 import { calculateNightStay } from "@/utils/calculateNightStay";
 import { memo } from "react";
@@ -22,6 +23,8 @@ const OrderItem = memo(({ orderData }: OrderItemProps) => {
     price,
   } = orderData;
 
+  const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
+
   return (
     <div className="order-item">
       <div className="order-item__name">
@@ -38,7 +41,7 @@ const OrderItem = memo(({ orderData }: OrderItemProps) => {
         </div>
         <OrderPrice
           nightCount={calculateNightStay(startDate, endDate)}
-          roomPrice={price}
+          roomPrice={price - discountAmt}
         />
       </div>
     </div>

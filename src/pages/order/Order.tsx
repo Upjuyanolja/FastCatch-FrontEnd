@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { OrderItemTypes, orderState } from "@/states/orderState";
 import { PostOrderApiErrorResponse, postOrderApi } from "@/api/postOrderApi";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import _debounce from "lodash/debounce";
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
 
 import numberFormat from "@/utils/numberFormat";
+import { discountState } from "@/states/discountState";
 
 import { orderErrorMsgState } from "@/states/orderErrorMsgState";
 import { Button } from "@/components/common";
@@ -36,10 +37,11 @@ const Order = memo(() => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const cartParam = urlParams.get("cart");
-  const totalOrderPrice = orderData.reduce(
-    (total, item) => total + item.price,
-    0
-  );
+  const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
+  const totalOrderPrice =
+    discountAmt !== 0
+      ? discountAmt
+      : orderData.reduce((total, item) => total + item.price, 0);
 
   useEffect(() => {
     localStorage.setItem("orderState", JSON.stringify(orderData));
@@ -68,8 +70,8 @@ const Order = memo(() => {
       cartItemIds: cartItemIds,
     };
     try {
-      const res = await postOrderApi("/api/orders/carts", requestBody);
-      navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
+      // const res = await postOrderApi("/api/orders/carts", requestBody);
+      // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
     } catch (error) {
       navigate("/order/result?=false");
       const postOrderApiError = error as PostOrderApiErrorResponse;
@@ -92,8 +94,8 @@ const Order = memo(() => {
       })),
     };
     try {
-      const res = await postOrderApi("/api/orders", requestBody);
-      navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
+      // const res = await postOrderApi("/api/orders", requestBody);
+      // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
     } catch (error) {
       navigate("/order/result?=false");
       const postOrderApiError = error as PostOrderApiErrorResponse;
