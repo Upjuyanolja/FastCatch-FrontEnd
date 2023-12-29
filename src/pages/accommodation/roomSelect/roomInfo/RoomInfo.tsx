@@ -3,7 +3,7 @@ import { filterState } from "@/states/filterState";
 import { orderState } from "@/states/orderState";
 import { userState } from "@/states/userState";
 import { IRoom } from "@/types/accommodationDetail";
-// import countDays from "@/utils/countDays";
+
 import englishToKoreanFormat from "@/utils/englishToKoreanFormat";
 import numberFormat from "@/utils/numberFormat";
 import { format } from "date-fns";
@@ -96,18 +96,19 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
 
     await setOrderData([
       {
-        accommodationName: accommodationName,
-        checkInTime: checkInTime,
-        checkOutTime: checkOutTime,
-        defaultCapacity: defaultCapacity,
-        maxCapacity: maxCapacity,
-        price: price,
-        discountPrice: discountPrice ? discountPrice : null,
-        id: id,
+        accommodationName,
+        checkInTime,
+        checkOutTime,
+        defaultCapacity,
+        maxCapacity,
+        price,
+        discountPrice,
+        id,
         roomName: name,
-        startDate: startDate,
-        endDate: endDate,
-        coupons: coupons,
+        startDate,
+        endDate,
+        coupons,
+        options,
       },
     ]);
 
@@ -157,11 +158,11 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
 
           <div className="room__detail-info__price text-subtitle4">
             {/* 쿠폰이 있으면 쿠폰가 div */}
-            {coupons ? (
+            {coupons && (
               <div className="room__detail-info__price__discountBox">
                 <span>쿠폰가</span>
               </div>
-            ) : null}
+            )}
             {numberFormat(discountPrice ? discountPrice : price)} 원
           </div>
         </div>
