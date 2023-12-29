@@ -6,7 +6,6 @@ export const setCookie = (refreshToken: string) => {
     document.cookie = `refreshToken=${refreshToken};expires=${expirationDateString};path=/;secure;`;
   } catch (e) {
     console.error(e);
-    alert("쿠키설정에 실패했습니다.");
   }
 };
 
@@ -23,6 +22,5 @@ export const removeCookie = async () => {
     document.cookie = "refreshToken=; expires=0; path=/";
   } catch (e) {
     console.error(e);
-    alert("쿠키삭제에 실패했습니다.");
   }
 };
