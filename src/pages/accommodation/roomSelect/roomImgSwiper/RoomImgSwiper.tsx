@@ -23,8 +23,6 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
       {roomImg.map((obj: any) => (
         <>
           <SwiperSlide key={obj.fileName}>
-            {/* 추가 부분 */}
-            {/* if / HasCoupon / true  */}
             <div
               style={{
                 width: "120px",
