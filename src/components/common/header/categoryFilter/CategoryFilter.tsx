@@ -87,7 +87,7 @@ const CategoryFilter = () => {
     setHasCoupon(prev => !prev);
     if (keyword !== "") setKeyword("");
   };
-
+  console.log(hasCoupon);
   return (
     <div className="category-filter__container">
       <div className="category-filter__inner">
@@ -119,7 +119,9 @@ const CategoryFilter = () => {
           )
         )}
         <div className="filter__adjust-height">
-          <div className={`filter__button-detail ${hasCoupon && "discount"}`}>
+          <div
+            className={`filter__button-detail ${hasCoupon && "discount-main"}`}
+          >
             <input
               type="checkbox"
               className="discount-filter"
@@ -127,7 +129,7 @@ const CategoryFilter = () => {
               checked={hasCoupon}
             />
             <label
-              className={`discount-filter-text ${hasCoupon && "discount"}`}
+              className={`discount-filter-text ${hasCoupon && "discount-main"}`}
             >
               할인숙소
             </label>
