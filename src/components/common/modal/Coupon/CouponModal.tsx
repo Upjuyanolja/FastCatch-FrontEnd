@@ -66,17 +66,21 @@ const CouponModal = ({ isVisible, setIsVisible }: modalPropI) => {
                   >
                     <div>
                       <div>
-                        <span className="text-subtitle3">
+                        <span className="coupon-modal-wrap__body__coupon-wrap__color-coral text-subtitle3">
                           {coupon.couponName.split(" ")[0] + " "}
                         </span>
-                        <span className="text-subtitle5">
+                        <span className="coupon-modal-wrap__body__coupon-wrap__color-gray text-subtitle5">
                           {coupon.couponName.split(" ")[1]}
                           {coupon.couponName.split(" ")[2]}
                         </span>
                       </div>
                       <ul className="coupon-modal-wrap__body__coupon-wrap__options text-body3">
-                        <li>숙박 예약 시</li>
-                        <li>{coupon.endDate.slice(2)} 까지</li>
+                        <li className="coupon-modal-wrap__body__coupon-wrap__color-coral">
+                          숙박 예약 시
+                        </li>
+                        <li coupon-modal-wrap__body__coupon-wrap__color-gray>
+                          {coupon.endDate.slice(2)} 까지
+                        </li>
                       </ul>
                       <div className="coupon-modal-wrap__body__coupon-wrap__room">
                         {coupon.rooms.map((room, roomIndex) => (
