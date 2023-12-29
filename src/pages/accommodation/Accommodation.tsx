@@ -1,12 +1,12 @@
-import { useRecoilValue } from "recoil";
-import { format } from "date-fns";
+// import { useRecoilValue } from "recoil";
+// import { format } from "date-fns";
 import "./accommodation.scss";
 import { useQuery } from "react-query";
 import RoomSelect from "./roomSelect/RoomSelect";
 import AccommodationMainInfo from "./accommodationMainInfo/AccommodationMainInfo";
 import AccommodationOptions from "./accommodationOptions/AccommodationOptions";
 import AccommodationMap from "./accommodationMap/AccommodationMap";
-import { filterState } from "@/states/filterState";
+// import { filterState } from "@/states/filterState";
 
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
@@ -17,13 +17,12 @@ import CouponModal from "@/components/common/modal/Coupon/CouponModal";
 import { useState } from "react";
 
 const Accommodation = () => {
-  const filterData = useRecoilValue(filterState);
-
-  const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
-  const endDate = filterData.endDate
-    ? format(filterData.endDate, "yyyy-MM-dd")
-    : format(filterData.startDate, "yyyy-MM-dd");
-  console.log(startDate, endDate);
+  // 해당 부분은 추후에 서버 API할 때 넣을 , Requset 부분입니다. 임시 주석입니다.
+  // const filterData = useRecoilValue(filterState);
+  // const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
+  // const endDate = filterData.endDate
+  //   ? format(filterData.endDate, "yyyy-MM-dd")
+  //   : format(filterData.startDate, "yyyy-MM-dd");
 
   const [isVisible, setIsVisible] = useState(false);
 
