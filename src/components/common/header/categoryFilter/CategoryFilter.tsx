@@ -87,7 +87,6 @@ const CategoryFilter = () => {
     setHasCoupon(prev => !prev);
     if (keyword !== "") setKeyword("");
   };
-  console.log(hasCoupon);
   return (
     <div className="category-filter__container">
       <div className="category-filter__inner">
