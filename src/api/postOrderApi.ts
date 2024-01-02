@@ -18,7 +18,26 @@ export interface PostOrderApiRequestBodyType {
   visitorPhone: string;
   roomId: number;
   startDate: string;
+  //orderItems?: OrderItemType[];
   endDate: string;
-  couponId: number | undefined;
+  couponId: number;
   totalPrice: number;
+}
+
+export interface PostOrderApiErrorResponse {
+  message: string;
+  name: string;
+  stack: string;
+  response: {
+    data: {
+      errorMessage: string;
+    };
+  };
+  config: {
+    method: string;
+    url: string;
+    data: string;
+  };
+  code: string;
+  status: number;
 }

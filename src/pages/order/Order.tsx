@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { OrderItemTypes, orderState } from "@/states/orderState";
-import { postOrderApi } from "@/api/postOrderApi";
+import { postOrderApi, PostOrderApiErrorResponse } from "@/api/postOrderApi";
 import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
@@ -60,7 +60,7 @@ const Order = memo(() => {
       roomId: orderRoomId,
       startDate: orderStartDate,
       endDate: orderEndDate,
-      couponId: selectedCoupon?.id,
+      couponId: selectedCoupon ? selectedCoupon.id : "",
       totalPrice: totalPrice,
     };
     try {

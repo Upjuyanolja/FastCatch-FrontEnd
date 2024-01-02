@@ -4,6 +4,8 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { orderState } from "@/states/orderState";
 import { discountState } from "@/states/discountState";
 
+import "./discount.scss";
+
 const Discount = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
 
