@@ -1,14 +1,13 @@
 import { memo, useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 import { OrderItemTypes, orderState } from "@/states/orderState";
-import { postOrderApi, PostOrderApiErrorResponse } from "@/api/postOrderApi";
+import { postOrderApi } from "@/api/postOrderApi";
 import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
 import numberFormat from "@/utils/numberFormat";
 import { discountState } from "@/states/discountState";
 import { couponState } from "@/states/couponState";
-import { orderErrorMsgState } from "@/states/orderErrorMsgState";
 import { Button } from "@/components/common";
 import {
   BookerInformation,
@@ -31,7 +30,6 @@ const Order = memo(() => {
   const [isBookerValidationPass, setIsBookerValidationPass] = useState(false);
   const [isAllValidationPass, setIsAllValidationPass] = useState(false);
   const orderData: OrderItemTypes[] = useRecoilValue(orderState);
-  const setOrderErrorMsg = useSetRecoilState(orderErrorMsgState);
   const [discountAmt, setDiscountAmt] = useRecoilState(discountState);
 
   const totalOrderPrice =
