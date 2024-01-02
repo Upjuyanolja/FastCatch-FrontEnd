@@ -7,7 +7,6 @@ import accommodationDetailData from "../../public/data/accommodationDetailData.j
 import couponData from "../../public/data/couponData.json";
 import successLoginData from "../../public/data/successLoginData.json";
 import failLoginData from "../../public/data/failLoginData.json";
-import reservationList from "../../public/data/reservationList.json";
 import cancelReservationList from "../../public/data/cancelReservationList.json";
 import successCancelReservation from "../../public/data/successCancelReservation.json";
 import successTokenData from "../../public/data/successTokenData.json";
@@ -49,10 +48,6 @@ const getLoginResolver = async () => {
   return HttpResponse.json(successLoginData, { status: 200 });
 };
 
-const getReservationListResolver = () => {
-  return HttpResponse.json(reservationList);
-};
-
 const getCancelReservationListResolver = () => {
   return HttpResponse.json(cancelReservationList);
 };
@@ -90,10 +85,6 @@ export const handlers = [
   ),
   http.get(`${import.meta.env.VITE_API_BASE_URL}/api/coupons`, getCouponsData),
   http.post(`/api/members/signin`, getLoginResolver),
-  http.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/reservations`,
-    getReservationListResolver
-  ),
   http.get(
     `${import.meta.env.VITE_API_BASE_URL}/api/reservations/cancel`,
     getCancelReservationListResolver

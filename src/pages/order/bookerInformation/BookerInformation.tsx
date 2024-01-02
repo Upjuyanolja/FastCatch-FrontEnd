@@ -33,7 +33,7 @@ const BookerInformation = ({
   useEffect(() => {
     if (userState) {
       setUserName(userInfo?.name || "");
-      setUserPhoneNumber(userInfo?.phoneNumber || "");
+      setUserPhoneNumber(userInfo?.phone || "");
       setIsBookerValidationPass(true);
     }
   }, [userState]);

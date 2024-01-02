@@ -60,7 +60,7 @@ const Order = memo(() => {
       roomId: orderRoomId,
       startDate: orderStartDate,
       endDate: orderEndDate,
-      couponId: selectedCoupon ? selectedCoupon.id : "",
+      couponId: selectedCoupon ? selectedCoupon.id : -1,
       totalPrice: totalPrice,
     };
     try {
