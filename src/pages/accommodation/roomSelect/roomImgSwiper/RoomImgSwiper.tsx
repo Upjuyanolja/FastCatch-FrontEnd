@@ -3,13 +3,13 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Coupon } from "@/types/accommodationDetail";
 
+const MAX_DISCOUNT = 0;
+
 interface RoomImgSwiperProps {
   roomImg: object[];
   coupons: Coupon[];
 }
 const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
-  console.log(roomImg);
-  console.log(roomImg[0]);
   return (
     <Swiper
       modules={[Navigation, Autoplay]}
@@ -45,7 +45,7 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
                 lineHeight: "24px",
               }}
             >
-              {coupons ? <span>{coupons[0].name}</span> : null}
+              {coupons ? <span>{coupons[MAX_DISCOUNT].name}</span> : null}
 
               <span>적용 가능 객실</span>
             </div>
