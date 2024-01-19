@@ -8,6 +8,8 @@ interface RoomImgSwiperProps {
   coupons: Coupon[];
 }
 const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
+  console.log(roomImg);
+  console.log(roomImg[0]);
   return (
     <Swiper
       modules={[Navigation, Autoplay]}
@@ -20,9 +22,9 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
       resistance={false}
       style={{ height: "264px", margin: "0 4px" }}
     >
-      {roomImg.map((obj: any) => (
+      {roomImg.map((obj: any, index) => (
         <>
-          <SwiperSlide key={obj.fileName}>
+          <SwiperSlide key={index}>
             <div
               style={{
                 width: "120px",
@@ -54,7 +56,7 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
                 width: "100%",
                 objectFit: "cover",
               }}
-              src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${obj.fileName}`}
+              src={`${obj}`}
               alt={"이미지"}
               loading="lazy"
             />
