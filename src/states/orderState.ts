@@ -12,7 +12,7 @@ export const orderStateFromLocalStorage = selector({
     return storedValue ? JSON.parse(storedValue) : get(orderState);
   },
 });
-interface Options {
+export interface Options {
   airCondition?: boolean;
   tv?: boolean;
   internet?: boolean;

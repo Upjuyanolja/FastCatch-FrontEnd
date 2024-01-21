@@ -4,7 +4,7 @@ import successSignUpData from "../../public/data/successSignUpData.json";
 import failSignUpData from "../../public/data/failSignUpData.json";
 import allAccommodations from "../../public/data/allAccommodations.json";
 import accommodationDetailData from "../../public/data/accommodationDetailData.json";
-import couponData from "../../public/data/couponData.json";
+import couponData from "../../public/data/CouponData.json";
 import successLoginData from "../../public/data/successLoginData.json";
 import failLoginData from "../../public/data/failLoginData.json";
 import reservationList from "../../public/data/reservationList.json";

@@ -1,31 +1,52 @@
-import { SetStateAction, memo, useState } from "react";
-
-//import DiscountItem from "@/pages/discount/discountItem/DiscountItem";
-import { discount } from "@/constant/discount";
+import { memo, useEffect, useState } from "react";
 import { FaSortDown } from "react-icons/fa6";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { orderState } from "@/states/orderState";
+import { discountState } from "@/states/discountState";
+
 import "./discount.scss";
-
-type OptionType = {
-  label: string;
-  value: string;
-};
-
-type CustomDropdownProps = {
-  options: OptionType[];
-};
 
 const Discount = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<OptionType | null>(null);
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
-
-  const selectOption = (option: OptionType) => {
-    setSelectedOption(option);
-    setIsOpen(false);
+  type CouponType = {
+    id: number;
+    name: string;
+    price: number;
   };
 
-  const defaultOption: OptionType = { label: "선택없음", value: "" };
+  const [couponList, setCouponList] = useState<CouponType[] | []>([]);
+  const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
+  const setDiscountAmt = useSetRecoilState(discountState);
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const selectCoupon = (coupon: CouponType) => {
+    setSelectedCoupon(coupon);
+    setDiscountAmt(coupon.price);
+    setIsOpen(false);
+
+    if (
+      coupon.name === "선택안함" ||
+      !couponList.find(item => item.name === defaultOption.name)
+    ) {
+      setCouponList(
+        coupon.name === "선택안함"
+          ? order[0]?.coupons || []
+          : [defaultOption, ...couponList]
+      );
+    }
+  };
+
+  const defaultOption: CouponType = { name: "선택안함", id: 0, price: 0 };
+
+  const order = useRecoilValue(orderState);
+
+  useEffect(() => {
+    if (!order) {
+      return;
+    }
+    setCouponList(order[0].coupons);
+  }, [order]);
 
   return (
     <div className="discount">
@@ -33,7 +54,7 @@ const Discount = memo(() => {
       <div className={`dropdown-container ${isOpen && "open"}`}>
         <div className="selected-option" onClick={toggleDropdown}>
           <span className="label">
-            {selectedOption ? selectedOption.label : "선택안함"}
+            {selectedCoupon ? selectedCoupon.name : "선택안함"}
           </span>
           <span
             className={`arrow ${isOpen ? "open" : ""}`}
@@ -45,35 +66,18 @@ const Discount = memo(() => {
 
         {isOpen && (
           <ul className="dropdown-list">
-            <li
-              key="default-option"
-              className="dropdown-item"
-              onClick={() => selectOption(defaultOption)}
-            >
-              {defaultOption.label}
-            </li>
-            {discount.map(option => (
+            {couponList.map(coupon => (
               <li
-                key={option.value}
+                key={coupon.id}
                 className="dropdown-item"
-                onClick={() => selectOption(option)}
+                onClick={() => selectCoupon(coupon)}
               >
-                {option.label}
+                {coupon.name}
               </li>
             ))}
           </ul>
         )}
       </div>
-
-      {/* {discount.map((option, index) => (
-          <DiscountItem
-            className={""}
-            methodName={option}
-            key={index}
-            selectedDiscount={selectedDiscount}
-            setSelectedDiscount={setSelectedDiscount}
-          />
-        ))} */}
     </div>
   );
 });

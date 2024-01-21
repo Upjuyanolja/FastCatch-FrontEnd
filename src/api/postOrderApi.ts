@@ -13,21 +13,15 @@ export const postOrderApi = async (
   }
 };
 
-interface OrderItemType {
+interface PostOrderApiRequestBodyType {
+  visitorName: string;
+  visitorPhone: string;
   roomId: number;
   startDate: string;
+  //orderItems?: OrderItemType[];
   endDate: string;
-  headCount: number;
-  orderPrice: number;
-}
-
-interface PostOrderApiRequestBodyType {
-  ageConsent: boolean;
-  reservationPersonName: string;
-  reservationPhoneNumber: string;
+  couponId: number;
   totalPrice: number;
-  orderItems?: OrderItemType[];
-  cartItemIds?: number[];
 }
 
 export interface PostOrderApiErrorResponse {
