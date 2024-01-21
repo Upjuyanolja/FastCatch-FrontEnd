@@ -1,7 +1,7 @@
 export interface Coupon {
-  id: number;
-  name: string;
-  price: number;
+  id?: number;
+  name?: string;
+  price?: number;
 }
 export interface IRoom {
   basePrice: number;
