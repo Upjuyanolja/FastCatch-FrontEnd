@@ -25,30 +25,32 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
       {roomImg.map((obj: any, index) => (
         <>
           <SwiperSlide key={index}>
-            <div
-              style={{
-                width: "120px",
-                height: "80px",
+            {coupons.length > 0 && (
+              <div
+                style={{
+                  width: "120px",
+                  height: "80px",
 
-                backgroundColor: "#FE395B",
-                color: "#FFF",
+                  backgroundColor: "#FE395B",
+                  color: "#FFF",
 
-                position: "fixed",
-                left: "17px",
+                  position: "fixed",
+                  left: "17px",
 
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
 
-                fontWeight: "700",
-                lineHeight: "24px",
-              }}
-            >
-              {coupons ? <span>{coupons[MAX_DISCOUNT].name}</span> : null}
+                  fontWeight: "700",
+                  lineHeight: "24px",
+                }}
+              >
+                <span>{coupons[MAX_DISCOUNT]?.name}</span>
 
-              <span>적용 가능 객실</span>
-            </div>
+                <span>적용 가능 객실</span>
+              </div>
+            )}
 
             <img
               style={{

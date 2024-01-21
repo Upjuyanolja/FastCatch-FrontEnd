@@ -28,6 +28,7 @@ const Accommodation = () => {
   const { data, isLoading, refetch, isError } = useQuery({
     queryKey: [id, "postDetail"],
     queryFn: () => getAccommodationDetailApi(id, startDate, endDate),
+    onSuccess: data => console.log(data),
     staleTime: 500000,
     cacheTime: 5000000,
   });
@@ -39,6 +40,7 @@ const Accommodation = () => {
       </div>
     );
   }
+
   if (isError || !data) {
     return (
       <div className="home__animation-container">
@@ -55,7 +57,14 @@ const Accommodation = () => {
   return (
     <>
       <div className="accommodation-container">
-        <CouponModal isVisible={isVisible} setIsVisible={setIsVisible} />
+        {isVisible && (
+          <CouponModal
+            isVisible={isVisible}
+            setIsVisible={setIsVisible}
+            id={id}
+          />
+        )}
+
         <img
           style={{ height: "550px", width: "100%", objectFit: "cover" }}
           src={`${data.images[0]}`}
