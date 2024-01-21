@@ -28,7 +28,7 @@ const Accommodation = () => {
   const { data, isLoading, refetch, isError } = useQuery({
     queryKey: [id, "postDetail"],
     queryFn: () => getAccommodationDetailApi(id, startDate, endDate),
-    onSuccess: data => console.log(data),
+
     staleTime: 500000,
     cacheTime: 5000000,
   });

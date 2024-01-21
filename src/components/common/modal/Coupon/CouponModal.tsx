@@ -14,7 +14,6 @@ interface modalPropI {
 }
 
 const CouponModal = ({ isVisible, setIsVisible, id }: modalPropI) => {
-  console.log(id);
   useEffect(() => {
     document.body.classList.toggle("no-scroll", isVisible);
     refetch();
@@ -25,8 +24,7 @@ const CouponModal = ({ isVisible, setIsVisible, id }: modalPropI) => {
   const { data, isLoading, refetch, isError } = useQuery({
     queryKey: [id, "couponData"],
     queryFn: () => getCouponDataApi(id),
-    onSuccess: res => console.log(res),
-    onError: error => console.log(error),
+
     staleTime: 500000,
     cacheTime: 5000000,
   });
