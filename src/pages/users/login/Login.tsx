@@ -6,11 +6,10 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import "../users.scss";
-// import instance from "@/api/instanceApi";
 import { useAuth } from "@/hooks/useAuth";
 import { Button, ToastLayout } from "@/components/common";
 import { memberResI } from "@/types/member";
-import axios from "axios";
+import instance from "@/api/instanceApi";
 
 const Login = () => {
   // 회원가입/로그인 링크이동
@@ -43,7 +42,7 @@ const Login = () => {
     e.preventDefault();
     const requestBody = { email, password };
     try {
-      const res = await axios.post("/api/members/signin", requestBody);
+      const res = await instance.post("/api/auth/members/signin", requestBody);
       const { accessToken, refreshToken, memberResponse }: memberResI =
         res.data.data;
       setToken(accessToken, refreshToken, memberResponse);
