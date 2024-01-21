@@ -10,6 +10,7 @@ const TermsAgreementItem = ({
   labelText,
   className,
   id,
+  name,
 }: TermsAgreementItemProps) => {
   return (
     <div className="terms-agreement__item">
@@ -17,10 +18,10 @@ const TermsAgreementItem = ({
         type="checkbox"
         id={id}
         checked={state}
+        name={name}
         onChange={() => {
           setState(!state);
         }}
-        required
       />
       {state ? (
         <IoCheckbox
@@ -52,4 +53,5 @@ interface TermsAgreementItemProps {
   labelText: ReactNode;
   className: string;
   id: string;
+  name: string;
 }
