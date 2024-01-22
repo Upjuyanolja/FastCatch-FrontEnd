@@ -26,7 +26,7 @@ export interface AccommodationCategory {
 
 export const accommodationCategoryData: AccommodationCategory = {
   ALL: "전체",
-  PENSION: "팬션/풀빌라",
+  PENSION: "펜션/풀빌라",
   HOTELRESORT: "호텔/리조트",
   MOTEL: "모텔",
   GUESTHOUSE: "게스트하우스",

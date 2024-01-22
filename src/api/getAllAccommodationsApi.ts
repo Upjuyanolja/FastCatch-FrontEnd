@@ -3,7 +3,7 @@ import instance from "./instanceApi";
 export type AccommodationParams = {
   category: string;
   page: number;
-  hasCoupon: boolean;
+  onlyHasCoupon: boolean;
   keyword: string;
 };
 export type Accommodation = {
@@ -32,14 +32,14 @@ export type ResponseAccommodation = {
 
 export const getAllAccommodations = ({
   category = "string",
-  hasCoupon = false,
+  onlyHasCoupon = false,
   keyword = "",
   page = 1,
 }: AccommodationParams) => {
   return instance.get<ResponseAccommodation>("/api/accommodations", {
     params: {
       category,
-      hasCoupon,
+      onlyHasCoupon,
       page,
       keyword,
     },
