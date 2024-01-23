@@ -92,7 +92,7 @@ export const handlers = [
     getReservationListResolver
   ),
   http.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/reservations/cancel`,
+    `${import.meta.env.VITE_API_BASE_URL}/api/reservations`,
     getCancelReservationListResolver
   ),
   http.delete(
