@@ -40,17 +40,17 @@ const CategoryFilter = () => {
     {
       name: "호텔/리조트",
       img: PENSION,
-      engName: "HOTELRESORT",
+      engName: "HOTEL_RESORT",
       select: false,
     },
     { name: "모텔", img: GUESTHOUSE, engName: "MOTEL", select: false },
     {
-      name: "팬션/풀빌라",
+      name: "펜션/풀빌라",
       img: HOTELRESORT,
-      engName: "PENSION",
+      engName: "PENSION_POOL_VILLA",
       select: false,
     },
-    { name: "게스트하우스", img: MOTEL, engName: "GUESTHOUSE", select: false },
+    { name: "게스트하우스", img: MOTEL, engName: "GUEST_HOUSE", select: false },
   ];
 
   const [categories, setCategories] = useState(categoriesData);

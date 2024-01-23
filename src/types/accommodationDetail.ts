@@ -1,13 +1,13 @@
 export interface Coupon {
-  id: number;
-  name: string;
-  price: number;
+  id?: number;
+  name?: string;
+  price?: number;
 }
 export interface IRoom {
-  price: number;
+  basePrice: number;
   id: number;
   name: string;
-  options: IRoomOption;
+  roomOption: IRoomOption;
   defaultCapacity: number;
   maxCapacity: number;
   checkInTime: string;
@@ -17,6 +17,7 @@ export interface IRoom {
   images?: Array<Object>;
   discountPrice: number | null;
   coupons: Coupon[];
+  count: number;
 }
 
 export interface IRoomOption {
@@ -37,16 +38,17 @@ export interface IAccommodationOptionsType {
   sports: boolean;
 }
 export interface IAccommodationDetail {
-  accommodationOption: IAccommodationOptionsType;
+  option: IAccommodationOptionsType;
   address: string;
   category: string;
   description: string;
   id: number;
-  image: string;
-  latitude: string;
-  longitude: string;
+  images: string[];
+  // latitude: string;
+  // longitude: string;
   name: string;
   phoneNumber: string;
   region: string;
   rooms: Array<IRoom>;
+  mainCoupon: string;
 }
