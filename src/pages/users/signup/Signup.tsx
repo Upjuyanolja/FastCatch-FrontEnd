@@ -59,11 +59,11 @@ const Signup = () => {
   const duplicatedId = async () => {
     try {
       const res = await instance.get(`/api/auth/members/email?email=${email}`);
-      if (res.data.data.isExists === false) {
+      console.log(res);
+      if (res.data.isExists === false) {
         setIsIdValid(true);
         showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
       } else {
-        setIsIdValid(false);
         showToast({ theme: "error", message: "사용 불가능한 아이디입니다" });
       }
       return res;
@@ -220,21 +220,13 @@ const Signup = () => {
                 <div className="input-inner">
                   <label htmlFor="">휴대폰 번호</label>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="숫자만 입력하세요"
                     {...register("phone", {
-                      required: "휴대폰 번호(-제외)를 입력하세요",
-                      minLength: {
-                        value: 10,
-                        message: "10자리 이상 입력하세요",
-                      },
-                      maxLength: {
-                        value: 11,
-                        message: "11자리 이하로 입력하세요",
-                      },
+                      required: "휴대폰 번호를 입력하세요",
                       pattern: {
-                        value: /^[0-9]*$/,
-                        message: "숫자만 입력하세요",
+                        value: /^\d{3}-\d{4}-\d{4}$/,
+                        message: "- 입력하세요",
                       },
                     })}
                   />
