@@ -51,7 +51,7 @@ const Home = () => {
   }, [scrollRef.current]);
 
   const accommodationsItems = useMemo(
-    () => data?.pages.flatMap(page => page.data.data.accommodations),
+    () => data?.pages.flatMap(page => page.data.accommodations),
     [data]
   );
   if (isLoading) {
