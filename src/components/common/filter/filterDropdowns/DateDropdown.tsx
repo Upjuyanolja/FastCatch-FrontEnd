@@ -6,6 +6,7 @@ import { useSetRecoilState } from "recoil";
 
 import "./react-datepicker.scss";
 import "./dropdown.scss";
+import { useState } from "react";
 
 interface dropdownProps {
   isSelected: "location" | "date" | "amount" | null;
@@ -15,6 +16,7 @@ interface dropdownProps {
 
 const DateDropdown = (props: dropdownProps) => {
   const setFilterStates = useSetRecoilState(filterState);
+  const [maxDate, setMaxDate] = useState<Date | null>(null);
 
   const onChange = (dates: [Date | null, Date | null]) => {
     const [start, end] = dates;
@@ -23,7 +25,16 @@ const DateDropdown = (props: dropdownProps) => {
       startDate: start as Date,
       endDate: end,
     }));
+
+    if (start) {
+      const newMaxDate = new Date(start);
+      newMaxDate.setDate(newMaxDate.getDate() + 30);
+      setMaxDate(newMaxDate);
+    } else {
+      setMaxDate(null);
+    }
   };
+
   return (
     <>
       {props.isSelected === "date" && ( //
@@ -32,6 +43,7 @@ const DateDropdown = (props: dropdownProps) => {
             selected={props.startDate}
             onChange={onChange}
             minDate={new Date()}
+            maxDate={maxDate ? maxDate : undefined}
             startDate={props.startDate}
             endDate={props.endDate}
             selectsRange

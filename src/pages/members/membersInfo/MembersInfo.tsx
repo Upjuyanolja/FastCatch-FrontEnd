@@ -1,11 +1,23 @@
-import { useRecoilValue } from "recoil";
-import { userState } from "@/states/userState";
-
 import "./membersInfo.scss";
+import { getUserInfoApi } from "@/api/getUserInfoApi";
+import { useEffect, useState } from "react";
+import { userInfo } from "./type";
 
 const MembersInfo = () => {
-  const userInfo = useRecoilValue(userState);
+  const [userInfo, setUserInfo] = useState<userInfo | null>(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getUserInfoApi();
+        setUserInfo(res);
+      } catch (error) {
+        console.error("유저 정보를 불러오지 못했습니다.", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="members-info">
       <div className="members-info__header">
@@ -23,7 +35,7 @@ const MembersInfo = () => {
               type="text"
               className="members-info__value text-body1"
               disabled
-              value={userInfo?.email}
+              value={userInfo?.email || ""}
             />
           </div>
         </div>
@@ -37,24 +49,11 @@ const MembersInfo = () => {
               type="text"
               className="members-info__value text-body1"
               disabled={true}
-              value={userInfo?.name}
+              value={userInfo?.name || ""}
             />
           </div>
         </div>
-        <div className="members-info__item">
-          <label htmlFor="nickName" className="members-info__title">
-            닉네임
-          </label>
-          <div className="members-info__input">
-            <input
-              id="nickName"
-              type="text"
-              className="members-info__value text-body1"
-              disabled={true}
-              value={userInfo?.nickname}
-            />
-          </div>
-        </div>
+
         <div className="members-info__item">
           <label htmlFor="userPhoneNumber" className="members-info__title">
             휴대폰 번호
@@ -65,7 +64,7 @@ const MembersInfo = () => {
               type="text"
               className="members-info__value text-body1"
               disabled={true}
-              value={userInfo?.phone}
+              value={userInfo?.phoneNumber || ""}
             />
           </div>
         </div>

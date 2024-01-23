@@ -40,14 +40,14 @@ const CategoryFilter = () => {
     {
       name: "호텔/리조트",
       img: PENSION,
-      engName: "HOTELRESORT",
+      engName: "HOTEL_RESORT",
       select: false,
     },
     { name: "모텔", img: GUESTHOUSE, engName: "MOTEL", select: false },
     {
-      name: "팬션/풀빌라",
+      name: "펜션/풀빌라",
       img: HOTELRESORT,
-      engName: "PENSION",
+      engName: "PENSION_POOL_VILLA",
       select: false,
     },
     { name: "게스트하우스", img: MOTEL, engName: "GUESTHOUSE", select: false },
@@ -87,7 +87,6 @@ const CategoryFilter = () => {
     setHasCoupon(prev => !prev);
     if (keyword !== "") setKeyword("");
   };
-
   return (
     <div className="category-filter__container">
       <div className="category-filter__inner">
@@ -119,16 +118,14 @@ const CategoryFilter = () => {
           )
         )}
         <div className="filter__adjust-height">
-          <div className={`filter__button-detail ${hasCoupon && "discount"}`}>
+          <div className={`filter__button-detail ${hasCoupon && "main"}`}>
             <input
               type="checkbox"
               className="discount-filter"
               onChange={handleChange}
               checked={hasCoupon}
             />
-            <label
-              className={`discount-filter-text ${hasCoupon && "discount"}`}
-            >
+            <label className={`discount-filter-text ${hasCoupon && "main"}`}>
               할인숙소
             </label>
           </div>

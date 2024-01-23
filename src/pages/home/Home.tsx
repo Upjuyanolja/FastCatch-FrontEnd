@@ -51,7 +51,7 @@ const Home = () => {
   }, [scrollRef.current]);
 
   const accommodationsItems = useMemo(
-    () => data?.pages.flatMap(page => page.data.data.accommodations),
+    () => data?.pages.flatMap(page => page.data.accommodations),
     [data]
   );
   if (isLoading) {
@@ -72,7 +72,7 @@ const Home = () => {
   return (
     <div className="home-wrapper">
       <div className="home-inner">
-        {accommodationsItems?.map(item => <AccomodationItem  data={item} />)}
+        {accommodationsItems?.map(item => <AccomodationItem data={item} />)}
         <div className="target-div" ref={scrollRef}>
           @2023 빨리 잡아
         </div>

@@ -43,6 +43,7 @@
     .item-info {
       display: flex;
       justify-content: space-between;
+      gap: 4px;
       strong {
         display: block;
         width: 280px;
@@ -52,14 +53,8 @@
         text-overflow: ellipsis;
       }
 
-      &__location p {
-        display: block;
-        width: 280px;
+      &__location span {
         color: gray(700);
-
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
       }
     }
 

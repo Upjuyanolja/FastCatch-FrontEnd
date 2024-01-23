@@ -1,12 +1,17 @@
 import React from "react";
 import "./discountBadge.scss";
+import numberFormat from "@/utils/numberFormat";
 
-const DiscountBadge = () => {
+interface DiscountBadgeProps {
+  savedAmt: number;
+}
+
+const DiscountBadge = ({ savedAmt }: DiscountBadgeProps) => {
   return (
     <>
       <div className="discount-badge-container">
         <div className="discount-badge">
-          <p>총 20,000원 할인 받았어요!</p>
+          <p>총 {numberFormat(savedAmt)}원 할인 받았어요!</p>
         </div>
       </div>
     </>

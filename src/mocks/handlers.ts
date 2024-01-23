@@ -1,16 +1,13 @@
 import { http, HttpResponse } from "msw";
 import emailData from "../../public/data/emailData.json";
 import successSignUpData from "../../public/data/successSignUpData.json";
-import failSignUpData from "../../public/data/failSignUpData.json";
 import allAccommodations from "../../public/data/allAccommodations.json";
 import accommodationDetailData from "../../public/data/accommodationDetailData.json";
-import couponData from "../../public/data/couponData.json";
+import couponData from "../../public/data/CouponData.json";
 import successLoginData from "../../public/data/successLoginData.json";
-import failLoginData from "../../public/data/failLoginData.json";
 import reservationList from "../../public/data/reservationList.json";
 import cancelReservationList from "../../public/data/cancelReservationList.json";
 import successCancelReservation from "../../public/data/successCancelReservation.json";
-import successTokenData from "../../public/data/successTokenData.json";
 import successInfoData from "../../public/data/successInfoData.json";
 import successLogOutData from "../../public/data/successLogOutData.json";
 // const getHotelResolver = () => {
@@ -80,10 +77,10 @@ export const handlers = [
   // http.get("/accomodations", getAccommodationResolver),
   http.get(`/api/members/email?email=${email}`, getEmailIsDuplicatedResolver),
   http.post(`/api/members/signup`, postSignUpResolver),
-  http.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/accommodations`,
-    getAccommodationResolver
-  ),
+  // http.get(
+  //   `${import.meta.env.VITE_API_BASE_URL}/api/accommodations`,
+  //   getAccommodationResolver
+  // ),
   http.get(
     `${import.meta.env.VITE_API_BASE_URL}/api/accommodations/detail`,
     getAccommodationDetailData
@@ -95,7 +92,7 @@ export const handlers = [
     getReservationListResolver
   ),
   http.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/reservations/cancel`,
+    `${import.meta.env.VITE_API_BASE_URL}/api/reservations`,
     getCancelReservationListResolver
   ),
   http.delete(

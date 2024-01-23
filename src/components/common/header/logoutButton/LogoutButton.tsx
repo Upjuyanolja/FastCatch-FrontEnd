@@ -6,7 +6,6 @@ import { MdLogout } from "react-icons/md";
 
 import { userState } from "@/states/userState";
 import instance from "@/api/instanceApi";
-import axios from "axios";
 import { removeCookie } from "@/utils/cookies";
 
 const LogoutButton = () => {
@@ -25,7 +24,7 @@ const LogoutButton = () => {
         onClick: () => {
           const logOut = async () => {
             try {
-              const res = await axios.post(`/api/members/signout`);
+              const res = await instance.post(`/api/auth/signout`);
               localStorage.removeItem("accessToken");
               removeCookie();
               setUserInfo(null);
@@ -46,7 +45,6 @@ const LogoutButton = () => {
         size: "small",
         colorName: "coral200",
         onClick: () => {
-          console.log("취소");
           setModalVisible(false);
         },
       },
