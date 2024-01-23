@@ -15,12 +15,12 @@ const AccommodationItem = ({ data }: { data: Accommodation }) => {
       <div
         className="accomdationItem-container__image-box"
         style={{
-          backgroundImage: `url(${data.imageUrl})`,
+          backgroundImage: `url(${data.thumbnail})`,
         }}
       >
-        {data.coupon && (
+        {data.couponName && (
           <div className="accomdationItem-container__coupon-box">
-            {data.coupon}
+            {data.couponName}
           </div>
         )}
       </div>
@@ -29,12 +29,14 @@ const AccommodationItem = ({ data }: { data: Accommodation }) => {
           <div>
             <strong className="text-subtitle5">{data.name}</strong>
             <div className="text-body2 item-info__location">
-              <p>{accommodationCategoryData[data.category]} </p>
+              <span>{accommodationCategoryData[data.category]} </span>
+              <span>|</span>
+              <span> {data.address.split(" ")[0]} </span>
             </div>
           </div>
         </div>
         <div className="item-price">
-          {data.coupon === "" ? (
+          {data.couponName === "" ? (
             <span className="price-info">최저가</span>
           ) : (
             <div className="coupon-box">쿠폰가</div>

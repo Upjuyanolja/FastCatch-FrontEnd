@@ -16,7 +16,7 @@ export const useGetAllAccommodations = (
     AxiosResponse<ResponseAccommodation>
   >(
     ["accommodations-list"],
-    ({ pageParam = 1 }) =>
+    ({ pageParam = 0 }) =>
       getAllAccommodations({
         page: pageParam,
         category,

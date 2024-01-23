@@ -13,9 +13,9 @@ export type Accommodation = {
   category: string;
   lowestPrice: number;
   discountPrice: number;
-  imageUrl: string;
+  thumbnail: string;
   soldOut: boolean;
-  coupon: string;
+  couponName: string;
 };
 export type Accommodations = {
   pageNum: number;
@@ -34,8 +34,17 @@ export const getAllAccommodations = ({
   category = "string",
   onlyHasCoupon = false,
   keyword = "",
-  page = 1,
+  page = 0,
 }: AccommodationParams) => {
+  console.log(keyword);
+  if (keyword === "")
+    return instance.get<ResponseAccommodation>("/api/accommodations", {
+      params: {
+        category,
+        onlyHasCoupon,
+        page,
+      },
+    });
   return instance.get<ResponseAccommodation>("/api/accommodations", {
     params: {
       category,
