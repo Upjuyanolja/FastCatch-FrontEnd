@@ -46,6 +46,9 @@
     border-top: 1px solid #e5e9ed;
     border-bottom: 1px solid #e5e9ed;
 
+    height: 720px;
+    overflow-y: scroll;
+
     padding: 16px 72px;
   }
   &__footer {
@@ -100,4 +103,7 @@
       }
     }
   }
+}
+.no-scroll {
+  overflow: hidden;
 }

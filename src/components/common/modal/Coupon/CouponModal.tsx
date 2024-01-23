@@ -1,39 +1,34 @@
-import axios from "axios";
 import "./CouponModal.scss";
 import { IoClose } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useQuery } from "react-query";
+
+import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
+import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
+import numberFormat from "./../../../../utils/numberFormat";
+import { getCouponDataApi } from "@/api/getCouponDataApi";
 
 interface modalPropI {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  id: string | null;
 }
 
-interface Rooms {
-  roomName: string;
-}
-
-interface CouponData {
-  maxDiscount: number;
-  couponName: string;
-  endDate: string;
-  rooms: Rooms[];
-}
-
-const CouponModal = ({ isVisible, setIsVisible }: modalPropI) => {
-  const [coupons, setCoupons] = useState<CouponData[]>([]);
-
+const CouponModal = ({ isVisible, setIsVisible, id }: modalPropI) => {
   useEffect(() => {
-    const fetchCouponData = async () => {
-      const result = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URL}/api/coupons`
-      );
-      setCoupons(result.data.data.coupons);
+    document.body.classList.toggle("no-scroll", isVisible);
+    refetch();
+    return () => {
+      document.body.classList.remove("no-scroll");
     };
-
-    if (isVisible) {
-      fetchCouponData();
-    }
   }, [isVisible]);
+  const { data, isLoading, refetch, isError } = useQuery({
+    queryKey: [id, "couponData"],
+    queryFn: () => getCouponDataApi(id),
+
+    staleTime: 500000,
+    cacheTime: 5000000,
+  });
 
   const closeModal = () => {
     setIsVisible(false);
@@ -44,7 +39,22 @@ const CouponModal = ({ isVisible, setIsVisible }: modalPropI) => {
       closeModal();
     }
   };
+  if (isLoading) {
+    return (
+      <div className="accommodation__animation-container">
+        <LoadingAnimation width="200px" height="200px" />
+      </div>
+    );
+  }
 
+  if (isError || !data) {
+    return (
+      <div className="home__animation-container">
+        <ErrorAnimation width="200px" height="200px" />
+        <p>에러가 발생하였습니다. 다시 시도해주세요!</p>
+      </div>
+    );
+  }
   return (
     <>
       {isVisible && (
@@ -58,41 +68,40 @@ const CouponModal = ({ isVisible, setIsVisible }: modalPropI) => {
             </div>
             <div className="coupon-modal-wrap__body">
               <p className="text-subtitle4">이 숙소 적용 가능 쿠폰</p>
-              {coupons.length > 0 &&
-                coupons.map((coupon, index) => (
-                  <div
-                    key={index}
-                    className="coupon-modal-wrap__body__coupon-wrap"
-                  >
-                    <div>
-                      <div>
-                        <span className="coupon-modal-wrap__body__coupon-wrap__color-coral text-subtitle3">
-                          {coupon.couponName.split(" ")[0] + " "}
-                        </span>
-                        <span className="coupon-modal-wrap__body__coupon-wrap__color-gray text-subtitle5">
-                          {coupon.couponName.split(" ")[1]}
-                          {coupon.couponName.split(" ")[2]}
-                        </span>
-                      </div>
-                      <ul className="coupon-modal-wrap__body__coupon-wrap__options text-body3">
-                        <li className="coupon-modal-wrap__body__coupon-wrap__color-coral">
-                          숙박 예약 시
-                        </li>
-                        <li coupon-modal-wrap__body__coupon-wrap__color-gray>
-                          {coupon.endDate.slice(2)} 까지
-                        </li>
-                      </ul>
-                      <div className="coupon-modal-wrap__body__coupon-wrap__room">
-                        {coupon.rooms.map((room, roomIndex) => (
-                          <div
-                            key={roomIndex}
-                            className="coupon-modal-wrap__body__coupon-wrap__room-item"
-                          >
-                            {room.roomName}
+              {data &&
+                data.map((room, index) => (
+                  <div key={index} className="coupon-modal-wrap__layout">
+                    {room.coupons.map(coupon => (
+                      <div className="coupon-modal-wrap__body__coupon-wrap">
+                        <div key={coupon.id}>
+                          <div>
+                            <span className="coupon-modal-wrap__body__coupon-wrap__color-coral text-subtitle3">
+                              {numberFormat(
+                                Number(coupon.name?.split(" ")[0].slice(0, -1))
+                              ) +
+                                coupon.name?.split(" ")[0].slice(-1, 100) +
+                                " "}
+                            </span>
+                            <span className="coupon-modal-wrap__body__coupon-wrap__color-gray text-subtitle5">
+                              할인쿠폰
+                            </span>
                           </div>
-                        ))}
+                          <ul className="coupon-modal-wrap__body__coupon-wrap__options text-body3">
+                            <li className="coupon-modal-wrap__body__coupon-wrap__color-coral">
+                              숙박 예약 시
+                            </li>
+                            <li className="coupon-modal-wrap__body__coupon-wrap__color-gray">
+                              {room.roomName.slice(2)} 까지
+                            </li>
+                          </ul>
+                          <div className="coupon-modal-wrap__body__coupon-wrap__room">
+                            <div className="coupon-modal-wrap__body__coupon-wrap__room-item">
+                              {room.roomName}
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ))}
                   </div>
                 ))}
             </div>

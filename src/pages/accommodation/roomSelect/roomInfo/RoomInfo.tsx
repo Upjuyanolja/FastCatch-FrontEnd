@@ -27,8 +27,8 @@ interface Template {
 const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
   const {
     name,
-    price,
-    options,
+    basePrice,
+    roomOption,
     id,
     defaultCapacity,
     maxCapacity,
@@ -94,6 +94,22 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
       return;
     }
 
+    const newCoupons = coupons.map(coupon => {
+      const splitArr = coupon.name?.split(" ");
+      if (splitArr) {
+        return {
+          ...coupon,
+          name:
+            parseInt(splitArr[0].slice(0, -1) || "0").toLocaleString() +
+            splitArr[0].slice(-1) +
+            " " +
+            splitArr[1],
+        };
+      }
+
+      return coupon;
+    });
+
     await setOrderData([
       {
         accommodationName,
@@ -101,14 +117,14 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         checkOutTime,
         defaultCapacity,
         maxCapacity,
-        price,
+        price: basePrice,
         discountPrice,
         id,
         roomName: name,
         startDate,
         endDate,
-        coupons,
-        options,
+        coupons: newCoupons,
+        options: roomOption,
       },
     ]);
 
@@ -138,7 +154,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
           </span>
         </div>
         <div className="room__options-container">
-          {englishToKoreanFormat(options, template).map((option: any) => (
+          {englishToKoreanFormat(roomOption, template).map((option: any) => (
             <Badge key={option} text={option} badgeStatus="gray" />
           ))}
         </div>
@@ -152,7 +168,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
           {/* 쿠폰이 있으면 원래가격 */}
           {coupons ? (
             <div className="room__detail-info__strikethrough">
-              <span>{numberFormat(price)} 원</span>
+              <span>{numberFormat(basePrice)} 원</span>
             </div>
           ) : null}
 
@@ -163,7 +179,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
                 <span>쿠폰가</span>
               </div>
             )}
-            {numberFormat(discountPrice ? discountPrice : price)} 원
+            {numberFormat(discountPrice ? discountPrice : basePrice)} 원
           </div>
         </div>
       </div>

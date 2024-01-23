@@ -3,6 +3,8 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Coupon } from "@/types/accommodationDetail";
 
+const MAX_DISCOUNT = 0;
+
 interface RoomImgSwiperProps {
   roomImg: object[];
   coupons: Coupon[];
@@ -20,33 +22,35 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
       resistance={false}
       style={{ height: "264px", margin: "0 4px" }}
     >
-      {roomImg.map((obj: any) => (
+      {roomImg.map((obj: any, index) => (
         <>
-          <SwiperSlide key={obj.fileName}>
-            <div
-              style={{
-                width: "120px",
-                height: "80px",
+          <SwiperSlide key={index}>
+            {coupons.length > 0 && (
+              <div
+                style={{
+                  width: "120px",
+                  height: "80px",
 
-                backgroundColor: "#FE395B",
-                color: "#FFF",
+                  backgroundColor: "#FE395B",
+                  color: "#FFF",
 
-                position: "fixed",
-                left: "17px",
+                  position: "fixed",
+                  left: "17px",
 
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
 
-                fontWeight: "700",
-                lineHeight: "24px",
-              }}
-            >
-              {coupons ? <span>{coupons[0].name}</span> : null}
+                  fontWeight: "700",
+                  lineHeight: "24px",
+                }}
+              >
+                <span>{coupons[MAX_DISCOUNT]?.name}</span>
 
-              <span>적용 가능 객실</span>
-            </div>
+                <span>적용 가능 객실</span>
+              </div>
+            )}
 
             <img
               style={{
@@ -54,7 +58,7 @@ const RoomImgSwiper = ({ roomImg, coupons }: RoomImgSwiperProps) => {
                 width: "100%",
                 objectFit: "cover",
               }}
-              src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${obj.fileName}`}
+              src={`${obj}`}
               alt={"이미지"}
               loading="lazy"
             />
