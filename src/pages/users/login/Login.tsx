@@ -44,7 +44,7 @@ const Login = () => {
     try {
       const res = await instance.post("/api/auth/members/signin", requestBody);
       const { accessToken, refreshToken, memberResponse }: memberResI =
-        res.data.data;
+        res.data;
       setToken(accessToken, refreshToken, memberResponse);
       setIsDisabled(!isDisabled);
       setTimeout(() => {
