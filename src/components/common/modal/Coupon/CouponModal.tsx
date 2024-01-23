@@ -2,10 +2,11 @@ import "./CouponModal.scss";
 import { IoClose } from "react-icons/io5";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { getCouponDataApi } from "@/api/getCouponDataAPi";
+
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
 import numberFormat from "./../../../../utils/numberFormat";
+import { getCouponDataApi } from "@/api/getCouponDataApi";
 
 interface modalPropI {
   isVisible: boolean;
