@@ -2,7 +2,7 @@ import instance from "./instanceApi";
 
 export const getUserInfoApi = async () => {
   try {
-    const res = await instance.get("/api/members");
+    const res = await instance.get("/api/auth/members");
 
     return res.data;
   } catch (error) {
