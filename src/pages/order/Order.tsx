@@ -23,20 +23,18 @@ import {
 import Discount from "@/pages/order/discount/Discount";
 import DiscountBadge from "./discountBadge/DiscountBadge";
 import "./order.scss";
+import { initialPaymentMethod } from "@/constant/initialPaymentMethod";
 
 const Order = memo(() => {
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
-  const [selectedMethod, setSelectedMethod] = useState("카드 결제");
+  const [selectedMethod, setSelectedMethod] = useState(initialPaymentMethod[0]);
   const [isAllCheck, setIsAllCheck] = useState(false);
   const [isBookerValidationPass, setIsBookerValidationPass] = useState(false);
   const [isAllValidationPass, setIsAllValidationPass] = useState(false);
   const orderData: OrderItemTypes[] = useRecoilValue(orderState);
   const setOrderErrorMsg = useSetRecoilState(orderErrorMsgState);
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const cartParam = urlParams.get("cart");
   const discountAmt = useRecoilValue(discountState);
   const totalOrderPrice =
     discountAmt !== 0
@@ -48,35 +46,8 @@ const Order = memo(() => {
   }, [orderData]);
 
   const handleClick = () => {
-    if (cartParam === "true") {
-      postOrderApiFromCart();
-    }
-    if (cartParam === "false") {
-      postOrderApiFromAccommodation();
-    }
-  };
-
-  const postOrderApiFromCart = async () => {
-    const cartItemIds: number[] = orderData
-      .map(item => {
-        return item.cartItemId;
-      })
-      .filter((cartId): cartId is number => typeof cartId === "number");
-    const requestBody = {
-      ageConsent: isAllCheck,
-      reservationPersonName: userName,
-      reservationPhoneNumber: userPhoneNumber,
-      totalPrice: totalOrderPrice,
-      cartItemIds: cartItemIds,
-    };
-    try {
-      // const res = await postOrderApi("/api/orders/carts", requestBody);
-      // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
-    } catch (error) {
-      navigate("/order/result?=false");
-      const postOrderApiError = error as PostOrderApiErrorResponse;
-      setOrderErrorMsg(postOrderApiError.response.data.errorMessage);
-    }
+    console.log(selectedMethod);
+    postOrderApiFromAccommodation();
   };
 
   const postOrderApiFromAccommodation = async () => {
@@ -104,11 +75,7 @@ const Order = memo(() => {
   };
 
   useEffect(() => {
-    if (!isAllCheck || !isBookerValidationPass) {
-      setIsAllValidationPass(false);
-      return;
-    }
-    setIsAllValidationPass(true);
+    setIsAllValidationPass(isAllCheck && isBookerValidationPass);
   }, [isAllCheck, isBookerValidationPass]);
 
   const totalPrice = orderData.reduce((sum, item) => sum + item.price, 0);

@@ -5,6 +5,6 @@ export const validationErrorMessage = {
 };
 
 export const REGEX_NAME = /([가-힣a-zA-Z]{2,})/;
-export const REGEX_PHONE_NUMBER = /^(?:\d{10}|\d{11})$/;
+export const REGEX_PHONE_NUMBER = /^010-(\d{4})-(\d{4})$/;
 export const REGEX_NICK_NAME = /^[A-Za-z가-힣]{2,14}$/;
 export const REGEX_BIRTH_DAY = /^\d{4}-\d{2}-\d{2}$/;
