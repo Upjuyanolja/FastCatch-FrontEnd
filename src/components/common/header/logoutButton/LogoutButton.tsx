@@ -46,7 +46,6 @@ const LogoutButton = () => {
         size: "small",
         colorName: "coral200",
         onClick: () => {
-          console.log("취소");
           setModalVisible(false);
         },
       },

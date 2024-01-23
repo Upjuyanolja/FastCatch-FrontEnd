@@ -7,7 +7,7 @@ import { useInfiniteQuery } from "react-query";
 
 export const useGetAllAccommodations = (
   category: string,
-  hasCoupon: boolean,
+  onlyHasCoupon: boolean,
   keyword: string
 ) => {
   return useInfiniteQuery<
@@ -17,7 +17,12 @@ export const useGetAllAccommodations = (
   >(
     ["accommodations-list"],
     ({ pageParam = 1 }) =>
-      getAllAccommodations({ page: pageParam, category, hasCoupon, keyword }),
+      getAllAccommodations({
+        page: pageParam,
+        category,
+        onlyHasCoupon,
+        keyword,
+      }),
     {
       getNextPageParam: ({
         data: {
