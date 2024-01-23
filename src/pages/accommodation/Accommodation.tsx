@@ -1,45 +1,34 @@
-// import { useRecoilValue } from "recoil";
-// import { format } from "date-fns";
+import { useRecoilValue } from "recoil";
+import { format } from "date-fns";
 import "./accommodation.scss";
 import { useQuery } from "react-query";
 import RoomSelect from "./roomSelect/RoomSelect";
 import AccommodationMainInfo from "./accommodationMainInfo/AccommodationMainInfo";
 import AccommodationOptions from "./accommodationOptions/AccommodationOptions";
-import AccommodationMap from "./accommodationMap/AccommodationMap";
-// import { filterState } from "@/states/filterState";
-
+import { filterState } from "@/states/filterState";
 import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 import ErrorAnimation from "@/components/errorAnimation/ErrorAnimation";
-import axios from "axios";
-
 import { AiOutlineRight } from "react-icons/ai";
 import CouponModal from "@/components/common/modal/Coupon/CouponModal";
 import { useState } from "react";
+import { getAccommodationDetailApi } from "@/api/getAccommodationDetailApi";
 
 const Accommodation = () => {
-  // 해당 부분은 추후에 서버 API할 때 넣을 , Requset 부분입니다. 임시 주석입니다.
-  // const filterData = useRecoilValue(filterState);
-  // const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
-  // const endDate = filterData.endDate
-  //   ? format(filterData.endDate, "yyyy-MM-dd")
-  //   : format(filterData.startDate, "yyyy-MM-dd");
+  const filterData = useRecoilValue(filterState);
+  const startDate = format(filterData.current.startDate, "yyyy-MM-dd");
+  const endDate = filterData.endDate
+    ? format(filterData.endDate, "yyyy-MM-dd")
+    : format(filterData.startDate, "yyyy-MM-dd");
 
   const [isVisible, setIsVisible] = useState(false);
 
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
-  const getAccommodationDetailData = async () => {
-    const result = await axios.get(
-      `${import.meta.env.VITE_API_BASE_URL}/api/accommodations/detail`
-    );
-
-    return result.data.data;
-  };
-
   const { data, isLoading, refetch, isError } = useQuery({
     queryKey: [id, "postDetail"],
-    queryFn: getAccommodationDetailData,
+    queryFn: () => getAccommodationDetailApi(id, startDate, endDate),
+
     staleTime: 500000,
     cacheTime: 5000000,
   });
@@ -51,6 +40,7 @@ const Accommodation = () => {
       </div>
     );
   }
+
   if (isError || !data) {
     return (
       <div className="home__animation-container">
@@ -63,40 +53,48 @@ const Accommodation = () => {
   const handleClickCouponBox = () => {
     setIsVisible(true);
   };
+
   return (
     <>
       <div className="accommodation-container">
-        <CouponModal isVisible={isVisible} setIsVisible={setIsVisible} />
+        {isVisible && (
+          <CouponModal
+            isVisible={isVisible}
+            setIsVisible={setIsVisible}
+            id={id}
+          />
+        )}
+
         <img
           style={{ height: "550px", width: "100%", objectFit: "cover" }}
-          src={`https://fastcatch-image.s3.ap-northeast-2.amazonaws.com/${data.imageUrl}`}
+          src={`${data.images[0]}`}
           alt={data.name}
           loading="lazy"
         />
-
         <AccommodationMainInfo
           accommodationName={data.name}
           accommodationLocation={data.address}
           accommodationPhone={data.phoneNumber}
           accommodationCategory={data.category}
         />
-        <div className="accommodation__coupon-wrapper">
-          <button
-            className="accommodation__coupon-wrapper__coupon-modal-btn"
-            onClick={handleClickCouponBox}
-          >
-            <div>{data.mainCoupon}</div>
-            <div className="accommodation__coupon-wrapper__coupon-modal-btn__right-menu">
-              <div>더보기</div>
-              <div>
-                <AiOutlineRight size={24} />
+        {/* 메인 쿠폰이 있을 시 보여지는 창*/}
+        {data.mainCoupon && (
+          <div className="accommodation__coupon-wrapper">
+            <button
+              className="accommodation__coupon-wrapper__coupon-modal-btn"
+              onClick={handleClickCouponBox}
+            >
+              <div>{data.mainCoupon}</div>
+              <div className="accommodation__coupon-wrapper__coupon-modal-btn__right-menu">
+                <div>더보기</div>
+                <div>
+                  <AiOutlineRight size={24} />
+                </div>
               </div>
-            </div>
-          </button>
-        </div>
-
+            </button>
+          </div>
+        )}
         <div className="accommodation__divider"></div>
-
         <div className="accommodation__introduce">
           <div className="accommodation__menu-title">
             <span className="text-subtitle4">숙소 소개</span>
@@ -105,17 +103,16 @@ const Accommodation = () => {
             <span className="text-body1">{data.description}</span>
           </div>
         </div>
-
         <div className="accommodation__divider"></div>
 
-        <div className="accommodation__divider"></div>
-        <AccommodationMap
+        {/* 없어진부분 */}
+        {/* <AccommodationMap
           accommodationName={data?.name}
           latitude={data?.mapX}
           longitude={data?.mapY}
-        />
+        /> */}
         <div className="accommodation__divider"></div>
-        <AccommodationOptions options={data?.options} />
+        <AccommodationOptions options={data?.option} />
         <div className="accommodation__divider"></div>
         <RoomSelect
           roomsInfo={data?.rooms}
