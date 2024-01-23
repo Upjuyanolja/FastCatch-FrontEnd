@@ -77,10 +77,10 @@ export const handlers = [
   // http.get("/accomodations", getAccommodationResolver),
   http.get(`/api/members/email?email=${email}`, getEmailIsDuplicatedResolver),
   http.post(`/api/members/signup`, postSignUpResolver),
-  http.get(
-    `${import.meta.env.VITE_API_BASE_URL}/api/accommodations`,
-    getAccommodationResolver
-  ),
+  // http.get(
+  //   `${import.meta.env.VITE_API_BASE_URL}/api/accommodations`,
+  //   getAccommodationResolver
+  // ),
   http.get(
     `${import.meta.env.VITE_API_BASE_URL}/api/accommodations/detail`,
     getAccommodationDetailData
