@@ -94,6 +94,22 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
       return;
     }
 
+    const newCoupons = coupons.map(coupon => {
+      const splitArr = coupon.name?.split(" ");
+      if (splitArr) {
+        return {
+          ...coupon,
+          name:
+            parseInt(splitArr[0].slice(0, -1) || "0").toLocaleString() +
+            splitArr[0].slice(-1) +
+            " " +
+            splitArr[1],
+        };
+      }
+
+      return coupon;
+    });
+
     await setOrderData([
       {
         accommodationName,
@@ -107,7 +123,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         roomName: name,
         startDate,
         endDate,
-        coupons,
+        coupons: newCoupons,
         options: roomOption,
       },
     ]);
