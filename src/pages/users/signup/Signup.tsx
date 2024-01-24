@@ -61,7 +61,6 @@ const Signup = () => {
       const res = await instance.post(`/api/auth/members/email`, {
         email: email,
       });
-      console.log(res);
       if (res.data.isExists === false) {
         setIsIdValid(true);
         showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
@@ -246,7 +245,7 @@ const Signup = () => {
                       {...register("password", {
                         required: "비밀번호를 입력하세요",
                         pattern: {
-                          value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
+                          value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/,
                           message: "영문자, 숫자 포함 최소 8~20자로 입력하세요",
                         },
                       })}
