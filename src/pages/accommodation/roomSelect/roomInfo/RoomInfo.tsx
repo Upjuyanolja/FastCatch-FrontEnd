@@ -166,7 +166,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
           </div>
 
           {/* 쿠폰이 있으면 원래가격 */}
-          {coupons ? (
+          {coupons.length > 0 ? (
             <div className="room__detail-info__strikethrough">
               <span>{numberFormat(basePrice)} 원</span>
             </div>
@@ -174,7 +174,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
 
           <div className="room__detail-info__price text-subtitle4">
             {/* 쿠폰이 있으면 쿠폰가 div */}
-            {coupons && (
+            {coupons.length > 0 && (
               <div className="room__detail-info__price__discountBox">
                 <span>쿠폰가</span>
               </div>
