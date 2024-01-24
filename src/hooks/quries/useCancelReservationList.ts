@@ -10,13 +10,9 @@ export const useGetCancelReservationList = () => {
     AxiosResponse<ResponseReservation>
   >(
     ["cancelReservations-list"],
-    ({ pageParam = 1 }) => getCancelReservationList({ page: pageParam }),
+    ({ pageParam = 0 }) => getCancelReservationList({ page: pageParam }),
     {
-      getNextPageParam: ({
-        data: {
-          data: { pageNum, totalPages },
-        },
-      }) => {
+      getNextPageParam: ({ data: { pageNum, totalPages } }) => {
         const nextPage = pageNum + 1;
         return totalPages > pageNum ? nextPage : undefined;
       },

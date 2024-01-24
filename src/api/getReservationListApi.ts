@@ -3,7 +3,6 @@ import instance from "./instanceApi";
 export type Reservation = {
   id: number;
   date: string;
-  totalPrice: number;
   accommodationId: number;
   accommodationName: string;
   roomId: number;
@@ -14,11 +13,12 @@ export type Reservation = {
   endDate: string;
   defaultCapacity: number;
   maxCapacity: number;
-  coupon: boolean;
-  basePrice: number;
+  isCouponUsed: boolean;
+  roomPrice: number;
+  totalAmount: number;
 };
 
-export type Reservations = {
+export type ResponseReservation = {
   pageNum: number;
   pageSize: number;
   totalPages: number;
@@ -27,12 +27,7 @@ export type Reservations = {
   reservations: Reservation[];
 };
 
-export type ResponseReservation = {
-  message: string;
-  data: Reservations;
-};
-
-export const getReservationList = ({ page = 1 }) => {
+export const getReservationList = ({ page = 0 }) => {
   return instance.get<ResponseReservation>("/api/reservations", {
     params: {
       page,

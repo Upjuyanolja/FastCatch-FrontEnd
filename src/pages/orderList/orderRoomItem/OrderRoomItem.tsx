@@ -12,19 +12,19 @@ const OrderRoomItem = ({ roomInfo }: RoomPropsType) => {
     endDate,
     checkInTime,
     checkOutTime,
-    totalPrice,
+    totalAmount,
     accommodationName,
     defaultCapacity,
     maxCapacity,
-    coupon,
-    basePrice,
+    isCouponUsed,
+    roomPrice,
   } = roomInfo;
 
   const sliceCheckInTime = checkInTime.slice(0, -3);
   const sliceCheckOutTime = checkOutTime.slice(0, -3);
-  const formattedOrderPrice = coupon
-    ? numberFormat(totalPrice)
-    : numberFormat(basePrice);
+  const formattedOrderPrice = isCouponUsed
+    ? numberFormat(totalAmount)
+    : numberFormat(roomPrice);
 
   return (
     <div className="order-room__item">
@@ -57,13 +57,13 @@ const OrderRoomItem = ({ roomInfo }: RoomPropsType) => {
           </div>
         </div>
         <div className="item-content__right-box">
-          {coupon && (
+          {isCouponUsed && (
             <span className="price text-body2">
-              {numberFormat(basePrice)}원
+              {numberFormat(roomPrice)}원
             </span>
           )}
           <div className="applyCoupon-container">
-            {coupon && <div className="orderlist-coupon-box">쿠폰가</div>}
+            {isCouponUsed && <div className="orderlist-coupon-box">쿠폰가</div>}
             <span className="applyCoupon-price text-subtitle5">
               {formattedOrderPrice}원
             </span>
