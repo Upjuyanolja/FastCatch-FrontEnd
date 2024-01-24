@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { OrderItemTypes, orderState } from "@/states/orderState";
-import { PostOrderApiErrorResponse } from "@/api/postOrderApi";
+import { PostOrderApiErrorResponse, postOrderApi } from "@/api/postOrderApi";
 import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
 
@@ -24,6 +24,7 @@ import Discount from "@/pages/order/discount/Discount";
 import DiscountBadge from "./discountBadge/DiscountBadge";
 import "./order.scss";
 import { initialPaymentMethod } from "@/constant/initialPaymentMethod";
+import { usedCouponState } from "@/states/usedCouponState";
 
 const Order = memo(() => {
   const [userName, setUserName] = useState("");
@@ -40,33 +41,32 @@ const Order = memo(() => {
     discountAmt !== 0
       ? discountAmt
       : orderData.reduce((total, item) => total + item.price, 0);
+  const usedCoupon = useRecoilValue(usedCouponState);
 
   useEffect(() => {
     localStorage.setItem("orderState", JSON.stringify(orderData));
   }, [orderData]);
 
   const handleClick = () => {
-    console.log(selectedMethod);
     postOrderApiFromAccommodation();
   };
 
   const postOrderApiFromAccommodation = async () => {
     const requestBody = {
-      ageConsent: isAllCheck,
-      reservationPersonName: userName,
-      reservationPhoneNumber: userPhoneNumber,
+      roomId: orderData[0].id,
+      visitorName: userName,
+      visitorPhone: userPhoneNumber,
+      startDate: orderData[0].startDate,
+      endDate: orderData[0].endDate,
+      couponId: usedCoupon?.id,
       totalPrice: totalOrderPrice,
-      orderItems: orderData.map(item => ({
-        roomId: item.id,
-        startDate: item.startDate,
-        endDate: item.endDate,
-        headCount: item.defaultCapacity,
-        orderPrice: item.price,
-      })),
+      payMethod: selectedMethod.payMethod,
     };
     try {
+      console.log(requestBody);
       // const res = await postOrderApi("/api/orders", requestBody);
       // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
+      // console.log(res);
     } catch (error) {
       navigate("/order/result?=false");
       const postOrderApiError = error as PostOrderApiErrorResponse;

@@ -14,14 +14,14 @@ export const postOrderApi = async (
 };
 
 interface PostOrderApiRequestBodyType {
+  roomId: number;
   visitorName: string;
   visitorPhone: string;
-  roomId: number;
   startDate: string;
-  //orderItems?: OrderItemType[];
   endDate: string;
-  couponId: number;
+  couponId?: number;
   totalPrice: number;
+  payMethod: string;
 }
 
 export interface PostOrderApiErrorResponse {
