@@ -1,5 +1,5 @@
 import {
-  ResponseAccommodation,
+  Accommodations,
   getAllAccommodations,
 } from "@/api/getAllAccommodationsApi";
 import { AxiosError, AxiosResponse } from "axios";
@@ -11,12 +11,12 @@ export const useGetAllAccommodations = (
   keyword: string
 ) => {
   return useInfiniteQuery<
-    AxiosResponse<ResponseAccommodation>,
+    AxiosResponse<Accommodations>,
     AxiosError,
-    AxiosResponse<ResponseAccommodation>
+    AxiosResponse<Accommodations>
   >(
     ["accommodations-list"],
-    ({ pageParam = 1 }) =>
+    ({ pageParam = 0 }) =>
       getAllAccommodations({
         page: pageParam,
         category,
@@ -24,11 +24,7 @@ export const useGetAllAccommodations = (
         keyword,
       }),
     {
-      getNextPageParam: ({
-        data: {
-          data: { pageNum, totalPages },
-        },
-      }) => {
+      getNextPageParam: ({ data: { pageNum, totalPages } }) => {
         const nextPage = pageNum + 1;
         return totalPages > pageNum ? nextPage : undefined;
       },

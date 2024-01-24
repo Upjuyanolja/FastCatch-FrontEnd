@@ -1,3 +1,4 @@
+import React from "react";
 import "./discountBadge.scss";
 import numberFormat from "@/utils/numberFormat";
 

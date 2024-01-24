@@ -6,11 +6,11 @@ import { FaRegEye } from "react-icons/fa";
 import { FaRegEyeSlash } from "react-icons/fa";
 
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
-// import instance from "@/api/instanceApi";
 import { Button, ToastLayout } from "@/components/common";
 
 import "../users.scss";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import instance from "@/api/instanceApi";
 
 const Signup = () => {
   // 회원가입/로그인 링크이동
@@ -50,7 +50,7 @@ const Signup = () => {
   const email = watch("email") ?? "";
   const nickname = watch("nickname") ?? "";
   const password = watch("password") ?? "";
-  const checkPassword = watch("checkPassword" ?? "");
+  const checkPassword = watch("checkPassword") ?? "";
   const name = watch("name") ?? "";
   const phone = watch("phone") ?? "";
   const { showToast, ToastContainer } = ToastLayout();
@@ -58,12 +58,12 @@ const Signup = () => {
 
   const duplicatedId = async () => {
     try {
-      const res = await axios.get(`/api/members/email?email=${email}`); // 추후 서버 baseURL 생성 시 .env 파일 내 url 주소 변경 후 axios -> instance로 변경 예정 / msw 결과 확인을 위해 axios로 임시 변경
-      if (res.data.data.isExists === false) {
+      const res = await instance.get(`/api/auth/members/email?email=${email}`);
+      console.log(res);
+      if (res.data.isExists === false) {
         setIsIdValid(true);
         showToast({ theme: "success", message: "사용 가능한 아이디입니다" });
       } else {
-        setIsIdValid(false);
         showToast({ theme: "error", message: "사용 불가능한 아이디입니다" });
       }
       return res;
@@ -95,15 +95,18 @@ const Signup = () => {
     event?.preventDefault();
     if (isAllCheck && isIdValid) {
       const requestBody = {
-        email: data.email,
-        password: data.password,
-        nickname: data.nickname,
         name: data.name,
+        email: data.email,
+        nickname: data.nickname,
         phone: data.phone,
+        password: data.password,
       };
       const signUp = async () => {
         try {
-          const res = await axios.post("/api/members/signup", requestBody); // 추후 서버 baseURL 생성 시 .env 파일 내 url 주소 변경 후 axios -> instance로 변경 예정 / msw 결과 확인을 위해 axios로 임시 변경
+          const res = await instance.post(
+            "/api/auth/members/signup",
+            requestBody
+          );
           setIsDisabled(!isDisabled);
           showToast({
             theme: "success",
@@ -178,11 +181,12 @@ const Signup = () => {
                         },
                       })}
                       onFocus={() => setIdError("")}
+                      readOnly={isIdValid !== null}
                     />
                     <button
                       className="btn-check"
                       onClick={duplicatedId}
-                      disabled={!isIdValids}
+                      disabled={!isIdValids || isIdValid !== null}
                     >
                       중복확인
                     </button>
@@ -216,21 +220,13 @@ const Signup = () => {
                 <div className="input-inner">
                   <label htmlFor="">휴대폰 번호</label>
                   <input
-                    type="number"
+                    type="text"
                     placeholder="숫자만 입력하세요"
                     {...register("phone", {
-                      required: "휴대폰 번호(-제외)를 입력하세요",
-                      minLength: {
-                        value: 10,
-                        message: "10자리 이상 입력하세요",
-                      },
-                      maxLength: {
-                        value: 11,
-                        message: "11자리 이하로 입력하세요",
-                      },
+                      required: "휴대폰 번호를 입력하세요",
                       pattern: {
-                        value: /^[0-9]*$/,
-                        message: "숫자만 입력하세요",
+                        value: /^\d{3}-\d{4}-\d{4}$/,
+                        message: "- 입력하세요",
                       },
                     })}
                   />
