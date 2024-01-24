@@ -63,10 +63,8 @@ const Order = memo(() => {
       payMethod: selectedMethod.payMethod,
     };
     try {
-      console.log(requestBody);
-      // const res = await postOrderApi("/api/orders", requestBody);
+      const res = await postOrderApi("/api/reservations", requestBody);
       // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
-      // console.log(res);
     } catch (error) {
       navigate("/order/result?=false");
       const postOrderApiError = error as PostOrderApiErrorResponse;
