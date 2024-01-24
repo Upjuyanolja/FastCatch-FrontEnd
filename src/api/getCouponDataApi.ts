@@ -3,6 +3,7 @@ import instance from "./instanceApi";
 interface Coupon {
   id?: number;
   name?: string;
+  endDate?: string;
 }
 
 interface Room {
@@ -14,7 +15,7 @@ interface Room {
 export const getCouponDataApi = async (id: string | null): Promise<Room[]> => {
   try {
     const res = await instance.get(`/api/coupons/${id}`);
-    return res.data.data;
+    return res.data;
   } catch (error) {
     throw new Error("Failed to fetch data");
   }
