@@ -64,6 +64,7 @@ const Order = memo(() => {
     };
     try {
       const res = await postOrderApi("/api/reservations", requestBody);
+      console.log(res);
       // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
     } catch (error) {
       navigate("/order/result?=false");

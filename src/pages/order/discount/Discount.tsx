@@ -19,6 +19,12 @@ const Discount = memo(() => {
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
+  const initialUsedCoupon = {
+    name: "선택안함",
+    id: 0,
+    price: 0,
+  };
+
   const selectCoupon = (coupon: Coupon) => {
     setUsedCoupon(coupon);
     setDiscountAmt(coupon.price || 0);
@@ -41,11 +47,14 @@ const Discount = memo(() => {
       return;
     }
     setCouponList(order[0].coupons);
+    return () => {
+      setUsedCoupon(null);
+    };
   }, [order]);
 
   useEffect(() => {
-    console.log("couponList", couponList);
-  }, [couponList]);
+    console.log("usedCoupon", usedCoupon);
+  }, [usedCoupon]);
 
   return (
     <div className="discount">
