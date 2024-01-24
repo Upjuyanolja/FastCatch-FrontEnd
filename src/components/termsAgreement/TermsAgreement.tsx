@@ -45,6 +45,7 @@ const TermsAgreement = memo(
             labelText={"필수약관 전체 동의"}
             className={"text-subtitle4"}
             id={"allCheck"}
+            name={"allCheck"}
           />
         </div>
         <div className="terms-agreement__body">
@@ -54,6 +55,7 @@ const TermsAgreement = memo(
             labelText={"숙소이용규칙 및 취소/환불규정 동의 (필수)"}
             className={"text-body1"}
             id={"checkRule"}
+            name={"checkRule"}
           />
           <TermsAgreementItem
             state={isCheckUse}
@@ -61,6 +63,7 @@ const TermsAgreement = memo(
             labelText={"개인정보 수집 및 이용 동의 (필수)"}
             className={"text-body1"}
             id={"checkUse"}
+            name={"checkUse"}
           />
           <TermsAgreementItem
             state={isCheckProvision}
@@ -68,6 +71,7 @@ const TermsAgreement = memo(
             labelText={"개인정보 제 3자 제공 동의 (필수)"}
             className={"text-body1"}
             id={"checkProvision"}
+            name={"checkProvision"}
           />
           <TermsAgreementItem
             state={isCheckAge}
@@ -75,6 +79,7 @@ const TermsAgreement = memo(
             labelText={"만 14세 이상 확인 (필수)"}
             className={"text-body1"}
             id={"checkAge"}
+            name={"checkAge"}
           />
         </div>
       </div>

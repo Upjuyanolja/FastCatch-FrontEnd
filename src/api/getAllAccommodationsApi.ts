@@ -38,14 +38,14 @@ export const getAllAccommodations = ({
 }: AccommodationParams) => {
   console.log(keyword);
   if (keyword === "")
-    return instance.get<ResponseAccommodation>("/api/accommodations", {
+    return instance.get<Accommodations>("/api/accommodations", {
       params: {
         category,
         onlyHasCoupon,
         page,
       },
     });
-  return instance.get<ResponseAccommodation>("/api/accommodations", {
+  return instance.get<Accommodations>("/api/accommodations", {
     params: {
       category,
       onlyHasCoupon,

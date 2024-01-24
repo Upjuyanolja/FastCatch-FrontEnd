@@ -25,7 +25,6 @@ const CouponModal = ({ isVisible, setIsVisible, id }: modalPropI) => {
   const { data, isLoading, refetch, isError } = useQuery({
     queryKey: [id, "couponData"],
     queryFn: () => getCouponDataApi(id),
-
     staleTime: 500000,
     cacheTime: 5000000,
   });
@@ -91,7 +90,7 @@ const CouponModal = ({ isVisible, setIsVisible, id }: modalPropI) => {
                               숙박 예약 시
                             </li>
                             <li className="coupon-modal-wrap__body__coupon-wrap__color-gray">
-                              {room.roomName.slice(2)} 까지
+                              {coupon.endDate} 까지
                             </li>
                           </ul>
                           <div className="coupon-modal-wrap__body__coupon-wrap__room">

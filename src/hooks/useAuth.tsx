@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useSetRecoilState } from "recoil";
 
 import { userInfoI, userState } from "@/states/userState";
 import { getCookie, setCookie } from "@/utils/cookies";
+import instance from "@/api/instanceApi";
 
 export const useAuth = () => {
   const setUserInfo = useSetRecoilState(userState);
@@ -30,7 +30,7 @@ export async function refreshAccessToken() {
     return;
   }
 
-  const response = await axios.post(`/api/members/re-token`, refreshToken, {
+  const response = await instance.post(`/api/auth/refresh`, refreshToken, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
       "Content-Type": "application/json",

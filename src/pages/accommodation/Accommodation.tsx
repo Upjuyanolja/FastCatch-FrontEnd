@@ -12,6 +12,7 @@ import { AiOutlineRight } from "react-icons/ai";
 import CouponModal from "@/components/common/modal/Coupon/CouponModal";
 import { useState } from "react";
 import { getAccommodationDetailApi } from "@/api/getAccommodationDetailApi";
+import AccommodationSwiper from "./accommodationSwiper/index";
 
 const Accommodation = () => {
   const filterData = useRecoilValue(filterState);
@@ -28,7 +29,6 @@ const Accommodation = () => {
   const { data, isLoading, refetch, isError } = useQuery({
     queryKey: [id, "postDetail"],
     queryFn: () => getAccommodationDetailApi(id, startDate, endDate),
-
     staleTime: 500000,
     cacheTime: 5000000,
   });
@@ -64,13 +64,10 @@ const Accommodation = () => {
             id={id}
           />
         )}
+        <div>
+          <AccommodationSwiper roomImg={data.images}></AccommodationSwiper>
+        </div>
 
-        <img
-          style={{ height: "550px", width: "100%", objectFit: "cover" }}
-          src={`${data.images[0]}`}
-          alt={data.name}
-          loading="lazy"
-        />
         <AccommodationMainInfo
           accommodationName={data.name}
           accommodationLocation={data.address}
@@ -103,14 +100,6 @@ const Accommodation = () => {
             <span className="text-body1">{data.description}</span>
           </div>
         </div>
-        <div className="accommodation__divider"></div>
-
-        {/* 없어진부분 */}
-        {/* <AccommodationMap
-          accommodationName={data?.name}
-          latitude={data?.mapX}
-          longitude={data?.mapY}
-        /> */}
         <div className="accommodation__divider"></div>
         <AccommodationOptions options={data?.option} />
         <div className="accommodation__divider"></div>

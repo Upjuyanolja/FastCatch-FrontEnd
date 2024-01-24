@@ -10,7 +10,7 @@ export const getAccommodationDetailApi = async (
     const res = await instance.get(
       `/api/accommodations/${id}?startDate=${startDate}&endDate=${endDate}`
     );
-    return res.data.data;
+    return res.data;
   } catch (error) {
     throw new Error("Failed to fetch data");
   }

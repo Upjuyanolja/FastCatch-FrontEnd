@@ -50,7 +50,7 @@ const CategoryFilter = () => {
       engName: "PENSION_POOL_VILLA",
       select: false,
     },
-    { name: "게스트하우스", img: MOTEL, engName: "GUEST_HOUSE", select: false },
+    { name: "게스트하우스", img: MOTEL, engName: "GUESTHOUSE", select: false },
   ];
 
   const [categories, setCategories] = useState(categoriesData);
