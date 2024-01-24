@@ -58,7 +58,9 @@ const Signup = () => {
 
   const duplicatedId = async () => {
     try {
-      const res = await instance.get(`/api/auth/members/email?email=${email}`);
+      const res = await instance.post(`/api/auth/members/email`, {
+        email: email,
+      });
       console.log(res);
       if (res.data.isExists === false) {
         setIsIdValid(true);
