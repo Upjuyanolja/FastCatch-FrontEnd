@@ -19,7 +19,8 @@ export function getCookie(name: string): string | undefined {
 
 export const removeCookie = async () => {
   try {
-    document.cookie = "refreshToken=; expires=0; path=/";
+    document.cookie =
+      "refreshToken=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;";
   } catch (e) {
     console.error(e);
   }

@@ -1,8 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
-import { refreshAccessToken } from "@/hooks/useAuth";
 import { isAccessTokenExpired } from "@/utils/checkToken";
-import { removeCookie } from "@/utils/cookies";
+import { getCookie, removeCookie, setCookie } from "@/utils/cookies";
 
 const instance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -13,24 +12,39 @@ instance.interceptors.request.use(
   async config => {
     config.headers["Content-Type"] = "application/json";
     const accessToken = localStorage.getItem("accessToken");
-
+    const refreshToken = getCookie("refreshToken");
     if (accessToken) {
       const isTokenExpired = isAccessTokenExpired(accessToken);
-
       if (isTokenExpired) {
         try {
-          const newAccessToken = await refreshAccessToken();
+          const res = await instance.post("/api/auth/refresh", {
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+          });
+          const newAccessToken = res.data.accessToken;
+          const newRefreshToken = res.data.refreshToken;
           config.headers["Authorization"] = `Bearer ${newAccessToken}`;
+          localStorage.setItem("accessToken", newAccessToken);
+          setCookie(newRefreshToken);
         } catch (refreshError) {
-          console.error("accessToken 재발급 실패", refreshError);
+          localStorage.clear();
+          removeCookie();
+          window.location.replace("/login");
         }
       } else {
         config.headers["Authorization"] = `Bearer ${accessToken}`;
       }
+    } else {
+      localStorage.clear();
+      removeCookie();
+      window.location.replace("/login");
     }
     return config;
   },
   error => {
+    localStorage.clear();
+    removeCookie();
+    window.location.replace("/login");
     return Promise.reject(error);
   }
 );
@@ -41,8 +55,7 @@ instance.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem("accessToken");
       removeCookie();
-      alert("인증이 만료되어 재 로그인이 필요합니다.");
-      window.location.href = "/login";
+      window.location.replace("/login");
     }
     return Promise.reject(error);
   }
