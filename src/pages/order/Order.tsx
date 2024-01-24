@@ -64,13 +64,12 @@ const Order = memo(() => {
       payMethod: selectedMethod.payMethod,
     };
     try {
-      postOrderApi("/api/reservations", requestBody);
+      await postOrderApi("/api/reservations", requestBody);
       navigate("/order/result?=true");
       setOrderResult(true);
     } catch (error) {
       navigate("/order/result?=false");
       setOrderResult(false);
-      console.log(error);
     }
   };
 
