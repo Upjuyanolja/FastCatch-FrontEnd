@@ -52,10 +52,6 @@ const Discount = memo(() => {
     };
   }, [order]);
 
-  useEffect(() => {
-    console.log("usedCoupon", usedCoupon);
-  }, [usedCoupon]);
-
   return (
     <div className="discount">
       <h4 className="text-subtitle4">할인</h4>
