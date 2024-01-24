@@ -10,10 +10,11 @@ const PaymentMethod = memo(
     return (
       <div className="payment-method">
         <h4 className="text-subtitle4">결제 수단</h4>
-        {initialPaymentMethod.map((option, index) => (
+        {initialPaymentMethod.map((item, index) => (
           <PaymentMethodItem
             className={index === 0 ? "full" : ""}
-            methodName={option}
+            label={item.label}
+            payMethod={item.payMethod}
             key={index}
             selectedMethod={selectedMethod}
             setSelectedMethod={setSelectedMethod}
@@ -27,6 +28,11 @@ const PaymentMethod = memo(
 export default PaymentMethod;
 
 interface PaymentMethodProps {
-  selectedMethod: string;
-  setSelectedMethod: React.Dispatch<SetStateAction<string>>;
+  selectedMethod: SelectedMethod;
+  setSelectedMethod: React.Dispatch<SetStateAction<SelectedMethod>>;
+}
+
+export interface SelectedMethod {
+  label: string;
+  payMethod: string;
 }
