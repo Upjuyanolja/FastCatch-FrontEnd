@@ -2,7 +2,6 @@ import axios, { AxiosInstance } from "axios";
 
 import { isAccessTokenExpired } from "@/utils/checkToken";
 import { getCookie, removeCookie, setCookie } from "@/utils/cookies";
-
 const instance: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 5000,
@@ -48,9 +47,11 @@ instance.interceptors.response.use(
       window.location.pathname !== "login" &&
       window.location.pathname !== "signup"
     ) {
-      localStorage.removeItem("accessToken");
+      localStorage.clear();
       removeCookie();
-      window.location.replace("/login");
+      setTimeout(() => {
+        window.location.replace("/login");
+      }, 1000);
     }
     return Promise.reject(error);
   }
