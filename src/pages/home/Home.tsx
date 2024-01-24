@@ -25,6 +25,7 @@ const Home = () => {
 
   useEffect(() => {
     refetch();
+    console.log(data);
     return () => {
       remove();
     };
