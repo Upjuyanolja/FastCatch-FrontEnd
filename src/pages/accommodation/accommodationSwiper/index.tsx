@@ -17,9 +17,9 @@ const AccommodationSwiper = ({ roomImg }: AccommodationSwiperProps) => {
       resistance={false}
       style={{ margin: "0 4px" }}
     >
-      {roomImg.map((obj: any, index) => (
-        <>
-          <SwiperSlide key={index}>
+      {roomImg.map((obj: any) => (
+        <div key={obj}>
+          <SwiperSlide>
             <img
               style={{ height: "550px", width: "100%", objectFit: "cover" }}
               src={`${obj}`}
@@ -27,7 +27,7 @@ const AccommodationSwiper = ({ roomImg }: AccommodationSwiperProps) => {
               loading="lazy"
             />
           </SwiperSlide>
-        </>
+        </div>
       ))}
     </Swiper>
   );
