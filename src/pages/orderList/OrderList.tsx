@@ -17,7 +17,7 @@ const OrderList = () => {
     useGetReservationList();
 
   const reservationItems = useMemo(
-    () => data?.pages.flatMap(page => page.data.data.reservations),
+    () => data?.pages.flatMap(page => page.data.reservations),
     [data]
   );
 
@@ -40,7 +40,7 @@ const OrderList = () => {
   } = useGetCancelReservationList();
 
   const cancelReservationItems = useMemo(
-    () => cancelData?.pages.flatMap(page => page.data.data.reservations),
+    () => cancelData?.pages.flatMap(page => page.data.reservations),
     [cancelData]
   );
 
