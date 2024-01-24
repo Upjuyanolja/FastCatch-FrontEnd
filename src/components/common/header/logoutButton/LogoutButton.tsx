@@ -7,6 +7,7 @@ import { MdLogout } from "react-icons/md";
 import { userState } from "@/states/userState";
 import instance from "@/api/instanceApi";
 import { removeCookie } from "@/utils/cookies";
+import { AxiosError } from "axios";
 
 const LogoutButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -24,15 +25,24 @@ const LogoutButton = () => {
         onClick: () => {
           const logOut = async () => {
             try {
-              const res = await instance.post(`/api/auth/signout`);
+              await instance.delete(`/api/auth/logout`);
               localStorage.removeItem("accessToken");
               removeCookie();
               setUserInfo(null);
               navigate("/");
-
-              return res;
             } catch (error) {
-              console.log(error);
+              if (error instanceof AxiosError) {
+                const res = error.response?.data.code;
+                if (res === 1005) {
+                  alert("회원 정보를 찾을 수 없습니다.");
+                  removeCookie();
+                  setUserInfo(null);
+                } else {
+                  alert("이미 로그아웃한 회원입니다.");
+                  removeCookie();
+                  setUserInfo(null);
+                }
+              }
             }
           };
 
