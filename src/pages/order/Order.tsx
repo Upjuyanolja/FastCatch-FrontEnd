@@ -25,6 +25,7 @@ import DiscountBadge from "./discountBadge/DiscountBadge";
 import "./order.scss";
 import { initialPaymentMethod } from "@/constant/initialPaymentMethod";
 import { usedCouponState } from "@/states/usedCouponState";
+import { orderResultState } from "@/states/orderResultState";
 
 const Order = memo(() => {
   const [userName, setUserName] = useState("");
@@ -35,13 +36,13 @@ const Order = memo(() => {
   const [isBookerValidationPass, setIsBookerValidationPass] = useState(false);
   const [isAllValidationPass, setIsAllValidationPass] = useState(false);
   const orderData: OrderItemTypes[] = useRecoilValue(orderState);
-  const setOrderErrorMsg = useSetRecoilState(orderErrorMsgState);
   const discountAmt = useRecoilValue(discountState);
   const totalOrderPrice =
     discountAmt !== 0
       ? discountAmt
       : orderData.reduce((total, item) => total + item.price, 0);
   const usedCoupon = useRecoilValue(usedCouponState);
+  const setOrderResult = useSetRecoilState(orderResultState);
 
   useEffect(() => {
     localStorage.setItem("orderState", JSON.stringify(orderData));
@@ -63,13 +64,13 @@ const Order = memo(() => {
       payMethod: selectedMethod.payMethod,
     };
     try {
-      const res = await postOrderApi("/api/reservations", requestBody);
-      console.log(res);
-      // navigate(`/order/result?result=true&orderid=${res.data.orderId}`);
+      postOrderApi("/api/reservations", requestBody);
+      navigate("/order/result?=true");
+      setOrderResult(true);
     } catch (error) {
       navigate("/order/result?=false");
-      const postOrderApiError = error as PostOrderApiErrorResponse;
-      setOrderErrorMsg(postOrderApiError.response.data.errorMessage);
+      setOrderResult(false);
+      console.log(error);
     }
   };
 
