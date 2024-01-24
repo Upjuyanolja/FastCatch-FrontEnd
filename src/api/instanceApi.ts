@@ -27,24 +27,15 @@ instance.interceptors.request.use(
           localStorage.setItem("accessToken", newAccessToken);
           setCookie(newRefreshToken);
         } catch (refreshError) {
-          localStorage.clear();
-          removeCookie();
-          window.location.replace("/login");
+          console.log(refreshError);
         }
       } else {
         config.headers["Authorization"] = `Bearer ${accessToken}`;
       }
-    } else {
-      localStorage.clear();
-      removeCookie();
-      window.location.replace("/login");
     }
     return config;
   },
   error => {
-    localStorage.clear();
-    removeCookie();
-    window.location.replace("/login");
     return Promise.reject(error);
   }
 );
@@ -52,7 +43,11 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   response => response,
   error => {
-    if (error.response?.status === 401) {
+    if (
+      error.response?.status === 401 &&
+      window.location.pathname !== "login" &&
+      window.location.pathname !== "signup"
+    ) {
       localStorage.removeItem("accessToken");
       removeCookie();
       window.location.replace("/login");
