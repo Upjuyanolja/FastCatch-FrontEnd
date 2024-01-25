@@ -37,6 +37,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
     soldOut,
     discountPrice,
     coupons,
+    count,
   } = room;
 
   const setOrderData = useSetRecoilState(orderState);
@@ -133,7 +134,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
   };
 
   let text = "";
-  if (soldOut) {
+  if (count === 0 || soldOut) {
     text = "판매된 객실입니다";
   } else if (!isPossible) {
     text = "인원을 변경해주세요";
