@@ -26,11 +26,14 @@ const Accommodation = () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
+  const getAccommodationDetailData = async () => {
+    const result = await getAccommodationDetailApi(id, startDate, endDate);
+    return result;
+  };
+
   const { data, isLoading, refetch, isError } = useQuery({
     queryKey: [id, "postDetail"],
-    queryFn: () => getAccommodationDetailApi(id, startDate, endDate),
-    staleTime: 500000,
-    cacheTime: 5000000,
+    queryFn: getAccommodationDetailData,
   });
 
   if (isLoading) {
