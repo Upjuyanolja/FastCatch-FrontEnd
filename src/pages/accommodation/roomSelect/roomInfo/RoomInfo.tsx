@@ -1,4 +1,5 @@
 import { Badge, Button, ToastLayout } from "@/components/common";
+import { PATH } from "@/routes/constants";
 import { filterState } from "@/states/filterState";
 import { orderState } from "@/states/orderState";
 import { userState } from "@/states/userState";
@@ -128,6 +129,8 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         options: roomOption,
       },
     ]);
+
+    navigate(PATH.ORDER);
   };
 
   let text = "";
