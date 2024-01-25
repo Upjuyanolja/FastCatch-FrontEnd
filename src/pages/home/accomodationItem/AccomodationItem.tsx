@@ -10,6 +10,18 @@ const AccommodationItem = ({ data }: { data: Accommodation }) => {
     navigate(`/accommodation?id=${data.id}`);
   };
 
+  const couponName = data.couponName;
+  let rateCouponName = couponName;
+
+  if (couponName.includes("원")) {
+    const index = couponName.indexOf("원");
+    const prefix = couponName.slice(0, index);
+    const parsedNumber = Number(prefix);
+    if (!isNaN(parsedNumber)) {
+      rateCouponName = parsedNumber.toLocaleString() + "원 할인";
+    }
+  }
+
   return (
     <div className="accomdationItem-container" onClick={navigateHandler}>
       <div
@@ -20,7 +32,7 @@ const AccommodationItem = ({ data }: { data: Accommodation }) => {
       >
         {data.couponName && (
           <div className="accomdationItem-container__coupon-box">
-            {data.couponName}
+            {rateCouponName}
           </div>
         )}
       </div>
@@ -44,12 +56,10 @@ const AccommodationItem = ({ data }: { data: Accommodation }) => {
 
           <div className="price-container">
             {data.discountPrice !== data.lowestPrice && (
-              <div className="price">
-                {data.discountPrice.toLocaleString()}원
-              </div>
+              <div className="price">{data.lowestPrice.toLocaleString()}원</div>
             )}
             <div className="lowest-price">
-              {data.lowestPrice.toLocaleString()}원
+              {data.discountPrice.toLocaleString()}원
             </div>
           </div>
         </div>
