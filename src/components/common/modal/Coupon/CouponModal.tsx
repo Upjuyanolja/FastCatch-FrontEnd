@@ -68,8 +68,11 @@ const CouponModal = ({ isVisible, setIsVisible, id }: modalPropI) => {
             <div className="coupon-modal-wrap__body">
               <p className="text-subtitle4">이 숙소 적용 가능 쿠폰</p>
               {data &&
-                data.map((room, index) => (
-                  <div key={index} className="coupon-modal-wrap__layout">
+                data.map(room => (
+                  <div
+                    key={`room-${room.id}`}
+                    className="coupon-modal-wrap__layout"
+                  >
                     {room.coupons.map(coupon => (
                       <div className="coupon-modal-wrap__body__coupon-wrap">
                         <div key={coupon.id}>
