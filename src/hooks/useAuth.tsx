@@ -1,8 +1,7 @@
 import { useSetRecoilState } from "recoil";
 
 import { userInfoI, userState } from "@/states/userState";
-import { getCookie, setCookie } from "@/utils/cookies";
-import instance from "@/api/instanceApi";
+import { setCookie } from "@/utils/cookies";
 
 export const useAuth = () => {
   const setUserInfo = useSetRecoilState(userState);
@@ -20,25 +19,3 @@ export const useAuth = () => {
     setToken,
   };
 };
-
-export async function refreshAccessToken() {
-  const accessToken = localStorage.getItem("accessToken");
-  const userDataString = localStorage.getItem("userState");
-  const refreshToken = getCookie("refreshToken");
-  if (!userDataString) {
-    console.error("User data not found in localStorage");
-    return;
-  }
-
-  const response = await instance.post(`/api/auth/refresh`, refreshToken, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-  });
-
-  const newAccessToken = response.data.data.accessToken;
-  localStorage.setItem("accessToken", newAccessToken);
-
-  return newAccessToken;
-}
