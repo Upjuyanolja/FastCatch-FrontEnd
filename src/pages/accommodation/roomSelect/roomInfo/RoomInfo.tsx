@@ -128,9 +128,6 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         options: roomOption,
       },
     ]);
-
-    await navigate("/order?cart=false");
-    window.scrollTo(0, 0);
   };
 
   let text = "";
@@ -187,7 +184,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
 
       <div>
         <div className="room__buttons-container">
-          {soldOut || !isPossible ? (
+          {count === 0 || soldOut || !isPossible ? (
             <Button
               text={text}
               buttonSize="large"
