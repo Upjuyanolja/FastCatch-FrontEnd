@@ -129,10 +129,8 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         options: roomOption,
       },
     ]);
-
     navigate(PATH.ORDER);
   };
-
   let text = "";
   if (count === 0 || soldOut) {
     text = "판매된 객실입니다";
