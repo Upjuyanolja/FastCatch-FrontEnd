@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./orderResult.scss";
@@ -7,10 +6,6 @@ import { orderResultState } from "@/states/orderResultState";
 
 const OrderResult = () => {
   const orderResult = useRecoilValue(orderResultState);
-
-  useEffect(() => {
-    console.log("orderResult", orderResult);
-  }, []);
 
   return (
     <div className="order-result">
