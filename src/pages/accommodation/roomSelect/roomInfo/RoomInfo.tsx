@@ -1,4 +1,5 @@
 import { Badge, Button, ToastLayout } from "@/components/common";
+import { PATH } from "@/routes/constants";
 import { filterState } from "@/states/filterState";
 import { orderState } from "@/states/orderState";
 import { userState } from "@/states/userState";
@@ -128,11 +129,8 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
         options: roomOption,
       },
     ]);
-
-    await navigate("/order?cart=false");
-    window.scrollTo(0, 0);
+    navigate(PATH.ORDER);
   };
-
   let text = "";
   if (count === 0 || soldOut) {
     text = "판매된 객실입니다";
@@ -187,7 +185,7 @@ const RoomInfo = ({ room, accommodationName, isClicked }: RoomInfoProps) => {
 
       <div>
         <div className="room__buttons-container">
-          {soldOut || !isPossible ? (
+          {count === 0 || soldOut || !isPossible ? (
             <Button
               text={text}
               buttonSize="large"

@@ -1,8 +1,6 @@
 import { memo, useEffect, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { OrderItemTypes, orderState } from "@/states/orderState";
-import { postOrderApi } from "@/api/postOrderApi";
-import { useNavigate } from "react-router-dom";
 import _debounce from "lodash/debounce";
 
 import TermsAgreement from "@/components/termsAgreement/TermsAgreement";
@@ -23,11 +21,11 @@ import DiscountBadge from "./discountBadge/DiscountBadge";
 import "./order.scss";
 import { initialPaymentMethod } from "@/constant/initialPaymentMethod";
 import { usedCouponState } from "@/states/usedCouponState";
-import { orderResultState } from "@/states/orderResultState";
+import { usePostOrder } from "@/hooks/quries/usePostOrder";
+import LoadingAnimation from "@/components/loadingAnimation/LoadingAnimation";
 
 const Order = memo(() => {
   const [userName, setUserName] = useState("");
-  const navigate = useNavigate();
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
   const [selectedMethod, setSelectedMethod] = useState(initialPaymentMethod[0]);
   const [isAllCheck, setIsAllCheck] = useState(false);
@@ -40,46 +38,39 @@ const Order = memo(() => {
       ? discountAmt
       : orderData.reduce((total, item) => total + item.price, 0);
   const usedCoupon = useRecoilValue(usedCouponState);
-  const setOrderResult = useSetRecoilState(orderResultState);
+
+  const requestBody = {
+    roomId: orderData[0].id,
+    visitorName: userName,
+    visitorPhone: userPhoneNumber,
+    startDate: orderData[0].startDate,
+    endDate: orderData[0].endDate,
+    couponId: usedCoupon?.id,
+    totalPrice: totalOrderPrice,
+    payMethod: selectedMethod.payMethod,
+  };
+
+  const postOrderMutation = usePostOrder(requestBody);
+  const totalPrice = orderData.reduce((sum, item) => sum + item.price, 0);
+
+  const handleClick = async () => {
+    await postOrderMutation.mutateAsync();
+  };
 
   useEffect(() => {
     localStorage.setItem("orderState", JSON.stringify(orderData));
   }, [orderData]);
 
-  const handleClick = () => {
-    postOrderApiFromAccommodation();
-  };
-
-  const postOrderApiFromAccommodation = async () => {
-    const requestBody = {
-      roomId: orderData[0].id,
-      visitorName: userName,
-      visitorPhone: userPhoneNumber,
-      startDate: orderData[0].startDate,
-      endDate: orderData[0].endDate,
-      couponId: usedCoupon?.id,
-      totalPrice: totalOrderPrice,
-      payMethod: selectedMethod.payMethod,
-    };
-    try {
-      await postOrderApi("/api/reservations", requestBody);
-      navigate("/order/result?=true");
-      setOrderResult(true);
-    } catch (error) {
-      navigate("/order/result?=false");
-      setOrderResult(false);
-    }
-  };
-
   useEffect(() => {
     setIsAllValidationPass(isAllCheck && isBookerValidationPass);
   }, [isAllCheck, isBookerValidationPass]);
 
-  const totalPrice = orderData.reduce((sum, item) => sum + item.price, 0);
-
   return (
     <div className="order">
       <form>
+        {postOrderMutation.isLoading && (
+          <LoadingAnimation width="200px" height="200px" />
+        )}
         {orderData.map((orderData, index) => (
           <OrderItem key={index} orderData={orderData} />
         ))}
