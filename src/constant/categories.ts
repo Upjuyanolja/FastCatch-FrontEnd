@@ -35,4 +35,5 @@ export const accommodationCategoryData: AccommodationCategory = {
   TOURIST_HOTEL: "호텔/리조트",
   RESIDENCE: "호텔/리조트",
   CONDO: "호텔/리조트",
+  RESORT: "호텔/리조트",
 };
