@@ -106,7 +106,7 @@ const Login = () => {
                           pattern: {
                             value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
                             message:
-                              "영문자, 숫자 포함 최소 8~20자로 입력하세요",
+                              "영문자(대,소문자), 숫자 포함 최소 8~20자로 입력하세요",
                           },
                         })}
                         data-cy="password-input"
