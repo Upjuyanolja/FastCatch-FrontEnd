@@ -245,7 +245,8 @@ const Signup = () => {
                       {...register("password", {
                         required: "비밀번호를 입력하세요",
                         pattern: {
-                          value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/,
+                          value:
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/,
                           message: "영문자, 숫자 포함 최소 8~20자로 입력하세요",
                         },
                       })}
