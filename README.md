@@ -5,7 +5,7 @@
 ### 업주야놀자 Final Project : 숙박 예약 프로젝트
 
 <p align="center">
-  <a href="https://mini-team-7.vercel.app/">
+  <a href="https://fast-catch-front-end-gold.vercel.app/">
     <img src="https://img.shields.io/badge/FASTCATCH-pink?style=for-the-badge&logoColor=white" alt="wiki"/>
   </a>
 </p>
