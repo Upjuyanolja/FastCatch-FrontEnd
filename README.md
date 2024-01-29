@@ -71,7 +71,6 @@ Backoffice는 [이곳](https://github.com/Upjuyanolja/Upjuyanolja_FE)을 클릭�
 ### Deploy
 
 <p align="left">
-  <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">
   <img src="https://img.shields.io/badge/vercel-ffffff?style=for-the-badge&logo=vercel&logoColor=black"/>
 </p>
 
